@@ -17,16 +17,11 @@ public class Airline {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
     @Column
     private String name;
 
     @Column
     private String iataCode;
-
-    @Column
-    private String icaoCode;
-
-
-
 
 }

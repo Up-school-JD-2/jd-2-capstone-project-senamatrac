@@ -10,19 +10,15 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @Builder
-public class Airport {
+public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+    @Column(name = "seat_code",unique = true)
+    private String seatCode;
 
-    @Column(nullable = false)
-    private String iataCode;
-
-    @ManyToOne
-    @JoinColumn(name = "city_id")
-    private City city;
+    @Column
+    private Boolean reserved;
 }
