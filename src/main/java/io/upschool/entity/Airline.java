@@ -18,10 +18,15 @@ public class Airline {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false,unique = true)
     private String iataCode;
 
+    @OneToMany(mappedBy = "airline", fetch = FetchType.LAZY)
+    private Set<Airplane> airplaneTypes;
+
+    @ManyToMany
+    private Set<Route> routes;
 }

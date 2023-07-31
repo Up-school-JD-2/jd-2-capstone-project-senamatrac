@@ -3,8 +3,10 @@ package io.upschool.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(name = "route", columnNames = { "origin_airport_id", "destination_airport_id" }))
+@Table(name="route",indexes = @Index(name = "UNQ_ROUTE_ORIGIN_DESTINATION", columnList =  "origin_airport_id, destination_airport_id",unique = true))
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,13 +18,15 @@ public class Route {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "origin_airport_id")
     @ManyToOne
+    @JoinColumn(name = "origin_airport_id")
     private Airport origin;
 
-    @Column(name = "destination_airport_id")
     @ManyToOne
+    @JoinColumn(name = "destination_airport_id")
     private Airport destination;
 
+    @ManyToMany(mappedBy = "routes")
+    private Set<Airline> airline;
 
 }

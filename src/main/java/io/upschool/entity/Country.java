@@ -20,6 +20,12 @@ public class Country {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false,unique = true)
+    private String code;
+
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
     private Set<City> cities;
 }

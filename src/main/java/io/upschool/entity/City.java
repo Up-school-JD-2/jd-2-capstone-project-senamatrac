@@ -19,6 +19,9 @@ public class City {
     @Column
     private String name;
 
+    @Column(nullable = false,unique = true)
+    private String code;
+
     @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;

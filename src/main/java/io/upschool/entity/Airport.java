@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "airline")
+@Table(name = "airport")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

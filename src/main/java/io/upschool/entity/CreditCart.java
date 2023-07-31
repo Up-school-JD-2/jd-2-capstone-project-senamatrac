@@ -1,4 +1,19 @@
 package io.upschool.entity;
 
-public class CreditCart   {
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name="flight")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = {"id"})
+@Builder
+public class CreditCart {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
 }

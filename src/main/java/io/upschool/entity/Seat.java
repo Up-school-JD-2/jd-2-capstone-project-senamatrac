@@ -1,10 +1,13 @@
 package io.upschool.entity;
 
+import io.upschool.enums.SeatType;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Entity
-@Table(name = "airline")
+@Table(name = "seat")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,6 +21,9 @@ public class Seat {
 
     @Column(name = "seat_code",unique = true)
     private String seatCode;
+
+    @Enumerated(EnumType.STRING)
+    private SeatType seatType;
 
     @Column
     private Boolean reserved;

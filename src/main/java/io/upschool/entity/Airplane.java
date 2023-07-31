@@ -18,10 +18,17 @@ public class Airplane {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "airline_id")
+    private Airline airline;
+
     @Column(name = "tail_number", nullable = false)
     private String tailNumber;
 
     @Column(name = "max_seats", nullable = false)
     private int maxSeats;
+
+    @OneToMany
+    private Set<Seat> seats;
 
 }
