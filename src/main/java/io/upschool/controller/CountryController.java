@@ -24,7 +24,6 @@ public class CountryController {
     private final CountyResponseMapper countyResponseMapper;
     @GetMapping
     public ResponseEntity<Page<CountryResponse>> getAllCountries(Pageable pageable){
-
         return ResponseEntity.ok(countryService.findAll(pageable).map(countyResponseMapper::map));
     }
     @GetMapping("/all")

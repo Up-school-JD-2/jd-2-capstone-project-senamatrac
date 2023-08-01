@@ -1,7 +1,6 @@
 package io.upschool.service;
 
 import io.upschool.dto.request.CityRequest;
-import io.upschool.dto.request.CountryRequest;
 import io.upschool.entity.City;
 import io.upschool.entity.Country;
 import io.upschool.exception.DataNotFoundException;
@@ -22,51 +21,49 @@ import java.util.Optional;
 public class CityService {
     private final CityRepository cityRepository;
     private final CountryRepository countryRepository;
-    public Country save(CityRequest cityRequest) throws DuplicateEntryException {
+    public City save(CityRequest cityRequest) throws DuplicateEntryException, DataNotFoundException {
         isExistsCode(cityRequest);
-        Optional<Country> country = countryRepository.findById(cityRequest.getCountryId());
-        if(country.isEmpty()){
-            throw new DataNotFoundException("")
-        }
-        City country = City.builder()
+        Country country = countryRepository.findById(cityRequest.getCountryId()).orElseThrow(() -> new DataNotFoundException("The country cannot found."));
+        City city = City.builder()
                 .code(cityRequest.getCode())
                 .name(cityRequest.getName())
-                .country().build();
-        return cityRepository.save(country);
+                .country(country).build();
+        return cityRepository.save(city);
     }
 
     @Transactional
-    public List<Country> saveAll(List<CityRequest> countryRequests) {
-        List<Country> countries = countryRequests.stream()
-                .map(cityRequest -> Country.builder().
+    public List<City> saveAll(List<CityRequest> cityRequests) {
+        List<City> cities = cityRequests.stream().map(cityRequest -> City.builder().
                         code(cityRequest.getCode()).
                         name(cityRequest.getName()).build()).toList();
 
-        return cityRepository.saveAll(countries);
+        return cityRepository.saveAll(cities);
     }
 
-    public Country update(Long id, CityRequest cityRequest) throws DataNotFoundException, DuplicateEntryException {
-        Country country = cityRepository.findById(id).orElseThrow(() -> new DataNotFoundException("The country cannot found."));
+    public City update(Long id, CityRequest cityRequest) throws DataNotFoundException, DuplicateEntryException {
+        City city = cityRepository.findById(id).orElseThrow(() -> new DataNotFoundException("The city cannot found."));
+        Country country = countryRepository.findById(cityRequest.getCountryId()).orElseThrow(() -> new DataNotFoundException("The country cannot found."));
         isExistsCode(cityRequest);
-        country.setCode(cityRequest.getCode());
-        country.setName(cityRequest.getName());
+        city.setCode(cityRequest.getCode());
+        city.setName(cityRequest.getName());
+        city.setCountry(country);
 
-        return cityRepository.save(country);
+        return cityRepository.save(city);
     }
 
-    public List<Country> findAll() {
+    public List<City> findAll() {
         return cityRepository.findAll();
     }
 
-    public Page<Country> findAll(Pageable pageable) {
+    public Page<City> findAll(Pageable pageable) {
         return cityRepository.findAll(pageable);
     }
 
-    public Optional<Country> findById(Long id) {
+    public Optional<City> findById(Long id) {
         return cityRepository.findById(id);
     }
 
-    public Optional<Country> findByCode(String code) {
+    public Optional<City> findByCode(String code) {
         return cityRepository.findByCode(code);
     }
 
