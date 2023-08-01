@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value  = { DuplicateEntryException.class})
-    protected ResponseEntity<Object> handleDuplicate(DuplicateEntryException ex, WebRequest request) {
+    @ExceptionHandler(value  = { DuplicateEntryException.class, DataNotFoundException.class})
+    protected ResponseEntity<Object> handleDuplicate(Exception ex, WebRequest request) {
         Map<String, Object> objectBody = new LinkedHashMap<>();
         objectBody.put("Current Timestamp", LocalDateTime.now());
         objectBody.put("Error", ex.getMessage());
@@ -34,10 +34,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 
-
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-
         Map<String, Object> objectBody = new LinkedHashMap<>();
         objectBody.put("Current Timestamp", LocalDateTime.now());
         objectBody.put("Status", status.value());
@@ -46,7 +44,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ex.getBindingResult()
                 .getFieldErrors()
                 .forEach(x -> errorBody.put(x.getField(),x.getDefaultMessage()));
-
         objectBody.put("Errors", errorBody);
 
         return new ResponseEntity<>(objectBody, status);
