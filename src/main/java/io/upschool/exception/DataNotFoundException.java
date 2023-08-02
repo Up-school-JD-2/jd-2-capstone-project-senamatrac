@@ -1,6 +1,8 @@
 package io.upschool.exception;
 
-public class DataNotFoundException extends Exception {
+import java.util.function.Supplier;
+
+public class DataNotFoundException extends Exception{
     public DataNotFoundException(String message) {
         super(message);
     }

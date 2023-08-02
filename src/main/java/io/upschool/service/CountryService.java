@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -60,6 +61,13 @@ public class CountryService {
 
     public Optional<Country> findByCode(String code) {
         return countryRepository.findByCode(code);
+    }
+
+    public Country softDelete(Long id) throws DataNotFoundException {
+        Country country = countryRepository.findById(id).orElseThrow(()->new DataNotFoundException("This country cannot found"));
+        country.setIsDeleted(true);
+        country.setCities(country.getCities().stream().map(city -> city.setIsDeleted(true)).collect(Collectors.toSet()));
+        return countryRepository.save(country);
     }
 
     private void isExistsCode(CountryRequest countryRequest) throws DuplicateEntryException {
