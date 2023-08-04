@@ -2,8 +2,10 @@ package io.upschool.service;
 
 import io.upschool.dto.request.CountryRequest;
 import io.upschool.entity.Country;
+import io.upschool.exception.DataCannotDelete;
 import io.upschool.exception.DataNotFoundException;
 import io.upschool.exception.DuplicateEntryException;
+import io.upschool.exception.ServiceExceptionUtil;
 import io.upschool.repository.CountryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,7 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +24,7 @@ public class CountryService {
     private final CountryRepository countryRepository;
 
     public Country save(CountryRequest countryRequest) throws DuplicateEntryException {
-        isExistsCode(countryRequest);
+        ServiceExceptionUtil.check(countryRepository::existsByCode,countryRequest.getCode(),()->new DuplicateEntryException("The code already exists."));
         Country country = Country.builder()
                 .code(countryRequest.getCode())
                 .name(countryRequest.getName()).build();
@@ -39,8 +42,10 @@ public class CountryService {
     }
 
     public Country update(Long id, CountryRequest countryRequest) throws DataNotFoundException, DuplicateEntryException {
+
+        ServiceExceptionUtil.check(countryRepository::existsByCode, countryRequest.getCode(),()->new DuplicateEntryException("The code already exists."));
+
         Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("The country cannot found."));
-        isExistsCode(countryRequest);
         country.setCode(countryRequest.getCode());
         country.setName(countryRequest.getName());
 
@@ -48,11 +53,11 @@ public class CountryService {
     }
 
     public List<Country> findAll() {
-        return countryRepository.findAll();
+        return countryRepository.findAllByIsDeleted(false);
     }
 
     public Page<Country> findAll(Pageable pageable) {
-        return countryRepository.findAll(pageable);
+        return countryRepository.findAllByIsDeleted(false,pageable);
     }
 
     public Optional<Country> findById(Long id) {
@@ -63,18 +68,13 @@ public class CountryService {
         return countryRepository.findByCode(code);
     }
 
-    public Country softDelete(Long id) throws DataNotFoundException {
-        Country country = countryRepository.findById(id).orElseThrow(()->new DataNotFoundException("This country cannot found"));
+    public Country softDelete(Long id) throws DataNotFoundException, DataCannotDelete {
+        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("This country cannot found"));
+        ServiceExceptionUtil.check(()->country.getCities().size() > 0, ()->new DataCannotDelete("The country cannot delete cause has cities"));
         country.setIsDeleted(true);
-        country.setCities(country.getCities().stream().map(city -> city.setIsDeleted(true)).collect(Collectors.toSet()));
         return countryRepository.save(country);
     }
 
-    private void isExistsCode(CountryRequest countryRequest) throws DuplicateEntryException {
-        boolean isExists = countryRepository.existsByCode(countryRequest.getCode());
-        if (isExists) {
-            throw new DuplicateEntryException("The code '" + countryRequest.getCode() + "' is associated with another country.");
-        }
-    }
+
 
 }

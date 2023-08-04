@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value  = { DuplicateEntryException.class, DataNotFoundException.class})
+    @ExceptionHandler(value  = { DuplicateEntryException.class, DataNotFoundException.class, DataCannotDelete.class})
     protected ResponseEntity<Object> handleDuplicate(Exception ex, WebRequest request) {
         Map<String, Object> objectBody = new LinkedHashMap<>();
         objectBody.put("Current Timestamp", LocalDateTime.now());
