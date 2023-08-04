@@ -10,11 +10,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CountryRepository extends JpaRepository<Country, Long>{
+public interface CountryRepository extends JpaRepository<Country, Long> {
 
     public List<Country> findAllByIsDeleted(Boolean isDeleted);
+
     public Page<Country> findAllByIsDeleted(Boolean isDeleted, Pageable pageable);
+
     public Optional<Country> findByCode(String code);
 
+    public List<Country> findAllByNameContainsIgnoreCaseAndCodeContainsIgnoreCaseAndIsDeleted(String name,String code, Boolean isDeleted);
+
     boolean existsByCode(String code);
+
 }
