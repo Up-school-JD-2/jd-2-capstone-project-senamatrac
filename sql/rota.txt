@@ -1,0 +1,17 @@
+City countryId boş gelebilir gelirse?
+
+Multi savelerde duplicate dikkat edilmiyor foreignkey kontrolü yok
+
+Delete olan kayıt tekrar geldiğinde ki sıkıntılar ele alınmadı
+
+update ve savede service ne gönderilcek request mi entity mi
+
+routesave servicede exception handle durumu
+
+inline class sapıtıklıkları
+
+postmande searchlere pagable ekle
+
+
+
+

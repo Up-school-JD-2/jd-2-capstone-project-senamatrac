@@ -10,4 +10,6 @@ import java.util.List;
 public interface AirlineRepository extends JpaRepository<Airline, Long> {
     @Override
     List<Airline> findAll();
+
+    boolean existsByIataCode(String iataCode);
 }

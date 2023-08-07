@@ -27,4 +27,7 @@ public class Seat {
 
     @Column
     private Boolean reserved;
+
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    private Aircraft aircraft;
 }

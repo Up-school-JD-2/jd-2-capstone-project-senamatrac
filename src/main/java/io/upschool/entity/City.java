@@ -2,6 +2,7 @@ package io.upschool.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "city")
@@ -10,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @Builder
+@Where(clause = "deleted=false")
 public class City extends SoftDeleteEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +24,7 @@ public class City extends SoftDeleteEntity{
     @Column(nullable = false,unique = true)
     private String code;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "country_id")
     private Country country;
 

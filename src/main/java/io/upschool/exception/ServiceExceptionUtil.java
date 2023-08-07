@@ -9,9 +9,11 @@ public class ServiceExceptionUtil {
             throw exceptionSupplier.get();
         }
     }
-    public static  <T,E extends Exception> void check(Supplier<T> func, Supplier<E> exceptionSupplier) throws E {
-        if (func.get() instanceof Boolean && (Boolean) func.get()){
+    public static  <E extends Exception> void check(Supplier<Boolean> func, Supplier<E> exceptionSupplier) throws E {
+        if (func.get()){
             throw exceptionSupplier.get();
         }
     }
+
+
 }

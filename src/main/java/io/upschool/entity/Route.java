@@ -2,7 +2,9 @@ package io.upschool.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Where;
 
+import java.time.Duration;
 import java.util.Set;
 
 @Entity
@@ -12,7 +14,8 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @Builder
-public class Route {
+@Where(clause = "deleted=false")
+public class Route extends SoftDeleteEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -26,7 +29,8 @@ public class Route {
     @JoinColumn(name = "destination_airport_id")
     private Airport destination;
 
-    @ManyToMany(mappedBy = "routes")
-    private Set<Airline> airline;
+    @Column
+    private Duration duration;
+
 
 }

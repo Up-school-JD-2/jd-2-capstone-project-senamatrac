@@ -12,16 +12,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CityRequest {
+public class AirportRequest {
     @NotBlank
     @Size(min = 3, max = 70 ,message = "The city name '${validatedValue}' must be between {min} and {max} characters long")
     private String name;
     @NotBlank
-    private String code;
+    private String iataCode;
     @NotNull
-    private Long countryId;
+    private Long cityId;
 }
-
-//notnull null olmamalı ama "" boş olabilür
-//notempty null olmamalı "" boş olmamalı " " bunu yer empty değil boşluk var
-//notblank null olmamalı " " buda yemez trimmed length > 0 olmalı

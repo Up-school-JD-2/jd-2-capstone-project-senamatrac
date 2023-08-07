@@ -15,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +27,7 @@ public class CountryService {
 
     @Transactional
     public Country save(CountryRequest countryRequest) throws DuplicateEntryException {
-        ServiceExceptionUtil.check(countryRepository::existsByCode, countryRequest.getCode(), () -> new DuplicateEntryException("The code already exists."));
+        ServiceExceptionUtil.check(countryRepository::existsByCode, countryRequest.getCode(), () -> new DuplicateEntryException("code"));
         Country country = Country.builder()
                 .code(countryRequest.getCode())
                 .name(countryRequest.getName()).build();
@@ -45,9 +47,9 @@ public class CountryService {
     @Transactional
     public Country update(Long id, CountryRequest countryRequest) throws DataNotFoundException, DuplicateEntryException {
 
-        ServiceExceptionUtil.check(countryRepository::existsByCode, countryRequest.getCode(), () -> new DuplicateEntryException("The code already exists."));
+        ServiceExceptionUtil.check(countryRepository::existsByCode, countryRequest.getCode(), () -> new DuplicateEntryException("code"));
 
-        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("The country cannot found."));
+        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("country with id: "+id));
         country.setCode(countryRequest.getCode());
         country.setName(countryRequest.getName());
 
@@ -56,18 +58,19 @@ public class CountryService {
 
     @Transactional
     public Country softDelete(Long id) throws DataNotFoundException, DataCannotDelete {
-        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("This country cannot found"));
-        ServiceExceptionUtil.check(() -> country.getCities().size() > 0, () -> new DataCannotDelete("The country cannot delete cause has cities"));
-        country.setIsDeleted(true);
+        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("country with id:"+id));
+        ServiceExceptionUtil.check(() -> !country.getCities().isEmpty(), () -> new DataCannotDelete("The country cannot delete cause has cities"));
+        country.setDeleted(true);
+        country.setDeletedDateTime(LocalDateTime.now());
         return countryRepository.save(country);
     }
 
-    public List<Country> findAllNotDeleted() {
-        return countryRepository.findAllByIsDeleted(false);
+    public List<Country> findAll() {
+        return countryRepository.findAll();
     }
 
-    public Page<Country> findAllNotDeleted(Pageable pageable) {
-        return countryRepository.findAllByIsDeleted(false, pageable);
+    public Page<Country> findAll(Pageable pageable) {
+        return countryRepository.findAll( pageable);
     }
 
     public List<Country> search(Country country) {
@@ -75,13 +78,8 @@ public class CountryService {
         return countryRepository.findAll(example);
     }
 
-    public Optional<Country> findById(Long id) {
-        return countryRepository.findById(id);
+    public Country findById(Long id) throws DataNotFoundException {
+        Country country = countryRepository.findById(id).orElseThrow(()->new DataNotFoundException("airport id:" +id));
+        return country;
     }
-
-    public Optional<Country> findByCode(String code) {
-        return countryRepository.findByCode(code);
-    }
-
-
 }
