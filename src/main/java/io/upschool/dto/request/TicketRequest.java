@@ -1,6 +1,7 @@
 package io.upschool.dto.request;
 
-import io.upschool.enums.SeatType;
+import io.upschool.entity.Flight;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +12,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SeatRequest {
+public class TicketRequest {
     @NotBlank
-    private String seatCode;
+    private String ticketNumber;
+
     @NotBlank
-    private SeatType seatType;
+    private Long flightId;
+
+    @Valid
+    private PassengerRequest passenger;
+
+    @Valid
+    private PaymentRequest payment;
 }

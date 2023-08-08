@@ -1,6 +1,7 @@
 package io.upschool.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Entity
@@ -16,4 +17,18 @@ public class CreditCart {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(nullable = false)
+    private String owner;
+
+    @Column(nullable = false)
+    private String expiredMonth;
+
+    @Column(nullable = false)
+    private String expiredYear;
+
+    @Column( nullable = false)
+    private String digits;
+
+    @Column(nullable = false)
+    private String ccv;
 }

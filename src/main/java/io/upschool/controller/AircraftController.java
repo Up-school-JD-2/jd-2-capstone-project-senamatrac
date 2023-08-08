@@ -3,6 +3,7 @@ package io.upschool.controller;
 import io.upschool.dto.request.AircraftRequest;
 import io.upschool.dto.response.AirlineResponse;
 import io.upschool.entity.Aircraft;
+import io.upschool.exception.DuplicateEntryException;
 import io.upschool.mapper.response.AircraftResponseMapping;
 import io.upschool.service.AircraftService;
 import jakarta.validation.Valid;
@@ -12,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/aircrafts")
+@RequestMapping("/api/aircraft")
 @RequiredArgsConstructor
 public class AircraftController {
     private final AircraftService aircraftService;
@@ -20,7 +21,7 @@ public class AircraftController {
 
     //--------> CREATE <--------\\
     @PostMapping
-    public ResponseEntity<AirlineResponse> create(@Valid @RequestBody AircraftRequest aircraftRequest) {
+    public ResponseEntity<AirlineResponse> create(@Valid @RequestBody AircraftRequest aircraftRequest) throws DuplicateEntryException {
         Aircraft aircraft = aircraftService.save(aircraftRequest);
         return ResponseEntity.ok(aircraftResponseMapping.map(aircraft));
     }

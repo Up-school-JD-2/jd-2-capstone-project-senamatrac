@@ -14,14 +14,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CityRequest {
     @NotBlank
-    @Size(min = 3, max = 70 ,message = "The city name '${validatedValue}' must be between {min} and {max} characters long")
+    @Size(min = 3, max = 70, message = "The city name '${validatedValue}' must be between {min} and {max} characters long")
     private String name;
     @NotBlank
     private String code;
     @NotNull
     private Long countryId;
 }
-
-//notnull null olmamalı ama "" boş olabilür
-//notempty null olmamalı "" boş olmamalı " " bunu yer empty değil boşluk var
-//notblank null olmamalı " " buda yemez trimmed length > 0 olmalı

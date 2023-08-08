@@ -1,6 +1,5 @@
 package io.upschool.dto.request;
 
-import io.upschool.enums.SeatType;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +10,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SeatRequest {
+public class CreditCartRequest {
     @NotBlank
-    private String seatCode;
+    private String owner;
+
     @NotBlank
-    private SeatType seatType;
+    private String expiredMonth;
+
+    @NotBlank
+    private String expiredYear;
+
+    @NotBlank
+    private String digits;
+
+    @NotBlank
+    private String ccv;
 }

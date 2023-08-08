@@ -1,34 +1,32 @@
 package io.upschool.entity;
 
-import io.upschool.enums.PaymentType;
+import io.upschool.enums.SeatType;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "payment")
+@Table(name="flight")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @Builder
-public class Payment {
+public class FlightSeatPrice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false)
-    private BigDecimal total;
+    @ManyToOne(optional = false)
+    @JoinColumn(name="flight_id")
+    private Flight flight;
 
-    @Column(nullable = false)
-    private BigDecimal tax;
-
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private PaymentType paymentType;
+    private SeatType seatType;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private CreditCart creditCart;
+    @Column
+    private BigDecimal price;
+
 }

@@ -7,7 +7,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "aircraft")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
@@ -24,10 +25,7 @@ public class Aircraft {
     @Column
     private String model;
 
-    @Column(nullable = false)
-    private Integer maxSeat;
-
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "aircraft", cascade = CascadeType.ALL)
     private Set<Seat> seats;
 
 

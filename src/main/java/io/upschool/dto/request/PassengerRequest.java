@@ -1,6 +1,6 @@
 package io.upschool.dto.request;
 
-import io.upschool.enums.SeatType;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SeatRequest {
+public class PassengerRequest {
     @NotBlank
-    private String seatCode;
+    private String identityNumber;
+
     @NotBlank
-    private SeatType seatType;
+    private String name;
+
+    @NotBlank
+    private String surname;
 }

@@ -1,30 +1,34 @@
 package io.upschool.dto.request;
 
+import io.upschool.enums.LegType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AircraftRequest {
+public class FlightRequest {
+
     @NotBlank
-    @Size(min = 3, max = 70, message = "The country name '${validatedValue}' must be between {min} and {max} characters long")
-    private String iataCode;
+    private String flightNumber;
     @NotBlank
-    private String model;
-    @NotNull
-    private Integer maxSeat;
+    private LocalDate flightDate;
+    @NotBlank
+    private Long airlineId;
+    @NotBlank
+    private LegType legType;
+    @NotBlank
+    private Long routeId;
     @Valid
     @NotEmpty
-    private Set<SeatRequest> seats;
+    private Set<FlightSeatPriceRequest> flightSeatPrice;
 }

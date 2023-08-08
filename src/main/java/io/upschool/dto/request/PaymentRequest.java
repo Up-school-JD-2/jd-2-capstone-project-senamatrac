@@ -1,19 +1,28 @@
 package io.upschool.dto.request;
 
-import io.upschool.enums.SeatType;
+import io.upschool.enums.PaymentType;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SeatRequest {
+public class PaymentRequest {
     @NotBlank
-    private String seatCode;
+    private BigDecimal total;
+
     @NotBlank
-    private SeatType seatType;
+    private BigDecimal tax;
+
+    @NotBlank
+    private PaymentType paymentType;
+
+    @NotBlank
+    private CreditCartRequest creditCart;
 }
