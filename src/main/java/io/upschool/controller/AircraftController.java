@@ -1,10 +1,14 @@
 package io.upschool.controller;
 
-import io.upschool.entity.Airline;
+import io.upschool.dto.request.AircraftRequest;
+import io.upschool.dto.response.AirlineResponse;
+import io.upschool.entity.Aircraft;
 import io.upschool.mapper.response.AircraftResponseMapping;
 import io.upschool.service.AircraftService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,8 +20,9 @@ public class AircraftController {
 
     //--------> CREATE <--------\\
     @PostMapping
-    public void create() {
-
+    public ResponseEntity<AirlineResponse> create(@Valid @RequestBody AircraftRequest aircraftRequest) {
+        Aircraft aircraft = aircraftService.save(aircraftRequest);
+        return ResponseEntity.ok(aircraftResponseMapping.map(aircraft));
     }
 
     @PostMapping("/all")
