@@ -27,7 +27,6 @@ import java.util.Map;
 public class CountryController {
     private final CountryService countryService;
     private final CountyResponseMapper countyResponseMapper;
-    private final CountryMapper countryMapper;
 
     //--------> CREAD <--------\\
     @PostMapping
@@ -63,7 +62,7 @@ public class CountryController {
     @GetMapping("/search")
     public ResponseEntity<List<CountryResponse>> search(@Valid @RequestBody CountrySearchRequest countrySearchRequest) {
 
-        List<Country> countries = countryService.search(countryMapper.map(countrySearchRequest));
+        List<Country> countries = countryService.search(countrySearchRequest);
         return ResponseEntity.ok(countyResponseMapper.map(countries));
     }
 

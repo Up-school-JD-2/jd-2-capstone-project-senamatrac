@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface FlightRepository extends JpaRepository<Flight,Long> {
-    @Override
-    List<Flight> findAll();
+
 }

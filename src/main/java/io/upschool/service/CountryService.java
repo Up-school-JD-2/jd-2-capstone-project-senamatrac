@@ -1,11 +1,13 @@
 package io.upschool.service;
 
 import io.upschool.dto.request.CountryRequest;
+import io.upschool.dto.request.search.CountrySearchRequest;
 import io.upschool.entity.Country;
 import io.upschool.exception.DataCannotDelete;
 import io.upschool.exception.DataNotFoundException;
 import io.upschool.exception.DuplicateEntryException;
 import io.upschool.exception.ServiceExceptionUtil;
+import io.upschool.mapper.entity.CountryMapper;
 import io.upschool.repository.CountryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
@@ -24,6 +26,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CountryService {
     private final CountryRepository countryRepository;
+
+    private final CountryMapper countryMapper;
 
     @Transactional
     public Country save(CountryRequest countryRequest) throws DuplicateEntryException {
@@ -73,8 +77,8 @@ public class CountryService {
         return countryRepository.findAll( pageable);
     }
 
-    public List<Country> search(Country country) {
-        Example<Country> example = Example.of(country, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
+    public List<Country> search(CountrySearchRequest countrySearchRequest) {
+        Example<Country> example = Example.of(countryMapper.map(countrySearchRequest), ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
         return countryRepository.findAll(example);
     }
 

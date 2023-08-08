@@ -4,6 +4,7 @@ import io.upschool.enums.LegType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,13 +21,13 @@ public class FlightRequest {
 
     @NotBlank
     private String flightNumber;
-    @NotBlank
+    @NotNull
     private LocalDate flightDate;
-    @NotBlank
+    @NotNull
     private Long airlineId;
-    @NotBlank
+    @NotNull
     private LegType legType;
-    @NotBlank
+    @NotNull
     private Long routeId;
     @Valid
     @NotEmpty

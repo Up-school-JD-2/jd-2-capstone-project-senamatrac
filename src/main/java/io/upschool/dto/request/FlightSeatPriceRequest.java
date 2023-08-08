@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(of = {"seatType"})
 @Builder
 public class FlightSeatPriceRequest {
-    @NotBlank
+    @NotNull
     private SeatType seatType;
     @NotNull
     @Min(1)
