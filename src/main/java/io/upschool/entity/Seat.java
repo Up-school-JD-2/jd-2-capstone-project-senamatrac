@@ -25,8 +25,8 @@ public class Seat {
     @Enumerated(EnumType.STRING)
     private SeatType seatType;
 
-    @Column
-    private Boolean reserved;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean reserved = Boolean.FALSE;
 
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
     private Aircraft aircraft;

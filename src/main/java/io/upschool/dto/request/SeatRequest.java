@@ -1,5 +1,9 @@
 package io.upschool.dto.request;
 
+import io.upschool.entity.Aircraft;
+import io.upschool.enums.SeatType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -7,19 +11,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AircraftRequest {
+public class SeatRequest {
     @NotBlank
-    private String iataCode;
+    private String seatCode;
     @NotBlank
-    private String model;
+    private SeatType seatType;
     @NotNull
-    private Integer maxSeat;
-
-    private List<SeatRequest> seats;
+    private Long aircraftId;
 }
