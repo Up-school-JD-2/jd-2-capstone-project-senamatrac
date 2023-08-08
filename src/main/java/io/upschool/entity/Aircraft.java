@@ -21,7 +21,7 @@ public class Aircraft {
     @Column(unique = true)
     private String iataCode;
 
-    @Column(unique = true)
+    @Column
     private String model;
 
     @Column(nullable = false)
@@ -29,5 +29,6 @@ public class Aircraft {
 
     @OneToMany(fetch = FetchType.LAZY)
     private Set<Seat> seats;
+
 
 }
