@@ -26,7 +26,7 @@ public class AirlineController {
 
     //--------> CREATE <--------\\
     @PostMapping
-    public ResponseEntity<AirlineResponse> create(@Valid @RequestBody  AirlineRequest airlineRequest) throws DuplicateEntryException {
+    public ResponseEntity<AirlineResponse> create(@Valid @RequestBody AirlineRequest airlineRequest) throws DuplicateEntryException {
         Airline airline = airlineService.save(airlineRequest);
         return ResponseEntity.ok(airlineResponseMapper.map(airline));
     }
@@ -51,19 +51,19 @@ public class AirlineController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AirlineResponse> getById(@PathVariable Long id) throws DataNotFoundException {
-        return  ResponseEntity.ok(airlineResponseMapper.map(airlineService.getById(id)));
+        return ResponseEntity.ok(airlineResponseMapper.map(airlineService.getById(id)));
     }
 
     @GetMapping("/search")
     public ResponseEntity<Page<AirlineResponse>> search(@RequestBody AirlineSearchRequest airlineSearchRequest, Pageable pageable) {
-        Page<Airline> airlines = airlineService.search(airlineSearchRequest,pageable);
+        Page<Airline> airlines = airlineService.search(airlineSearchRequest, pageable);
         return ResponseEntity.ok(airlines.map(airlineResponseMapper::map));
     }
 
     //--------> UPDATE <--------\\
     @PutMapping("/{id}")
     public ResponseEntity<AirlineResponse> update(@PathVariable Long id, @Valid @RequestBody AirlineRequest airlineRequest) throws DataNotFoundException, DuplicateEntryException {
-        Airline airline = airlineService.update(id,airlineRequest);
+        Airline airline = airlineService.update(id, airlineRequest);
         return ResponseEntity.ok(airlineResponseMapper.map(airline));
     }
 

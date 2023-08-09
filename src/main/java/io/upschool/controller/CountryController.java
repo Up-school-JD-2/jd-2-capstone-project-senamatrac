@@ -7,7 +7,6 @@ import io.upschool.entity.Country;
 import io.upschool.exception.DataCannotDelete;
 import io.upschool.exception.DataNotFoundException;
 import io.upschool.exception.DuplicateEntryException;
-import io.upschool.mapper.entity.CountryMapper;
 import io.upschool.mapper.response.CountyResponseMapper;
 import io.upschool.service.CountryService;
 import jakarta.validation.Valid;

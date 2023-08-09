@@ -7,9 +7,9 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses={CityResponseMapper.class})
+@Mapper(componentModel = "spring", uses = {CityResponseMapper.class})
 public interface AirportResponseMapper {
-    @Mapping(target = "city",source = "city")
+    @Mapping(target = "city", source = "city")
     AirportResponse map(Airport airport);
 
     List<AirportResponse> map(List<Airport> airports);

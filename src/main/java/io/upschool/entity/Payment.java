@@ -30,5 +30,7 @@ public class Payment {
     private PaymentType paymentType;
 
     @OneToOne(cascade = CascadeType.PERSIST)
-    private CreditCart creditCart;
+    @JoinColumn(name = "credit_card_id")
+    private CreditCard creditCard;
+
 }

@@ -1,6 +1,5 @@
 package io.upschool.dto.request;
 
-import io.upschool.enums.LegType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -25,11 +24,10 @@ public class FlightRequest {
     private LocalDate flightDate;
     @NotNull
     private Long airlineId;
-    @NotNull
-    private LegType legType;
+
     @NotNull
     private Long routeId;
     @Valid
     @NotEmpty
-    private Set<FlightSeatPriceRequest> flightSeatPrice;
+    private Set<FlightSeatPriceRequest> flightSeatPrices;
 }

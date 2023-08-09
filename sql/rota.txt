@@ -12,6 +12,8 @@ inline class sapıtıklıkları
 
 postmande searchlere pagable ekle
 
+card
+
 
 
 

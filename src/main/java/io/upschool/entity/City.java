@@ -12,7 +12,7 @@ import org.hibernate.annotations.Where;
 @EqualsAndHashCode(of = {"id"})
 @Builder
 @Where(clause = "deleted=false")
-public class City extends SoftDeleteEntity{
+public class City extends SoftDeleteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -21,7 +21,7 @@ public class City extends SoftDeleteEntity{
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String code;
 
     @ManyToOne(optional = false)

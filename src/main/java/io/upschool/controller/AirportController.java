@@ -65,13 +65,13 @@ public class AirportController {
     //--------> UPDATE <--------\\
     @PutMapping("/{id}")
     public ResponseEntity<AirportResponse> update(@PathVariable Long id, @Valid @RequestBody AirportRequest airportRequest) throws DataNotFoundException, DuplicateEntryException {
-        Airport airport = airportService.update(id,airportRequest);
+        Airport airport = airportService.update(id, airportRequest);
         return ResponseEntity.ok(airportResponseMapper.map(airport));
     }
 
     //--------> DELETE <--------\\
     @DeleteMapping(("/{id}"))
-    public void save(@PathVariable Long id){
+    public void save(@PathVariable Long id) {
 //Airporta bağlı rota varsa?
     }
 

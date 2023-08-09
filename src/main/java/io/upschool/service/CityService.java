@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +31,7 @@ public class CityService {
     //--------> CREATE <--------\\
     @Transactional
     public City save(CityRequest cityRequest) throws DuplicateEntryException, DataNotFoundException {
-        ServiceExceptionUtil.check(cityRepository::existsByCode,cityRequest.getCode(),()-> new DuplicateEntryException("code"));
+        ServiceExceptionUtil.check(cityRepository::existsByCode, cityRequest.getCode(), () -> new DuplicateEntryException("code"));
         Country country = countryRepository.findById(cityRequest.getCountryId()).orElseThrow(() -> new DataNotFoundException("city's country id: " + cityRequest.getCountryId()));
 
         City city = City.builder()
@@ -65,7 +64,7 @@ public class CityService {
     }
 
     public City findById(Long id) throws DataNotFoundException {
-        City city = cityRepository.findById(id).orElseThrow(()->new DataNotFoundException("airport id:" +id));
+        City city = cityRepository.findById(id).orElseThrow(() -> new DataNotFoundException("airport id:" + id));
         return city;
     }
 
@@ -83,7 +82,7 @@ public class CityService {
     public City update(Long id, CityRequest cityRequest) throws DataNotFoundException, DuplicateEntryException {
         City city = cityRepository.findById(id).orElseThrow(() -> new DataNotFoundException("city id: " + id));
         Country country = countryRepository.findById(cityRequest.getCountryId()).orElseThrow(() -> new DataNotFoundException("city's country id:" + cityRequest.getCountryId()));
-        ServiceExceptionUtil.check(cityRepository::existsByCode, cityRequest.getCode(), ()-> new DuplicateEntryException("code"));
+        ServiceExceptionUtil.check(cityRepository::existsByCode, cityRequest.getCode(), () -> new DuplicateEntryException("code"));
 
         city.setCode(cityRequest.getCode());
         city.setName(cityRequest.getName());

@@ -9,5 +9,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface AircraftResponseMapping {
     AirlineResponse map(Aircraft aircraft);
+
     List<AirlineResponse> map(List<Aircraft> aircraft);
 }

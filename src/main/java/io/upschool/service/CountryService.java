@@ -17,10 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,7 +51,7 @@ public class CountryService {
 
         ServiceExceptionUtil.check(countryRepository::existsByCode, countryRequest.getCode(), () -> new DuplicateEntryException("code"));
 
-        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("country with id: "+id));
+        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("country with id: " + id));
         country.setCode(countryRequest.getCode());
         country.setName(countryRequest.getName());
 
@@ -62,7 +60,7 @@ public class CountryService {
 
     @Transactional
     public Country softDelete(Long id) throws DataNotFoundException, DataCannotDelete {
-        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("country with id:"+id));
+        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("country with id:" + id));
         ServiceExceptionUtil.check(() -> !country.getCities().isEmpty(), () -> new DataCannotDelete("The country cannot delete cause has cities"));
         country.setDeleted(true);
         country.setDeletedDateTime(LocalDateTime.now());
@@ -74,7 +72,7 @@ public class CountryService {
     }
 
     public Page<Country> findAll(Pageable pageable) {
-        return countryRepository.findAll( pageable);
+        return countryRepository.findAll(pageable);
     }
 
     public List<Country> search(CountrySearchRequest countrySearchRequest) {
@@ -83,7 +81,7 @@ public class CountryService {
     }
 
     public Country findById(Long id) throws DataNotFoundException {
-        Country country = countryRepository.findById(id).orElseThrow(()->new DataNotFoundException("airport id:" +id));
+        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("airport id:" + id));
         return country;
     }
 }

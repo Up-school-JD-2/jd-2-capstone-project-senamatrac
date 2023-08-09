@@ -7,9 +7,11 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring",uses = {CityMapper.class})
+@Mapper(componentModel = "spring", uses = {CityMapper.class})
 public interface AirportMapper {
     Airport map(AirportRequest airportRequest);
+
     List<Airport> map(List<AirportRequest> airportRequest);
+
     Airport map(AirportSearchRequest airportSearchRequest);
 }

@@ -9,5 +9,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface SeatMapper {
     Seat map(SeatRequest seatRequest);
+
     List<Seat> map(List<SeatRequest> seatRequest);
 }

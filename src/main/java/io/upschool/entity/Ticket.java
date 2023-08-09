@@ -2,10 +2,9 @@ package io.upschool.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 
 @Entity
-@Table(name="ticket")
+@Table(name = "ticket")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,18 +16,19 @@ public class Ticket {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String ticketNumber;
 
     @ManyToOne
     @JoinColumn(name = "flight_id")
     private Flight flight;
 
-    @ManyToOne
-    @JoinColumn(name = "passenger")
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "passenger_id")
     private Passenger passenger;
 
     @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "payment_id")
     private Payment payment;
 
 }

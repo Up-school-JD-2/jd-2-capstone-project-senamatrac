@@ -29,15 +29,15 @@ public class RouteService {
 
     //--------> CREATE <--------\\
     public Route save(RouteRequest routeRequest) throws DuplicateEntryException, DataNotFoundException {
-        ServiceExceptionUtil.check(()->routeRepository.existsByOrigin_IdAndDestination_Id(routeRequest.getOriginAirportId(),routeRequest.getDestinationAirportId()),()->new DuplicateEntryException("origin-destination: " + routeRequest.getOriginAirportId()+"-"+routeRequest.getDestinationAirportId()));
-        Airport origin = airportRepository.findById(routeRequest.getOriginAirportId()).orElseThrow(()->new DataNotFoundException("origin airport id:" +routeRequest.getOriginAirportId()));
-        Airport destination = airportRepository.findById(routeRequest.getDestinationAirportId()).orElseThrow(()->new DataNotFoundException("destination airport id:"+routeRequest.getDestinationAirportId()));
+        ServiceExceptionUtil.check(() -> routeRepository.existsByOrigin_IdAndDestination_Id(routeRequest.getOriginAirportId(), routeRequest.getDestinationAirportId()), () -> new DuplicateEntryException("origin-destination: " + routeRequest.getOriginAirportId() + "-" + routeRequest.getDestinationAirportId()));
+        Airport origin = airportRepository.findById(routeRequest.getOriginAirportId()).orElseThrow(() -> new DataNotFoundException("origin airport id:" + routeRequest.getOriginAirportId()));
+        Airport destination = airportRepository.findById(routeRequest.getDestinationAirportId()).orElseThrow(() -> new DataNotFoundException("destination airport id:" + routeRequest.getDestinationAirportId()));
 
         Route r = Route.builder().origin(origin).destination(destination).duration(routeRequest.getDuration()).build();
         return routeRepository.save(r);
     }
 
-    public List<Route> saveAll(List<RouteRequest> routeRequests)  throws DuplicateEntryException, DataNotFoundException {
+    public List<Route> saveAll(List<RouteRequest> routeRequests) throws DuplicateEntryException, DataNotFoundException {
         List<Route> list = new ArrayList<>();
         for (RouteRequest routeRequest : routeRequests) {
             Route savedRoute = save(routeRequest);
@@ -50,12 +50,13 @@ public class RouteService {
     public Page<Route> findAll(Pageable pageable) {
         return routeRepository.findAll(pageable);
     }
+
     public List<Route> findAll() {
         return routeRepository.findAll();
     }
 
     public Route findById(Long id) throws DataNotFoundException {
-        Route route = routeRepository.findById(id).orElseThrow(()->new DataNotFoundException("route id:" +id));
+        Route route = routeRepository.findById(id).orElseThrow(() -> new DataNotFoundException("route id:" + id));
         return route;
     }
 
@@ -63,16 +64,16 @@ public class RouteService {
         Route route = routeMapper.map(routeSearchRequest);
         Example<Route> search = Example.of(route, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
 
-        return routeRepository.findAll(search,pageable);
+        return routeRepository.findAll(search, pageable);
     }
 
     public Route update(Long id, RouteRequest routeRequest) throws DataNotFoundException, DuplicateEntryException {
-        ServiceExceptionUtil.check(()->routeRepository.existsByOrigin_IdAndDestination_Id(routeRequest.getOriginAirportId(),routeRequest.getDestinationAirportId()),
-                ()->new DuplicateEntryException("origin-destination: " + routeRequest.getOriginAirportId()+"-"+routeRequest.getDestinationAirportId()));
+        ServiceExceptionUtil.check(() -> routeRepository.existsByOrigin_IdAndDestination_Id(routeRequest.getOriginAirportId(), routeRequest.getDestinationAirportId()),
+                () -> new DuplicateEntryException("origin-destination: " + routeRequest.getOriginAirportId() + "-" + routeRequest.getDestinationAirportId()));
 
-        Route route = routeRepository.findById(id).orElseThrow(()->new DataNotFoundException("route id:"+id));
-        Airport airportOrigin = airportRepository.findById(routeRequest.getOriginAirportId()).orElseThrow(()->new DataNotFoundException("oridin airport id:"+routeRequest.getOriginAirportId()));
-        Airport airportDestination = airportRepository.findById(routeRequest.getOriginAirportId()).orElseThrow(()->new DataNotFoundException("oridin airport id:"+routeRequest.getOriginAirportId()));
+        Route route = routeRepository.findById(id).orElseThrow(() -> new DataNotFoundException("route id:" + id));
+        Airport airportOrigin = airportRepository.findById(routeRequest.getOriginAirportId()).orElseThrow(() -> new DataNotFoundException("oridin airport id:" + routeRequest.getOriginAirportId()));
+        Airport airportDestination = airportRepository.findById(routeRequest.getOriginAirportId()).orElseThrow(() -> new DataNotFoundException("oridin airport id:" + routeRequest.getOriginAirportId()));
 
         route.setOrigin(airportOrigin);
         route.setOrigin(airportDestination);

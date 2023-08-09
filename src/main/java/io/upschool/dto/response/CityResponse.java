@@ -1,6 +1,5 @@
 package io.upschool.dto.response;
 
-import io.upschool.entity.Country;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

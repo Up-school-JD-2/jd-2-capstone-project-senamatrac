@@ -2,7 +2,6 @@ package io.upschool.dto.request;
 
 import io.upschool.enums.SeatType;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -19,4 +18,5 @@ public class FlightSeatPriceRequest {
     @NotNull
     @Min(1)
     private BigDecimal price;
+
 }

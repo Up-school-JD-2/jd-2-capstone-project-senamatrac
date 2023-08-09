@@ -7,11 +7,11 @@ import lombok.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name="flight")
+@Table(name = "flight_seat_price")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(of = {"id", "seatType"})
 @Builder
 public class FlightSeatPrice {
     @Id
@@ -20,7 +20,7 @@ public class FlightSeatPrice {
     private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name="flight_id")
+    @JoinColumn(name = "flight_id")
     private Flight flight;
 
     @Enumerated(EnumType.STRING)

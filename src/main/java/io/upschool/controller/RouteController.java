@@ -39,15 +39,17 @@ public class RouteController {
 
     //--------> READ <--------\\
     @GetMapping
-    public Page<RouteResponse> getRoutes(Pageable pageable){
+    public Page<RouteResponse> getRoutes(Pageable pageable) {
         Page<Route> routes = routeService.findAll(pageable);
         return routes.map(routeResponseMapper::map);
     }
+
     @GetMapping("/all")
-    public ResponseEntity<List<RouteResponse>> getAllRoutes(){
+    public ResponseEntity<List<RouteResponse>> getAllRoutes() {
         List<Route> routes = routeService.findAll();
         return ResponseEntity.ok(routeResponseMapper.map(routes));
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<RouteResponse> getAllRoutes(@PathVariable Long id) throws DataNotFoundException {
         Route route = routeService.findById(id);
@@ -55,15 +57,15 @@ public class RouteController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Page<RouteResponse>> search(@RequestBody RouteSearchRequest routeSearchRequest,Pageable pageable){
-        Page<Route> routes = routeService.search(routeSearchRequest,pageable);
+    public ResponseEntity<Page<RouteResponse>> search(@RequestBody RouteSearchRequest routeSearchRequest, Pageable pageable) {
+        Page<Route> routes = routeService.search(routeSearchRequest, pageable);
         return ResponseEntity.ok(routes.map(routeResponseMapper::map));
     }
 
     //--------> UPDATE <--------\\
     @PutMapping("/{id}")
     public ResponseEntity<RouteResponse> update(@PathVariable Long id, @Valid @RequestBody RouteRequest routeRequest) throws DataNotFoundException, DuplicateEntryException {
-        Route route = routeService.update(id,routeRequest);
+        Route route = routeService.update(id, routeRequest);
         return ResponseEntity.ok(routeResponseMapper.map(route));
     }
 

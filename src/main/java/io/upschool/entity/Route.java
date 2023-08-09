@@ -5,17 +5,16 @@ import lombok.*;
 import org.hibernate.annotations.Where;
 
 import java.time.Duration;
-import java.util.Set;
 
 @Entity
-@Table(name="route",indexes = @Index(name = "UNQ_ROUTE_ORIGIN_DESTINATION", columnList =  "origin_airport_id, destination_airport_id",unique = true))
+@Table(name = "route", indexes = @Index(name = "UNQ_ROUTE_ORIGIN_DESTINATION", columnList = "origin_airport_id, destination_airport_id", unique = true))
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @Builder
 @Where(clause = "deleted=false")
-public class Route extends SoftDeleteEntity{
+public class Route extends SoftDeleteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

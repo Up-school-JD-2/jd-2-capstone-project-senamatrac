@@ -8,5 +8,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring", uses = {CityMapper.class})
 public interface CountryMapper {
     Country map(CountrySearchRequest countryRequest);
+
     Country map(CountryRequest countryRequest);
 }

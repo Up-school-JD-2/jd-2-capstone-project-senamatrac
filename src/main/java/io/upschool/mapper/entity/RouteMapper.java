@@ -6,9 +6,10 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring",uses = {RouteMapper.class})
+@Mapper(componentModel = "spring", uses = {RouteMapper.class})
 public interface RouteMapper {
     Route map(RouteSearchRequest routeSearchRequest);
+
     List<Route> map(List<RouteSearchRequest> routeSearchRequest);
 
 }

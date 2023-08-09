@@ -1,8 +1,8 @@
 package io.upschool.dto.request;
 
-import io.upschool.entity.Flight;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,12 +16,14 @@ public class TicketRequest {
     @NotBlank
     private String ticketNumber;
 
-    @NotBlank
+    @NotNull
     private Long flightId;
 
     @Valid
+    @NotNull
     private PassengerRequest passenger;
 
     @Valid
+    @NotNull
     private PaymentRequest payment;
 }

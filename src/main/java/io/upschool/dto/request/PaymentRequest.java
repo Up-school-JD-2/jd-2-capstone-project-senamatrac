@@ -1,7 +1,9 @@
 package io.upschool.dto.request;
 
 import io.upschool.enums.PaymentType;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,15 +16,18 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 public class PaymentRequest {
-    @NotBlank
+    @NotNull
     private BigDecimal total;
 
-    @NotBlank
+    @NotNull
     private BigDecimal tax;
 
-    @NotBlank
+    @NotNull
     private PaymentType paymentType;
 
-    @NotBlank
-    private CreditCartRequest creditCart;
+    @Valid
+    @NotNull
+    private CreditCardRequest creditCard;
+
+
 }

@@ -27,7 +27,7 @@ public class AirportService {
     private final CityRepository cityRepository;
     private final AirportMapper airportMapper;
 
-    public Optional<Airport> findByCityId(Long cityId){
+    public Optional<Airport> findByCityId(Long cityId) {
         Optional<Airport> city = airportRepository.findByCity_Id(cityId);
         return city;
     }
@@ -41,7 +41,7 @@ public class AirportService {
     }
 
     public Airport findById(Long id) throws DataNotFoundException {
-        Airport airport = airportRepository.findById(id).orElseThrow(()->new DataNotFoundException("airport id:" +id));
+        Airport airport = airportRepository.findById(id).orElseThrow(() -> new DataNotFoundException("airport id:" + id));
         return airport;
     }
 
@@ -56,9 +56,9 @@ public class AirportService {
     }
 
     public Airport save(AirportRequest airportRequest) throws DuplicateEntryException, DataNotFoundException {
-        ServiceExceptionUtil.check(airportRepository::existsAirportByIataCode, airportRequest.getIataCode(), ()->new DuplicateEntryException("iataCode"));
+        ServiceExceptionUtil.check(airportRepository::existsAirportByIataCode, airportRequest.getIataCode(), () -> new DuplicateEntryException("iataCode"));
 
-        City city = cityRepository.findById(airportRequest.getCityId()).orElseThrow(()->new DataNotFoundException("city with id:"+airportRequest.getCityId()));
+        City city = cityRepository.findById(airportRequest.getCityId()).orElseThrow(() -> new DataNotFoundException("city with id:" + airportRequest.getCityId()));
 
         Airport airport = Airport.builder().
                 name(airportRequest.getName()).
@@ -68,7 +68,7 @@ public class AirportService {
         return airportRepository.save(airport);
     }
 
-    public List<Airport> saveAll(List<AirportRequest> airportRequests){
+    public List<Airport> saveAll(List<AirportRequest> airportRequests) {
         return airportRequests.stream().map(x -> {
             try {
                 return save(x);
@@ -79,10 +79,10 @@ public class AirportService {
     }
 
     public Airport update(Long id, AirportRequest airportRequest) throws DuplicateEntryException, DataNotFoundException {
-        ServiceExceptionUtil.check(airportRepository::existsAirportByIataCode, airportRequest.getIataCode(), ()->new DuplicateEntryException("iataCode"));
+        ServiceExceptionUtil.check(airportRepository::existsAirportByIataCode, airportRequest.getIataCode(), () -> new DuplicateEntryException("iataCode"));
 
-        City city = cityRepository.findById(id).orElseThrow(()->new DataNotFoundException("city with id:"+id));
-        Airport airport = airportRepository.findById(id).orElseThrow(()->new DataNotFoundException("airport id:"+id));
+        City city = cityRepository.findById(id).orElseThrow(() -> new DataNotFoundException("city with id:" + id));
+        Airport airport = airportRepository.findById(id).orElseThrow(() -> new DataNotFoundException("airport id:" + id));
         airport.setName(airportRequest.getName());
         airport.setIataCode(airport.getIataCode());
         airport.setCity(city);

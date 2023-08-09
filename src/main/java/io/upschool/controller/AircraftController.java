@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AircraftController {
     private final AircraftService aircraftService;
-    private final AircraftResponseMapping aircraftResponseMapping ;
+    private final AircraftResponseMapping aircraftResponseMapping;
 
     //--------> CREATE <--------\\
     @PostMapping

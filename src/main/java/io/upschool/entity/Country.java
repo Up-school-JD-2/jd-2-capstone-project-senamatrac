@@ -25,7 +25,7 @@ public class Country extends SoftDeleteEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String code;
 
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
