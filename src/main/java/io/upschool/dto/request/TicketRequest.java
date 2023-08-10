@@ -1,5 +1,6 @@
 package io.upschool.dto.request;
 
+import io.upschool.enums.SeatType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -26,4 +27,7 @@ public class TicketRequest {
     @Valid
     @NotNull
     private PaymentRequest payment;
+
+    @NotNull
+    private SeatType seatType;
 }

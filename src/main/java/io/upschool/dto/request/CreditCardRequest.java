@@ -1,5 +1,6 @@
 package io.upschool.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -35,9 +36,10 @@ public class CreditCardRequest {
     @Pattern(regexp = "^(\\d{3})$", message = " The cvv is invalid")
     private String cvv;
 
-    private String valid;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String expiredDate;
     @AssertTrue(message = " The credit card has expired")
-    private boolean isValid() {
+    private boolean isExpiredDate() {
         LocalDate now = LocalDate.now().withDayOfMonth(1);
         LocalDate expiredDate = LocalDate.of(Integer.parseInt(expiredYear), Integer.parseInt(expiredMonth), 1);
         return !now.isAfter(expiredDate);

@@ -23,6 +23,7 @@ public class FlightSeatPrice {
     @JoinColumn(name = "flight_id")
     private Flight flight;
 
+
     @Enumerated(EnumType.STRING)
     private SeatType seatType;
 

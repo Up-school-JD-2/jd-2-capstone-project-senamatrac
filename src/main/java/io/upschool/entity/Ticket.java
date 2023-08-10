@@ -23,6 +23,11 @@ public class Ticket {
     @JoinColumn(name = "flight_id")
     private Flight flight;
 
+    @ManyToOne
+    @JoinColumn(name = "flightSeatPrice_id")
+    private FlightSeatPrice flightSeatPrice;
+
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "passenger_id")
     private Passenger passenger;
