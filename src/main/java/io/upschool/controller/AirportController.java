@@ -32,8 +32,8 @@ public class AirportController {
     }
 
     @PostMapping("/all")
-    public List<Airport> createAll(@RequestBody List<AirportRequest> airportRequests) {
-        return airportService.saveAll(airportRequests);
+    public List<AirportResponse> createAll(@RequestBody List<AirportRequest> airportRequests) {
+        return airportResponseMapper.map(airportService.saveAll(airportRequests));
     }
 
     //--------> READ <--------\\
