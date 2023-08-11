@@ -24,7 +24,8 @@ public class FlightRequest {
     private LocalDate flightDate;
     @NotNull
     private Long airlineId;
-
+    @NotNull
+    private Long aircraftTypeId;
     @NotNull
     private Long routeId;
     @Valid

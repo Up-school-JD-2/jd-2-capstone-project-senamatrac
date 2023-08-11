@@ -101,6 +101,7 @@
                             <version>0.2.0</version>
                         </path>
                     </annotationProcessorPaths>
+                    <showWarnings>true</showWarnings>
                 </configuration>
             </plugin>
         </plugins>

@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AircraftResponse {
+public class AircraftTypeResponse {
     private String iataCode;
     private String model;
     private List<SeatResponse> seats;

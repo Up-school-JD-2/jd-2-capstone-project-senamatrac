@@ -3,6 +3,7 @@ package io.upschool.controller;
 import io.upschool.dto.request.TicketRequest;
 import io.upschool.dto.response.TicketResponse;
 import io.upschool.exception.DataNotFoundException;
+import io.upschool.exception.DuplicateEntryException;
 import io.upschool.mapper.response.TicketResponseMapper;
 import io.upschool.service.TicketService;
 import jakarta.validation.Valid;
@@ -20,7 +21,7 @@ public class TicketController {
     private final TicketResponseMapper ticketResponse;
 
     @PostMapping
-    public TicketResponse create(@Valid @RequestBody TicketRequest ticketRequest) throws DataNotFoundException {
+    public TicketResponse create(@Valid @RequestBody TicketRequest ticketRequest) throws DataNotFoundException, DuplicateEntryException {
         return ticketResponse.map(ticketService.save(ticketRequest));
     }
 }

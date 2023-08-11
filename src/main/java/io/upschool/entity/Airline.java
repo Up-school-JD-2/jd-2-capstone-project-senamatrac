@@ -24,7 +24,4 @@ public class Airline {
     @Column(nullable = false, unique = true)
     private String iataCode;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Aircraft> aircraft;
-
 }

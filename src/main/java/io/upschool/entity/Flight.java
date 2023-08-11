@@ -12,7 +12,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(of = {"id","flightNumber"})
 @Builder
 public class Flight {
     @Id
@@ -26,15 +26,20 @@ public class Flight {
     @Column(nullable = false)
     private LocalDate flightDate;
 
-    @ManyToOne
-    @JoinColumn(name = "airline_id", nullable = false)
-    private Airline airline;
-
     @Column
     @Enumerated(EnumType.STRING)
     private LegType legType;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "airline_id", nullable = false)
+    private Airline airline;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "aircraft_type_id")
+    private AircraftType aircraftType;
+
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "route_id")
     private Route route;
 

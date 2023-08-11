@@ -1,5 +1,7 @@
 package io.upschool.entity;
 
+import io.upschool.enums.SeatType;
+import io.upschool.enums.TicketStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,21 +21,24 @@ public class Ticket {
     @Column(nullable = false, unique = true)
     private String ticketNumber;
 
-    @ManyToOne
+    @Column(nullable = false)
+    private SeatType seatType;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TicketStatus status;
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "flight_id")
     private Flight flight;
 
-    @ManyToOne
-    @JoinColumn(name = "flightSeatPrice_id")
-    private FlightSeatPrice flightSeatPrice;
-
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST,optional = false)
     @JoinColumn(name = "passenger_id")
     private Passenger passenger;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.PERSIST,optional = false)
     @JoinColumn(name = "payment_id")
     private Payment payment;
+
 
 }

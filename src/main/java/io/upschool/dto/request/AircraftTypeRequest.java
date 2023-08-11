@@ -16,7 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AircraftRequest {
+public class AircraftTypeRequest {
     @NotBlank
     @Size(min = 3, max = 70, message = "The country name '${validatedValue}' must be between {min} and {max} characters long")
     private String iataCode;

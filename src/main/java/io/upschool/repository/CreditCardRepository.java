@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface CreditCardRepository extends JpaRepository<CreditCard, Long> {
-    @Override
-    List<CreditCard> findAll();
+    <S extends CreditCard> S save(S entity);
 }

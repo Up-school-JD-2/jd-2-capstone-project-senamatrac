@@ -25,5 +25,5 @@ public class Seat {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "aircraft_id")
-    private Aircraft aircraft;
+    private AircraftType aircraftType;
 }

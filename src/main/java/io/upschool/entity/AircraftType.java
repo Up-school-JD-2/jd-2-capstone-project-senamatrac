@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @Builder
-public class Aircraft {
+public class AircraftType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -25,7 +25,7 @@ public class Aircraft {
     @Column
     private String model;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "aircraft", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "aircraftType", cascade = CascadeType.ALL)
     private Set<Seat> seats;
 
 

@@ -74,12 +74,9 @@ public class CountryController {
 
     //--------> DELETE <--------\\
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> delete(@PathVariable Long id) throws DataNotFoundException, DataCannotDelete {
-        var country = countryService.softDelete(id);
-        Map<String, Object> objectBody = new LinkedHashMap<>();
-        objectBody.put("isSuccess", true);
-        objectBody.put("message", country.getName() + " is deleted");
-        return ResponseEntity.ok().body(objectBody);
+    public ResponseEntity<String> delete(@PathVariable Long id) throws DataNotFoundException, DataCannotDelete {
+
+        return ResponseEntity.ok().body("soon");
     }
 
 

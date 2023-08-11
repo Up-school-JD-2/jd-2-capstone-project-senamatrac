@@ -3,6 +3,7 @@ package io.upschool.controller;
 import io.upschool.dto.request.FlightRequest;
 import io.upschool.dto.response.FlightResponse;
 import io.upschool.exception.DataNotFoundException;
+import io.upschool.exception.DuplicateEntryException;
 import io.upschool.service.FlightService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class FlightController {
     private final FlightService flightService;
 
     @PostMapping
-    public FlightResponse create(@Valid @RequestBody FlightRequest flightRequest) throws DataNotFoundException {
+    public FlightResponse create(@Valid @RequestBody FlightRequest flightRequest) throws DataNotFoundException, DuplicateEntryException {
         return flightService.save(flightRequest);
     }
 }

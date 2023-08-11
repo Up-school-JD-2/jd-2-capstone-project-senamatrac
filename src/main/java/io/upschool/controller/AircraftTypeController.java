@@ -1,11 +1,11 @@
 package io.upschool.controller;
 
-import io.upschool.dto.request.AircraftRequest;
+import io.upschool.dto.request.AircraftTypeRequest;
 import io.upschool.dto.response.AirlineResponse;
-import io.upschool.entity.Aircraft;
+import io.upschool.entity.AircraftType;
 import io.upschool.exception.DuplicateEntryException;
 import io.upschool.mapper.response.AircraftResponseMapping;
-import io.upschool.service.AircraftService;
+import io.upschool.service.AircraftTypeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/aircraft")
 @RequiredArgsConstructor
-public class AircraftController {
-    private final AircraftService aircraftService;
+public class AircraftTypeController {
+    private final AircraftTypeService aircraftTypeService;
     private final AircraftResponseMapping aircraftResponseMapping;
 
     //--------> CREATE <--------\\
     @PostMapping
-    public ResponseEntity<AirlineResponse> create(@Valid @RequestBody AircraftRequest aircraftRequest) throws DuplicateEntryException {
-        Aircraft aircraft = aircraftService.save(aircraftRequest);
-        return ResponseEntity.ok(aircraftResponseMapping.map(aircraft));
+    public ResponseEntity<AirlineResponse> create(@Valid @RequestBody AircraftTypeRequest aircraftTypeRequest) throws DuplicateEntryException {
+        AircraftType aircraftType = aircraftTypeService.save(aircraftTypeRequest);
+        return ResponseEntity.ok(aircraftResponseMapping.map(aircraftType));
     }
 
     @PostMapping("/all")
