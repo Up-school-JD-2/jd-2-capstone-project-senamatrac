@@ -73,8 +73,7 @@ public class CityController {
     //--------> DELETE <--------\\
     @DeleteMapping({"/{id}"})
     public ResponseEntity<Object> delete(@PathVariable Long id) throws DataNotFoundException, DataCannotDelete {
-        cityService.softDelete(id);
-        return ResponseEntity.ok().build();
+        return null;
     }
 
 }

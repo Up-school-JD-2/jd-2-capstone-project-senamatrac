@@ -12,7 +12,7 @@ import org.hibernate.annotations.Where;
 @EqualsAndHashCode(of = {"id"})
 @Builder
 @Where(clause = "deleted=false")
-public class Airport extends SoftDeleteEntity {
+public class Airport{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

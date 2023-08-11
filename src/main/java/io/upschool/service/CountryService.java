@@ -60,11 +60,7 @@ public class CountryService {
 
     @Transactional
     public Country softDelete(Long id) throws DataNotFoundException, DataCannotDelete {
-        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("country with id:" + id));
-        ServiceExceptionUtil.check(() -> !country.getCities().isEmpty(), () -> new DataCannotDelete("The country cannot delete cause has cities"));
-        country.setDeleted(true);
-        country.setDeletedDateTime(LocalDateTime.now());
-        return countryRepository.save(country);
+       return null;
     }
 
     public List<Country> findAll() {

@@ -1,6 +1,8 @@
 package io.upschool.exception;
 
+import io.upschool.dto.response.BaseResponse;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -17,29 +19,37 @@ import java.util.Map;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 
-    @ExceptionHandler(value = {DuplicateEntryException.class, DataNotFoundException.class, DataCannotDelete.class})
-    protected ResponseEntity<Object> handleDuplicate(Exception ex, WebRequest request) {
+    @ExceptionHandler(value = {Exception.class})
+    protected ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
         Map<String, Object> objectBody = new LinkedHashMap<>();
-        objectBody.put("Current Timestamp", LocalDateTime.now());
         objectBody.put("Error", ex.getMessage());
-        objectBody.put("Errors", ex.getCause());
-        return ResponseEntity.badRequest().body(objectBody);
+        objectBody.put("Error Cause", ex.getCause());
+
+        var response = BaseResponse.builder()
+                .responseBody(objectBody)
+                .status(HttpStatus.BAD_REQUEST.value()).isSuccess(false).build();
+        return ResponseEntity.badRequest().body(response);
     }
 
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        Map<String, Object> objectBody = new LinkedHashMap<>();
-        objectBody.put("Current Timestamp", LocalDateTime.now());
-        objectBody.put("Status", status.value());
 
-        Map<String, Object> errorBody = new LinkedHashMap<>();
+        Map<String, Object> notValidFields = new LinkedHashMap<>();
         ex.getBindingResult()
                 .getFieldErrors()
-                .forEach(x -> errorBody.put(x.getField(), x.getDefaultMessage()));
-        objectBody.put("Errors", errorBody);
+                .forEach(x -> notValidFields.put(x.getField(), x.getDefaultMessage()));
 
-        return new ResponseEntity<>(objectBody, status);
+
+        Map<String, Object> errorBody = new LinkedHashMap<>();
+        errorBody.put("Not Valid Field", notValidFields);
+
+        var response = BaseResponse.<Object>builder()
+                .isSuccess(false)
+                .status(HttpStatus.BAD_REQUEST.value())
+                .responseBody(errorBody)
+                .build();
+        return ResponseEntity.badRequest().body(response);
     }
 
 }

@@ -13,8 +13,7 @@ import java.time.Duration;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @Builder
-@Where(clause = "deleted=false")
-public class Route extends SoftDeleteEntity {
+public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

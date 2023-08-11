@@ -93,12 +93,8 @@ public class CityService {
 
     //--------> DELETE <--------\\
     @Transactional
-    public void softDelete(Long id) throws DataNotFoundException, DataCannotDelete {
-        City city = cityRepository.findById(id).orElseThrow(() -> new DataNotFoundException("city with id:" + id));
-        ServiceExceptionUtil.check(airportRepository::existsAirportByCity_Id, city.getId(), () -> new DataCannotDelete(""));
+    public void delete(Long id) throws DataNotFoundException, DataCannotDelete {
 
-        city.setDeleted(true);
-        city.setDeletedDateTime(LocalDateTime.now());
-        cityRepository.save(city);
+
     }
 }
