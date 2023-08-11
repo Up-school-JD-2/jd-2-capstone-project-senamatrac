@@ -19,7 +19,6 @@ public class BaseResponse<T> {
     @Builder.Default
     @JsonProperty("Current Timestamp")
     private LocalDateTime currentTimestamp = LocalDateTime.now();
-    private Map<String, Object> responseBody;
-    private T data;
+    private Map<String, T> responseBody;
 
 }
