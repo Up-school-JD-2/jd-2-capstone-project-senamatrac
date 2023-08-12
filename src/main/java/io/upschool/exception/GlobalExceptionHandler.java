@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -22,12 +21,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {Exception.class})
     protected ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
         Map<String, Object> objectBody = new LinkedHashMap<>();
-        objectBody.put("Error", ex.getMessage());
+        objectBody.put("Database Error", ex.getMessage());
         objectBody.put("Error Cause", ex.getCause());
 
         var response = BaseResponse.builder()
-                .responseBody(objectBody)
-                .status(HttpStatus.BAD_REQUEST.value()).isSuccess(false).build();
+                .isSuccess(false)
+                .status(HttpStatus.BAD_REQUEST.value())
+                .errorBody(objectBody)
+                .build();
         return ResponseEntity.badRequest().body(response);
     }
 
@@ -47,7 +48,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         var response = BaseResponse.<Object>builder()
                 .isSuccess(false)
                 .status(HttpStatus.BAD_REQUEST.value())
-                .responseBody(errorBody)
+                .errorBody(errorBody)
                 .build();
         return ResponseEntity.badRequest().body(response);
     }

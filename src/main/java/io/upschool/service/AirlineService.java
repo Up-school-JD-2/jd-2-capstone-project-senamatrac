@@ -3,6 +3,7 @@ package io.upschool.service;
 import io.upschool.dto.request.AirlineRequest;
 import io.upschool.dto.request.search.AirlineSearchRequest;
 import io.upschool.entity.Airline;
+import io.upschool.entity.City;
 import io.upschool.exception.DataNotFoundException;
 import io.upschool.exception.DuplicateEntryException;
 import io.upschool.exception.ServiceExceptionUtil;
@@ -43,15 +44,15 @@ public class AirlineService {
     }
 
     //--------> READ <--------\\
-    public List<Airline> getAll() {
+    public List<Airline> findAll() {
         return airlineRepository.findAll();
     }
 
-    public Page<Airline> getAll(Pageable pageable) {
+    public Page<Airline> findAll(Pageable pageable) {
         return airlineRepository.findAll(pageable);
     }
 
-    public Airline getById(Long id) throws DataNotFoundException {
+    public Airline findById(Long id) throws DataNotFoundException {
         return airlineRepository.findById(id).orElseThrow(() -> new DataNotFoundException("id:" + id));
     }
 
@@ -70,4 +71,5 @@ public class AirlineService {
         airline.setIataCode(airline.getIataCode());
         return airline;
     }
+
 }

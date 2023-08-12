@@ -1,6 +1,6 @@
 package io.upschool.dto.request;
 
-import io.upschool.enums.PaymentType;
+import io.upschool.enums.PaymentMethod;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ public class PaymentRequest {
     private BigDecimal tax;
 
     @NotNull
-    private PaymentType paymentType;
+    private PaymentMethod paymentMethod;
 
     @Valid
     @NotNull

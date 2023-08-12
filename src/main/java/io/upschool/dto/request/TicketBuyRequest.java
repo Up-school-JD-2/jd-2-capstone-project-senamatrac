@@ -1,7 +1,6 @@
 package io.upschool.dto.request;
 
 import io.upschool.enums.SeatType;
-import io.upschool.enums.TicketStatus;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TicketRequest {
+public class TicketBuyRequest {
     @NotBlank
     private String ticketNumber;
 

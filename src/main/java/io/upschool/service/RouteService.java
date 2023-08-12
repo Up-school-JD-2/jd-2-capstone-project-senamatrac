@@ -4,6 +4,7 @@ import io.upschool.dto.request.RouteRequest;
 import io.upschool.dto.request.search.RouteSearchRequest;
 import io.upschool.entity.Airport;
 import io.upschool.entity.Route;
+import io.upschool.enums.RouteStatus;
 import io.upschool.exception.DataNotFoundException;
 import io.upschool.exception.DuplicateEntryException;
 import io.upschool.exception.ServiceExceptionUtil;
@@ -67,17 +68,11 @@ public class RouteService {
         return routeRepository.findAll(search, pageable);
     }
 
-    public Route update(Long id, RouteRequest routeRequest) throws DataNotFoundException, DuplicateEntryException {
-        ServiceExceptionUtil.check(() -> routeRepository.existsByOrigin_IdAndDestination_Id(routeRequest.getOriginAirportId(), routeRequest.getDestinationAirportId()),
-                () -> new DuplicateEntryException("origin-destination: " + routeRequest.getOriginAirportId() + "-" + routeRequest.getDestinationAirportId()));
-
+    public Route cancel(Long id) throws DataNotFoundException {
         Route route = routeRepository.findById(id).orElseThrow(() -> new DataNotFoundException("route id:" + id));
-        Airport airportOrigin = airportRepository.findById(routeRequest.getOriginAirportId()).orElseThrow(() -> new DataNotFoundException("oridin airport id:" + routeRequest.getOriginAirportId()));
-        Airport airportDestination = airportRepository.findById(routeRequest.getOriginAirportId()).orElseThrow(() -> new DataNotFoundException("oridin airport id:" + routeRequest.getOriginAirportId()));
 
-        route.setOrigin(airportOrigin);
-        route.setOrigin(airportDestination);
-        route.setDuration(routeRequest.getDuration());
-        return route;
+        route.setStatus(RouteStatus.CANCELED);
+
+        return routeRepository.save(route);
     }
 }

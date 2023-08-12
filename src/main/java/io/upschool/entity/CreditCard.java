@@ -30,4 +30,8 @@ public class CreditCard {
 
     @Column(nullable = false)
     private String cvv;
+
+    @OneToOne
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
 }

@@ -17,5 +17,7 @@ aircraftı düzenle
 queryparam olayı
 
 
+indexleri uniqueleri çek et
+
 
 

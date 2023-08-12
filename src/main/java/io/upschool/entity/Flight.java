@@ -1,10 +1,13 @@
 package io.upschool.entity;
 
+import io.upschool.enums.FlightStatus;
+import io.upschool.enums.FlightType;
 import io.upschool.enums.LegType;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -24,7 +27,15 @@ public class Flight {
     private String flightNumber;
 
     @Column(nullable = false)
-    private LocalDate flightDate;
+    private LocalDateTime flightDate;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private FlightStatus status;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private FlightType flightType;
 
     @Column
     @Enumerated(EnumType.STRING)

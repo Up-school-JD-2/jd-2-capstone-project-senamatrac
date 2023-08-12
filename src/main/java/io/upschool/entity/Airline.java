@@ -3,8 +3,6 @@ package io.upschool.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "airline")
 @Data

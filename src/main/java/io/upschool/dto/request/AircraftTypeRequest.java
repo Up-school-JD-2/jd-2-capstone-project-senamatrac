@@ -20,10 +20,8 @@ public class AircraftTypeRequest {
     @NotBlank
     @Size(min = 3, max = 70, message = "The country name '${validatedValue}' must be between {min} and {max} characters long")
     private String iataCode;
-    @NotBlank
+    @NotBlank(message = "Model not be blank")
     private String model;
-    @NotNull
-    private Integer maxSeat;
     @Valid
     @NotEmpty
     private Set<SeatRequest> seats;

@@ -2,7 +2,6 @@ package io.upschool.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "city")

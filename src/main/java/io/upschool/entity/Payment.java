@@ -1,6 +1,7 @@
 package io.upschool.entity;
 
-import io.upschool.enums.PaymentType;
+import io.upschool.enums.PaymentStatus;
+import io.upschool.enums.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,11 +27,14 @@ public class Payment {
     private BigDecimal tax;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private PaymentType paymentType;
+    private PaymentStatus status;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "credit_card_id")
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
+    @OneToOne(cascade = CascadeType.PERSIST,mappedBy = "payment")
     private CreditCard creditCard;
+
 
 }

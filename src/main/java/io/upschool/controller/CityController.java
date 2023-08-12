@@ -1,5 +1,6 @@
 package io.upschool.controller;
 
+import io.upschool.dto.response.BaseResponse;
 import io.upschool.dto.request.CityRequest;
 import io.upschool.dto.request.search.CitySearchRequest;
 import io.upschool.dto.response.CityResponse;
@@ -7,14 +8,13 @@ import io.upschool.entity.City;
 import io.upschool.exception.DataCannotDelete;
 import io.upschool.exception.DataNotFoundException;
 import io.upschool.exception.DuplicateEntryException;
-import io.upschool.mapper.entity.CityMapper;
 import io.upschool.mapper.response.CityResponseMapper;
 import io.upschool.service.CityService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,55 +25,76 @@ import java.util.List;
 public class CityController {
     private final CityService cityService;
     private final CityResponseMapper cityResponseMapper;
-    private final CityMapper cityMapper;
 
-    //--------> CREAD <--------\\
+    //--------> CREATE <--------\\
     @PostMapping
-    public ResponseEntity<CityResponse> create(@Valid @RequestBody CityRequest cityRequest) throws DataNotFoundException, DuplicateEntryException {
+    public BaseResponse<CityResponse> create(@Valid @RequestBody CityRequest cityRequest) throws DataNotFoundException, DuplicateEntryException {
         City city = cityService.save(cityRequest);
-        return ResponseEntity.ok(cityResponseMapper.map(city));
+        return BaseResponse.<CityResponse>builder()
+                .isSuccess(true)
+                .status(HttpStatus.CREATED.value())
+                .responseBody(cityResponseMapper.map(city))
+                .build();
     }
 
     @PostMapping("/all")
-    public ResponseEntity<List<CityResponse>> create(@Valid @RequestBody List<CityRequest> cityRequests) throws DataNotFoundException, DuplicateEntryException {
+    public BaseResponse<List<CityResponse>> create(@Valid @RequestBody List<CityRequest> cityRequests) throws DataNotFoundException, DuplicateEntryException {
         List<City> cities = cityService.saveAll(cityRequests);
-        return ResponseEntity.ok(cityResponseMapper.map(cities));
+        return BaseResponse.<List<CityResponse>>builder()
+                .isSuccess(true)
+                .status(HttpStatus.CREATED.value())
+                .responseBody(cityResponseMapper.map(cities))
+                .build();
     }
 
     //--------> READ <--------\\
     @GetMapping
-    public ResponseEntity<Page<CityResponse>> getAllCities(Pageable pageable) {
-        return ResponseEntity.ok(cityService.findAll(pageable).map(cityResponseMapper::map));
+    public BaseResponse<Page<CityResponse>> getAllCities(Pageable pageable) {
+        Page<City> cities = cityService.findAll(pageable);
+        return BaseResponse.<Page<CityResponse>>builder()
+                .isSuccess(true)
+                .status(HttpStatus.OK.value())
+                .responseBody(cities.map(cityResponseMapper::map))
+                .build();
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<CityResponse>> getAllCities() {
-        return ResponseEntity.ok(cityResponseMapper.map(cityService.findAll()));
+    public BaseResponse<List<CityResponse>> getAllCities() {
+        List<City> cities = cityService.findAll();
+        return BaseResponse.<List<CityResponse>>builder()
+                .isSuccess(true)
+                .status(HttpStatus.OK.value())
+                .responseBody(cityResponseMapper.map(cities))
+                .build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CityResponse> getById(@PathVariable Long id) throws DataNotFoundException {
+    public BaseResponse<CityResponse> getById(@PathVariable Long id) throws DataNotFoundException {
         City city = cityService.findById(id);
-        return ResponseEntity.ok(cityResponseMapper.map(city));
+        return BaseResponse.<CityResponse>builder()
+                .isSuccess(true)
+                .status(HttpStatus.OK.value())
+                .responseBody(cityResponseMapper.map(city))
+                .build();
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Page<CityResponse>> search(Pageable pageable, @Valid @RequestBody CitySearchRequest citySearchRequest) {
-        Page<City> cities = cityService.search(cityMapper.map(citySearchRequest), pageable);
-        return ResponseEntity.ok(cities.map(cityResponseMapper::map));
-    }
-
-    //--------> UPDATE <--------\\
-    @PutMapping("/{id}")
-    public ResponseEntity<CityResponse> update(@PathVariable Long id, @Valid @RequestBody CityRequest cityRequest) throws DataNotFoundException, DuplicateEntryException {
-        City city = cityService.update(id, cityRequest);
-        return ResponseEntity.ok(cityResponseMapper.map(city));
+    public BaseResponse<Page<CityResponse>> search(Pageable pageable, @Valid @RequestBody CitySearchRequest citySearchRequest) {
+        Page<City> cities = cityService.search(citySearchRequest, pageable);
+        return BaseResponse.<Page<CityResponse>>builder()
+                .isSuccess(true)
+                .status(HttpStatus.OK.value())
+                .responseBody(cities.map(cityResponseMapper::map))
+                .build();
     }
 
     //--------> DELETE <--------\\
     @DeleteMapping({"/{id}"})
-    public ResponseEntity<Object> delete(@PathVariable Long id) throws DataNotFoundException, DataCannotDelete {
-        return null;
+    public BaseResponse<String> delete(@PathVariable Long id) throws DataNotFoundException, DataCannotDelete {
+        return BaseResponse.<String>builder()
+                .isSuccess(true)
+                .status(HttpStatus.OK.value())
+                .responseBody("soon")
+                .build();
     }
-
 }

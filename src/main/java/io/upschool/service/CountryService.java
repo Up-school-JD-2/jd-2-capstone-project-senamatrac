@@ -17,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -71,9 +70,9 @@ public class CountryService {
         return countryRepository.findAll(pageable);
     }
 
-    public List<Country> search(CountrySearchRequest countrySearchRequest) {
+    public Page<Country> search(CountrySearchRequest countrySearchRequest, Pageable pageable) {
         Example<Country> example = Example.of(countryMapper.map(countrySearchRequest), ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
-        return countryRepository.findAll(example);
+        return countryRepository.findAll(example,pageable);
     }
 
     public Country findById(Long id) throws DataNotFoundException {

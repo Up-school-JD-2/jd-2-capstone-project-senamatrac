@@ -1,8 +1,8 @@
 package io.upschool.entity;
 
+import io.upschool.enums.RouteStatus;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Where;
 
 import java.time.Duration;
 
@@ -30,5 +30,7 @@ public class Route {
     @Column
     private Duration duration;
 
-
+    @Column
+    @Enumerated(EnumType.STRING)
+    private RouteStatus status;
 }
