@@ -5,19 +5,16 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.envers.Audited;
 
-@Entity
-@Table(name = "seat", indexes = @Index(name = "UNQ_SEAT_AIRCRAFT_ID_SEAT_CODE", columnList = "aircraft_id, seat_code"))
-@Data
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"seatCode", "seatType"})
 @Builder
 @Audited
-public class Seat {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+@Entity
+@Table(name = "seat", indexes = @Index(name = "UNQ_SEAT_AIRCRAFT_ID_SEAT_CODE", columnList = "aircraft_id, seat_code",unique = true))
+public class Seat extends BaseEntity{
 
     @Column(name = "seat_code")
     private String seatCode;

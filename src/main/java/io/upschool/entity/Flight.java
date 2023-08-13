@@ -11,25 +11,22 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@Entity
-@Table(name = "flight")
-@Data
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id","flightNumber"})
 @Builder
 @Audited
-public class Flight {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+@Entity
+@Table(name = "flight")
+public class Flight extends BaseEntity{
 
     @Column(nullable = false, unique = true)
     private String flightNumber;
 
     @Column(nullable = false)
-    private LocalDateTime flightDate;
+    private LocalDate flightDate;
 
     @Column
     @Enumerated(EnumType.STRING)

@@ -17,7 +17,6 @@ public abstract class FlightMapper {
     @Mapping(target = "aircraftType",source = "aircraftType")
     @Mapping(target = ".",source = "flightRequest")
     @Mapping(target = "status",ignore = true)
-    @Mapping(target = "id",ignore = true)
     public abstract Flight map(FlightRequest flightRequest, Airline airline, AircraftType aircraftType, Route route, LegType legType);
 
     @AfterMapping
@@ -28,7 +27,6 @@ public abstract class FlightMapper {
     @Mapping(target = "route",source = "route")
     @Mapping(target = "airline",source = "airline")
     @Mapping(target = "aircraftType",source = "aircraftType")
-    @Mapping(target = "id",ignore = true)
     @Mapping(target = "flightSeatPrices",ignore = true)
     public abstract Flight map(FlightSearchRequest flightSearchRequest);
 

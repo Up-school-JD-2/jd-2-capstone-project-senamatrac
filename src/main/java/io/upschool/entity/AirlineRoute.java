@@ -1,22 +1,20 @@
 package io.upschool.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.envers.Audited;
 
-@Entity
-@Table(name = "airline_route")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Audited
-public class AirlineRoute {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+@Entity
+@Table(name = "airline_route")
+public class AirlineRoute extends BaseEntity{
+
+    @Column
+    private Boolean active;
 
     @ManyToOne
     @JoinColumn(name = "airline_id")
@@ -26,7 +24,5 @@ public class AirlineRoute {
     @JoinColumn(name = "route_id")
     private Route route;
 
-    @Column
-    private Boolean active;
 
 }

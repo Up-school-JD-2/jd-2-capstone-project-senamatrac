@@ -7,11 +7,9 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(of = {"seatType"})
-@Builder
 public class FlightSeatPriceRequest {
     @NotNull
     private SeatType seatType;

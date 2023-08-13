@@ -1,17 +1,12 @@
 package io.upschool.dto.request;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.Duration;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Getter
+@Setter
 public class RouteRequest {
     @NotNull
     private Long originAirportId;

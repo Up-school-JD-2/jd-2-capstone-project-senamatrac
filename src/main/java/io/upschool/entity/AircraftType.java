@@ -6,20 +6,15 @@ import org.hibernate.envers.Audited;
 
 import java.util.Set;
 
-@Entity
-@Table(name = "aircraft")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id"})
 @Builder
 @Audited
-public class AircraftType {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+@Entity
+@Table(name = "aircraft")
+public class AircraftType extends BaseEntity {
 
     @Column(unique = true)
     private String iataCode;

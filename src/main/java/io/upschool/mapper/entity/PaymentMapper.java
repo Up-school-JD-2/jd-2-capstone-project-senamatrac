@@ -1,10 +1,28 @@
 package io.upschool.mapper.entity;
 
-import io.upschool.dto.request.PaymentRequest;
-import io.upschool.entity.Payment;
+import io.upschool.dto.request.CreditCardPaymentRequest;
+import io.upschool.entity.CreditCardPayment;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
-@Mapper(componentModel = "spring", uses = {CreditCardMapper.class})
+import java.math.BigDecimal;
+
+@Mapper(componentModel = "spring")
 public interface PaymentMapper {
-    Payment map(PaymentRequest paymentRequest);
+    @Mapping(target = "digits", qualifiedByName = "MaskedCreditCard")
+    CreditCardPayment map(CreditCardPaymentRequest creditCard, BigDecimal tax, BigDecimal total);
+
+
+    @Named("MaskedCreditCard")
+    default String maskedCreditCard(String digits){
+        String first4digits = digits.substring(0,4);
+        String shouldMasked = digits.substring(4, digits.length()-4);
+        String last4digits = digits.substring( digits.length()-4);
+
+        String masked = shouldMasked.replaceAll("\\W?\\d\\W?","*");
+        return first4digits + masked + last4digits;
+    }
+
+
 }

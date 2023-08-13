@@ -19,5 +19,11 @@ queryparam olayı
 
 indexleri uniqueleri çek et
 
+ @CreatedDate
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
+
 
 

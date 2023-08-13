@@ -5,20 +5,16 @@ import lombok.*;
 import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
 
-@Entity
-@Table(name = "airport")
-@Data
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id"})
 @Builder
-@Where(clause = "deleted=false")
 @Audited
-public class Airport{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+@Entity
+@Table(name = "airport")
+public class Airport extends BaseEntity{
 
     @Column(nullable = false)
     private String name;

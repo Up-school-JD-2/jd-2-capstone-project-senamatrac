@@ -1,32 +1,25 @@
 package io.upschool.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class CreditCardRequest {
+@Getter
+@Setter
+public class CreditCardPaymentRequest extends PaymentRequest {
     @NotBlank
     private String owner;
 
-
     @Pattern(regexp = "(1|2|3|4|5|6|7|8|9|01|02|03|04|05|06|07|08|09|10|11|12|)", message = " The expired month is invalid")
-    private String expiredMonth;
-
+    private int expiredMonth;
 
     @Pattern(regexp = "^(\\d{4})$", message = " The expired year is invalid")
-    private String expiredYear;
-
+    private int expiredYear;
 
     @Pattern(regexp = "^(\\d{4}\\W?\\d{4}\\W?\\d{4}\\W?\\d{4})$", message = " The credit card number is invalid")
     private String digits;
@@ -36,11 +29,12 @@ public class CreditCardRequest {
     private String cvv;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     private String expiredDate;
-    @AssertTrue(message = " The credit card has expired")
+    @AssertTrue(message = "The credit card has expired")
     private boolean isExpiredDate() {
         LocalDate now = LocalDate.now().withDayOfMonth(1);
-        LocalDate expiredDate = LocalDate.of(Integer.parseInt(expiredYear), Integer.parseInt(expiredMonth), 1);
+        LocalDate expiredDate = LocalDate.of(expiredYear, expiredMonth, 1);
         return !now.isAfter(expiredDate);
     }
 }

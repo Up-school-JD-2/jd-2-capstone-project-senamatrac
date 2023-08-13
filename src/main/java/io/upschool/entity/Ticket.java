@@ -8,18 +8,13 @@ import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "ticket")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"ticketNumber"})
 @Builder
 @Audited
-public class Ticket {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
-
+public class Ticket extends BaseEntity{
     @Column(nullable = false, unique = true)
     private String ticketNumber;
 

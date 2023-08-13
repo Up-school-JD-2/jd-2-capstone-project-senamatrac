@@ -7,19 +7,16 @@ import org.hibernate.envers.Audited;
 
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "flight_seat_price")
-@Data
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id", "seatType"})
 @Builder
 @Audited
-public class FlightSeatPrice {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+@Entity
+@Table(name = "flight_seat_price")
+public class FlightSeatPrice extends BaseEntity{
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "flight_id")

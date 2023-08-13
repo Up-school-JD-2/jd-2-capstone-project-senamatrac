@@ -3,15 +3,10 @@ package io.upschool.dto.request;
 import io.upschool.enums.SeatType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Getter
+@Setter
 public class SeatRequest {
     @NotBlank
     private String seatCode;

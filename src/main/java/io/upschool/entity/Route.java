@@ -7,20 +7,16 @@ import org.hibernate.envers.Audited;
 
 import java.time.Duration;
 
-@Entity
-@Table(name = "route", indexes = @Index(name = "UNQ_ROUTE_ORIGIN_DESTINATION", columnList = "origin_airport_id, destination_airport_id", unique = true))
-@Data
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id"})
 @Builder
 @Audited
-public class Route {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
-
+@Entity
+@Table(name = "route", indexes = @Index(name = "UNQ_ROUTE_ORIGIN_DESTINATION", columnList = "origin_airport_id, destination_airport_id", unique = true))
+public class Route extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "origin_airport_id")
     private Airport origin;
@@ -36,3 +32,5 @@ public class Route {
     @Enumerated(EnumType.STRING)
     private RouteStatus status;
 }
+
+

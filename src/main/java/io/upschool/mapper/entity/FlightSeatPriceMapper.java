@@ -14,7 +14,6 @@ public interface FlightSeatPriceMapper {
     @Mapping(target = "flight", source = "flight")
     @Mapping(target = "seatType", source = "flightSeatPriceRequest.seatType")
     @Mapping(target = "price", source = "flightSeatPriceRequest.price")
-    @Mapping(target = "id", ignore = true)
     @Named("MapFlightToFSP")
     FlightSeatPrice mapFlightToFSPRequest(FlightSeatPriceRequest flightSeatPriceRequest, Flight flight);
 

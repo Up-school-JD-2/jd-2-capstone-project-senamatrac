@@ -1,29 +1,32 @@
 package io.upschool.entity;
 
-import io.upschool.enums.PaymentStatus;
 import io.upschool.enums.PaymentMethod;
+import io.upschool.enums.PaymentStatus;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.envers.Audited;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "payment")
-@Data
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id"})
-@Builder
 @Audited
-public class Payment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+@Entity
+@Table(name = "payment")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "payment_method",
+        discriminatorType = DiscriminatorType.STRING)
+public abstract class Payment extends BaseEntity {
+
+    @Column(name = "payment_method", nullable = false,insertable=false, updatable=false)
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
 
     @Column(nullable = false)
     private BigDecimal total;
@@ -33,19 +36,6 @@ public class Payment {
 
     @Column(nullable = false)
     private PaymentStatus status;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private PaymentMethod paymentMethod;
-
-    @OneToOne(cascade = CascadeType.PERSIST,mappedBy = "payment")
-    private CreditCard creditCard;
-
-    @CreatedDate
-    private LocalDateTime createdDate;
-
-    @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
 
 
 }

@@ -1,15 +1,14 @@
 package io.upschool.service;
 
+import io.upschool.dto.request.CreditCardPaymentRequest;
+import io.upschool.dto.request.PaymentRequest;
 import io.upschool.dto.request.TicketBuyRequest;
 import io.upschool.entity.*;
 import io.upschool.enums.PaymentMethod;
 import io.upschool.enums.PaymentStatus;
 import io.upschool.enums.TicketStatus;
-import io.upschool.exception.DataNotFoundException;
-import io.upschool.exception.DuplicateEntryException;
-import io.upschool.exception.ServiceExceptionUtil;
-import io.upschool.exception.TicketSoldOut;
-import io.upschool.mapper.entity.CreditCardMapper;
+import io.upschool.exception.*;
+import io.upschool.mapper.entity.PaymentMapper;
 import io.upschool.mapper.entity.PassengerMapper;
 import io.upschool.mapper.entity.TicketMapper;
 import io.upschool.repository.FlightRepository;
@@ -34,20 +33,19 @@ public class TicketService {
     private final TicketMapper ticketMapper;
     private final FlightRepository flightRepository;
     private final FlightSeatPriceRepository flightSeatPriceRepository;
-    private final CreditCardMapper creditCardMapper;
-    private final PassengerMapper passengerMapper;
+    private final PaymentMapper paymentMapper;
     @Value("${capstone.ticket.taxPercentage}")
     private Double taxPercentage;
     private final PassengerRepository passengerRepository;
 
     @Transactional
-    public Ticket buy(TicketBuyRequest ticketBuyRequest) throws DataNotFoundException, DuplicateEntryException, TicketSoldOut {
+    public Ticket buy(TicketBuyRequest ticketBuyRequest) throws DataNotFoundException, DuplicateEntryException, TicketSoldOut, UnsupportedPaymentType {
         ServiceExceptionUtil.check(ticketRepository::existsByTicketNumber, ticketBuyRequest.getTicketNumber(), () -> new DuplicateEntryException("ticket number:" + ticketBuyRequest.getTicketNumber()));
         Flight flight = flightRepository.findById(ticketBuyRequest.getFlightId()).orElseThrow(() -> new DataNotFoundException("flight id:" + ticketBuyRequest.getFlightId()));
         checkCapacity(ticketBuyRequest, flight);
 
         FlightSeatPrice flightSeatPrice = flightSeatPriceRepository.findByFlightIdAndSeatType(ticketBuyRequest.getFlightId(), ticketBuyRequest.getSeatType());
-        Payment payment = createPayment(ticketBuyRequest, flightSeatPrice);
+        Payment payment = createPayment(ticketBuyRequest.getPaymentRequest(), flightSeatPrice);
 
         Optional<Passenger> passengerOptional = passengerRepository.findByIdentityNumber(ticketBuyRequest.getPassenger().getIdentityNumber());
         Ticket ticket = passengerOptional.map(passenger -> ticketMapper.map(ticketBuyRequest, flight, payment, passenger))
@@ -57,15 +55,16 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
-    private Payment createPayment(TicketBuyRequest ticketBuyRequest, FlightSeatPrice flightSeatPrice) {
-        var subTotal = flightSeatPrice.getPrice().doubleValue();
-        var taxFee = subTotal * (taxPercentage / 100);
-        return Payment.builder()
-                .paymentMethod(PaymentMethod.CREDIT_CART)
-                .tax(BigDecimal.valueOf(taxFee))
-                .total(BigDecimal.valueOf(subTotal + taxFee))
-                .creditCard(creditCardMapper.map(ticketBuyRequest.getCreditCard()))
-                .build();
+    private Payment createPayment(PaymentRequest paymentRequest, FlightSeatPrice flightSeatPrice) throws UnsupportedPaymentType {
+        var subTotal = flightSeatPrice.getPrice();
+        var taxFee = subTotal.multiply(BigDecimal.valueOf((taxPercentage / 100)));
+        var total = subTotal.add(taxFee);
+        if (paymentRequest.getPaymentMethod() == PaymentMethod.CREDIT_CARD){
+            CreditCardPaymentRequest creditCardPaymentRequest = (CreditCardPaymentRequest) paymentRequest;
+            return paymentMapper.map(creditCardPaymentRequest,taxFee,total);
+        }else{
+            throw new UnsupportedPaymentType("Unsupported payment method.");
+        }
     }
 
     private void checkCapacity(TicketBuyRequest ticketBuyRequest, Flight flight) throws TicketSoldOut {

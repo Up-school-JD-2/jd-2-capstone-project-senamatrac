@@ -2,15 +2,10 @@ package io.upschool.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Getter
+@Setter
 public class CountryRequest {
     @NotBlank
     @Size(min = 3, max = 70, message = "The country name '${validatedValue}' must be between {min} and {max} characters long")

@@ -4,10 +4,7 @@ import io.upschool.dto.request.TicketBuyRequest;
 import io.upschool.dto.response.BaseResponse;
 import io.upschool.dto.response.TicketResponse;
 import io.upschool.entity.Ticket;
-import io.upschool.exception.DataCannotDelete;
-import io.upschool.exception.DataNotFoundException;
-import io.upschool.exception.DuplicateEntryException;
-import io.upschool.exception.TicketSoldOut;
+import io.upschool.exception.*;
 import io.upschool.mapper.response.TicketResponseMapper;
 import io.upschool.service.TicketService;
 import jakarta.validation.Valid;
@@ -28,7 +25,7 @@ public class TicketController {
 
     //--------> CREATE <--------\\
     @PostMapping
-    public BaseResponse<TicketResponse> create(@Valid @RequestBody TicketBuyRequest ticketBuyRequest) throws DataNotFoundException, DuplicateEntryException, TicketSoldOut {
+    public BaseResponse<TicketResponse> create(@Valid @RequestBody TicketBuyRequest ticketBuyRequest) throws DataNotFoundException, DuplicateEntryException, TicketSoldOut, UnsupportedPaymentType {
         Ticket ticket = ticketService.buy(ticketBuyRequest);
         return BaseResponse.<TicketResponse>builder()
                 .isSuccess(true)

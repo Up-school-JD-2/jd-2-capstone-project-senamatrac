@@ -29,6 +29,6 @@ public class TicketBuyRequest {
 
     @Valid
     @NotNull
-    private CreditCardRequest creditCard;
+    private PaymentRequest paymentRequest;
 
 }

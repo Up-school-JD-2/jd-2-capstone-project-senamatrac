@@ -18,7 +18,6 @@ public interface TicketMapper {
     @Mapping(target = "flight", source = "flight")
     @Mapping(target = "payment", source = "payment")
     @Mapping(target = "status", ignore = true)
-    @Mapping(target = "id", ignore = true)
     Ticket map(TicketBuyRequest ticketBuyRequest, Flight flight, Payment payment);
 
     @Mapping(target = "ticketNumber", source = "ticketBuyRequest.ticketNumber")
@@ -27,7 +26,6 @@ public interface TicketMapper {
     @Mapping(target = "payment", source = "payment")
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "passenger", source = "passenger")
-    @Mapping(target = "id", ignore = true)
     Ticket map(TicketBuyRequest ticketBuyRequest, Flight flight, Payment payment, Passenger passenger);
 
 }

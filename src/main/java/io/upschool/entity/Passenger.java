@@ -4,20 +4,16 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.envers.Audited;
 
-@Entity
-@Table(name = "passenger")
-@Data
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"identityNumber"})
 @Builder
 @Audited
-public class Passenger {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+@Entity
+@Table(name = "passenger")
+public class Passenger extends BaseEntity{
 
     @Column(nullable = false, unique = true)
     private String identityNumber;
