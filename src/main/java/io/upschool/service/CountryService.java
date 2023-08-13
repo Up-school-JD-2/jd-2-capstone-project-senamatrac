@@ -3,7 +3,6 @@ package io.upschool.service;
 import io.upschool.dto.request.CountryRequest;
 import io.upschool.dto.request.search.CountrySearchRequest;
 import io.upschool.entity.Country;
-import io.upschool.exception.DataCannotDelete;
 import io.upschool.exception.DataNotFoundException;
 import io.upschool.exception.DuplicateEntryException;
 import io.upschool.exception.ServiceExceptionUtil;
@@ -58,8 +57,9 @@ public class CountryService {
     }
 
     @Transactional
-    public Country softDelete(Long id) throws DataNotFoundException, DataCannotDelete {
-       return null;
+    public void deleteById(Long id) throws DataNotFoundException {
+        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("country with id: " + id));
+        countryRepository.delete(country);
     }
 
     public List<Country> findAll() {
@@ -72,7 +72,7 @@ public class CountryService {
 
     public Page<Country> search(CountrySearchRequest countrySearchRequest, Pageable pageable) {
         Example<Country> example = Example.of(countryMapper.map(countrySearchRequest), ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
-        return countryRepository.findAll(example,pageable);
+        return countryRepository.findAll(example, pageable);
     }
 
     public Country findById(Long id) throws DataNotFoundException {

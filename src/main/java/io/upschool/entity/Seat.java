@@ -3,6 +3,7 @@ package io.upschool.entity;
 import io.upschool.enums.SeatType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "seat", indexes = @Index(name = "UNQ_SEAT_AIRCRAFT_ID_SEAT_CODE", columnList = "aircraft_id, seat_code"))
@@ -11,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"seatCode", "seatType"})
 @Builder
+@Audited
 public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

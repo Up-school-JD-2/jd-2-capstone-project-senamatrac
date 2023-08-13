@@ -4,6 +4,7 @@ import io.upschool.enums.SeatType;
 import io.upschool.enums.TicketStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "ticket")
@@ -12,6 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"ticketNumber"})
 @Builder
+@Audited
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

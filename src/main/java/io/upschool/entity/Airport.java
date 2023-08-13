@@ -3,6 +3,7 @@ package io.upschool.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Where;
+import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "airport")
@@ -12,6 +13,7 @@ import org.hibernate.annotations.Where;
 @EqualsAndHashCode(of = {"id"})
 @Builder
 @Where(clause = "deleted=false")
+@Audited
 public class Airport{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

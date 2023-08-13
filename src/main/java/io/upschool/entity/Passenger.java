@@ -2,6 +2,7 @@ package io.upschool.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "passenger")
@@ -10,7 +11,9 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"identityNumber"})
 @Builder
+@Audited
 public class Passenger {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

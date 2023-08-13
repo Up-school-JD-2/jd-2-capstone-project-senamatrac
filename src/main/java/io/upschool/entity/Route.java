@@ -3,6 +3,7 @@ package io.upschool.entity;
 import io.upschool.enums.RouteStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 import java.time.Duration;
 
@@ -13,6 +14,7 @@ import java.time.Duration;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @Builder
+@Audited
 public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "airline_route")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Audited
 public class AirlineRoute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

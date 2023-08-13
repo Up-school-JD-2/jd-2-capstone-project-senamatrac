@@ -91,10 +91,10 @@ public class CountryController {
     //--------> DELETE <--------\\
     @DeleteMapping("/{id}")
     public BaseResponse<String> delete(@PathVariable Long id) throws DataNotFoundException, DataCannotDelete {
+        countryService.deleteById(id);
         return BaseResponse.<String>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
-                .responseBody("soon")
                 .build();
     }
 }

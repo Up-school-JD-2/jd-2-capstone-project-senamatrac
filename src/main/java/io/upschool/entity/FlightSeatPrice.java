@@ -3,6 +3,7 @@ package io.upschool.entity;
 import io.upschool.enums.SeatType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 import java.math.BigDecimal;
 
@@ -13,6 +14,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id", "seatType"})
 @Builder
+@Audited
 public class FlightSeatPrice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

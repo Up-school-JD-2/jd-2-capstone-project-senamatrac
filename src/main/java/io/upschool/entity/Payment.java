@@ -4,8 +4,12 @@ import io.upschool.enums.PaymentStatus;
 import io.upschool.enums.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "payment")
@@ -14,6 +18,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @Builder
+@Audited
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +40,12 @@ public class Payment {
 
     @OneToOne(cascade = CascadeType.PERSIST,mappedBy = "payment")
     private CreditCard creditCard;
+
+    @CreatedDate
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
 
 
 }

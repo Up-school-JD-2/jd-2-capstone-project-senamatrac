@@ -5,6 +5,7 @@ import io.upschool.enums.FlightType;
 import io.upschool.enums.LegType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id","flightNumber"})
 @Builder
+@Audited
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
