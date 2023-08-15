@@ -1,0 +1,1769 @@
+{
+	"info": {
+		"_postman_id": "34e4c53c-03e2-4bfa-8c7d-043a449738d5",
+		"name": "Airplane ticket",
+		"description": "**Sena Matrac** Upshool Capstone Airline Ticket Service Project Documentation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1996802"
+	},
+	"item": [
+		{
+			"name": "Run For İnit DB",
+			"item": [
+				{
+					"name": "Country Save Multiple Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"name\": \"Türkiye\",\r\n        \"code\": \"TK\"\r\n    },\r\n    {\r\n        \"name\": \"Fransa\",\r\n        \"code\": \"FR\"\r\n    },\r\n    {\r\n        \"name\": \"Mozambik\",\r\n        \"code\": \"MPM\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/countries/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"countries",
+								"all"
+							]
+						},
+						"description": "Save multiple countries in a request"
+					},
+					"response": []
+				},
+				{
+					"name": "City Save Multiple Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"name\": \"istanbul\",\n        \"code\": \"IS\",\n        \"countryId\": 1\n    },\n    {\n        \"name\": \"Balıkesir\",\n        \"code\": \"BK\",\n        \"countryId\": 1\n    },\n    {\n        \"name\": \"Diyarbakir\",\n        \"code\": \"DYB\",\n        \"countryId\": 1\n    },\n    {\n        \"name\": \"Paris\",\n        \"code\": \"PR\",\n        \"countryId\": 2\n    },\n    {\n        \"name\": \"Nice\",\n        \"code\": \"NC\",\n        \"countryId\": 2\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/cities/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"cities",
+								"all"
+							]
+						},
+						"description": "Save multiple cities in a request"
+					},
+					"response": []
+				},
+				{
+					"name": "Airport Save Multiple Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"name\": \"Sabiha Gökcen Havalimani\",\n        \"iataCode\": \"SAW\",\n        \"cityId\": \"1\"\n    },\n    {\n        \"name\": \"Balıkesir Havalimani\",\n        \"iataCode\": \"BZI\",\n        \"cityId\": \"2\"\n    },\n    {\n        \"name\": \"Diyarbakır Havalimani\",\n        \"iataCode\": \"DIY\",\n        \"cityId\": \"3\"\n    },\n    {\n        \"name\": \"Paris Airport\",\n        \"iataCode\": \"CDG\",\n        \"cityId\": \"4\"\n    },\n    {\n        \"name\": \"Paris Airport\",\n        \"iataCode\": \"NCE\",\n        \"cityId\": \"4\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/airports/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"airports",
+								"all"
+							]
+						},
+						"description": "Save multiple airports in a request"
+					},
+					"response": []
+				},
+				{
+					"name": "Airline Save Multi Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"iataCode\": \"TK\",\n        \"name\": \"Turkish Airlines\"\n    },\n    {\n        \"iataCode\": \"XQ\",\n        \"name\": \"Sun Express\"\n    },\n    {\n        \"iataCode\": \"AFR\",\n        \"name\": \"Air Franse\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/airlines/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"airlines",
+								"all"
+							]
+						},
+						"description": "Save multiple airlines in a request"
+					},
+					"response": []
+				},
+				{
+					"name": "Aircraft Save Multi",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"iataCode\": \"73G\",\n        \"model\": \"Boeing 777 - 300ER\",\n        \"seats\": [\n            {\n                \"seatCode\": \"1A\",\n                \"seatType\": \"ECONOMY\"\n            },\n            {\n                \"seatCode\": \"1B\",\n                \"seatType\": \"ECONOMY\"\n            },\n            {\n                \"seatCode\": \"2C\",\n                \"seatType\": \"ECONOMY\"\n            },\n            {\n                \"seatCode\": \"2A\",\n                \"seatType\": \"FIRST\"\n            },\n            {\n                \"seatCode\": \"2B\",\n                \"seatType\": \"FIRST\"\n            },\n            {\n                \"seatCode\": \"2C\",\n                \"seatType\": \"PREMIUM\"\n            },\n            {\n                \"seatCode\": \"2D\",\n                \"seatType\": \"PREMIUM\"\n            }\n        ]\n    },\n    {\n        \"iataCode\": \"733\",\n        \"model\": \"Boeing 737\",\n        \"seats\": [\n            {\n                \"seatCode\": \"1A\",\n                \"seatType\": \"ECONOMY\"\n            },\n            {\n                \"seatCode\": \"1B\",\n                \"seatType\": \"ECONOMY\"\n            },\n            {\n                \"seatCode\": \"2C\",\n                \"seatType\": \"ECONOMY\"\n            },\n            {\n                \"seatCode\": \"3C\",\n                \"seatType\": \"ECONOMY\"\n            },\n            {\n                \"seatCode\": \"2A\",\n                \"seatType\": \"FIRST\"\n            },\n            {\n                \"seatCode\": \"2B\",\n                \"seatType\": \"FIRST\"\n            }\n        ]\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/aircraft_type/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"aircraft_type",
+								"all"
+							]
+						},
+						"description": "Save multiple aircrafts in a request"
+					},
+					"response": []
+				},
+				{
+					"name": "Route Save Multiple",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"originAirportId\": \"1\",\n        \"destinationAirportId\": \"3\",\n        \"duration\": \"PT3H43M\"\n    },\n    {\n        \"originAirportId\": \"1\",\n        \"destinationAirportId\": \"4\",\n        \"duration\": \"PT3H43M\"\n    },\n    {\n        \"originAirportId\": \"1\",\n        \"destinationAirportId\": \"5\",\n        \"duration\": \"PT3H43M\"\n    },\n    {\n        \"originAirportId\": \"2\",\n        \"destinationAirportId\": \"3\",\n        \"duration\": \"PT3H43M\"\n    },\n    {\n        \"originAirportId\": \"4\",\n        \"destinationAirportId\": \"5\",\n        \"duration\": \"PT3H43M\"\n    },\n    {\n        \"originAirportId\": \"4\",\n        \"destinationAirportId\": \"1\",\n        \"duration\": \"PT3H43M\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/routes/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"routes",
+								"all"
+							]
+						},
+						"description": "Save multiple routes in a request"
+					},
+					"response": []
+				},
+				{
+					"name": "Flight Save Multiple",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"flightNumber\": \"TK-IST_PRS\",\r\n        \"flightDate\": \"2023-08-08\",\r\n        \"airlineId\": 1,\r\n        \"routeId\": 2,\r\n        \"aircraftTypeId\": 2,\r\n        \"flightSeatPrices\": [\r\n            {\r\n                \"seatType\": \"ECONOMY\",\r\n                \"price\": 200\r\n            },\r\n            {\r\n                \"seatType\": \"FIRST\",\r\n                \"price\": 258.03\r\n            }\r\n        ]\r\n    },\r\n    {\r\n        \"flightNumber\": \"TK-IST-NC\",\r\n        \"flightDate\": \"2023-08-08\",\r\n        \"airlineId\": 1,\r\n        \"routeId\": 3,\r\n        \"aircraftTypeId\": 2,\r\n        \"flightSeatPrices\": [\r\n            {\r\n                \"seatType\": \"ECONOMY\",\r\n                \"price\": 155\r\n            },\r\n            {\r\n                \"seatType\": \"FIRST\",\r\n                \"price\": 258.03\r\n            }\r\n        ]\r\n    },\r\n    {\r\n        \"flightNumber\": \"TK-BLK-DYB\",\r\n        \"flightDate\": \"2023-08-08\",\r\n        \"airlineId\": 1,\r\n        \"routeId\": 4,\r\n        \"aircraftTypeId\": 2,\r\n        \"flightSeatPrices\": [\r\n            {\r\n                \"seatType\": \"ECONOMY\",\r\n                \"price\": 150\r\n            },\r\n            {\r\n                \"seatType\": \"FIRST\",\r\n                \"price\": 258.03\r\n            }\r\n        ]\r\n    },\r\n    {\r\n        \"flightNumber\": \"SNX-BLK-DYB\",\r\n        \"flightDate\": \"2023-08-08\",\r\n        \"airlineId\": 2,\r\n        \"routeId\": 4,\r\n        \"aircraftTypeId\": 2,\r\n        \"flightSeatPrices\": [\r\n            {\r\n                \"seatType\": \"ECONOMY\",\r\n                \"price\": 150\r\n            },\r\n            {\r\n                \"seatType\": \"FIRST\",\r\n                \"price\": 258.03\r\n            }\r\n        ]\r\n    },\r\n    {\r\n        \"flightNumber\": \"SNX-IST-PRS\",\r\n        \"flightDate\": \"2023-08-08\",\r\n        \"airlineId\": 2,\r\n        \"routeId\": 2,\r\n        \"aircraftTypeId\": 1,\r\n        \"flightSeatPrices\": [\r\n            {\r\n                \"seatType\": \"ECONOMY\",\r\n                \"price\": 150\r\n            },\r\n            {\r\n                \"seatType\": \"FIRST\",\r\n                \"price\": 258.03\r\n            },\r\n            {\r\n                \"seatType\": \"PREMIUM\",\r\n                \"price\": 500\r\n            }\r\n        ]\r\n    },\r\n    {\r\n        \"flightNumber\": \"AFR-PRS-NC\",\r\n        \"flightDate\": \"2023-08-08\",\r\n        \"airlineId\": 3,\r\n        \"routeId\": 5,\r\n        \"aircraftTypeId\": 2,\r\n        \"flightSeatPrices\": [\r\n            {\r\n                \"seatType\": \"ECONOMY\",\r\n                \"price\": 150\r\n            },\r\n            {\r\n                \"seatType\": \"FIRST\",\r\n                \"price\": 258.03\r\n            }\r\n        ]\r\n    },\r\n    {\r\n        \"flightNumber\": \"AFR-PRS-IST\",\r\n        \"flightDate\": \"2023-08-08\",\r\n        \"airlineId\": 3,\r\n        \"routeId\": 6,\r\n        \"aircraftTypeId\": 2,\r\n        \"flightSeatPrices\": [\r\n            {\r\n                \"seatType\": \"ECONOMY\",\r\n                \"price\": 150\r\n            },\r\n            {\r\n                \"seatType\": \"FIRST\",\r\n                \"price\": 258.03\r\n            }\r\n        ]\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/flights/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"flights",
+								"all"
+							]
+						},
+						"description": "Save multiple flights in a request"
+					},
+					"response": []
+				}
+			],
+			"description": "This folder is for creating several entries to the database."
+		},
+		{
+			"name": "Country",
+			"item": [
+				{
+					"name": "Country Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Japonya\",\r\n    \"code\":\"JP\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/countries",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"countries"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": null,
+									"disabled": true
+								}
+							]
+						},
+						"description": "Save single country in a request"
+					},
+					"response": []
+				},
+				{
+					"name": "Countries Pagable",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/countries?page=0&size=10",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"countries"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						},
+						"description": "This request produces pageable countries."
+					},
+					"response": []
+				},
+				{
+					"name": "Countries All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/countries/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"countries",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Country Get By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/countries/1",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"countries",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Country Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//yalnızca request param ile search yapılmıştır",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/countries/search?name=r&code=t",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"countries",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "r"
+								},
+								{
+									"key": "code",
+									"value": "t"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Country Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/countries/1",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"countries",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "City",
+			"item": [
+				{
+					"name": "City Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"istanbul\",\r\n    \"code\":\"IS\",\r\n    \"countryId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/cities",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"cities"
+							]
+						},
+						"description": "Save single city in a request"
+					},
+					"response": []
+				},
+				{
+					"name": "City Save Multiple",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n    \"name\":\"istanbul\",\n    \"code\":\"IS\",\n    \"countryId\": 1\n},{\n    \"name\":\"Balıkesir\",\n    \"code\":\"BK\",\n    \"countryId\": 1\n},{\n    \"name\":\"Diyarbakir\",\n    \"code\":\"DYB\",\n    \"countryId\": 1\n},{\n    \"name\":\"Paris\",\n    \"code\":\"PR\",\n    \"countryId\": 2\n}\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/cities/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"cities",
+								"all"
+							]
+						},
+						"description": "This request produces pageable countries."
+					},
+					"response": []
+				},
+				{
+					"name": "Cities Pagable",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/cities?page=0&size=10",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"cities"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cities All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/cities/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"cities",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "City Get By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/cities/1",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"cities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "City Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"country\":{\n        \"id\":1\n    }\n}\n\n//1 id li countrye ait şehirler",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/cities/search",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"cities",
+								"search"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "City Seach Json",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\":1,\n    \"name\": \"\",\n    \"code\": \"\",\n    \"country\": {\n        \"name\": \"\",\n        \"code\": \"\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/cities/search",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"cities",
+										"search"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Airport",
+			"item": [
+				{
+					"name": "Airport Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Istanbul Havalimani\",\n    \"iataCode\":\"ISK\",\n    \"cityId\":\"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/airports",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"airports"
+							]
+						},
+						"description": "Save single airport in a request"
+					},
+					"response": []
+				},
+				{
+					"name": "Airport Save Multiple",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n    \"name\":\"Sabiha Gökcen Havalimani\",\n    \"iataCode\":\"SAW\",\n    \"cityId\":\"1\"\n    },{\n    \"name\":\"Balıkesir Havalimani\",\n    \"iataCode\":\"BZI\",\n    \"cityId\":\"2\"\n    },{\n    \"name\":\"Diyarbakır Havalimani\",\n    \"iataCode\":\"DIY\",\n    \"cityId\":\"3\"\n    },{\n    \"name\":\"Paris Airport\",\n    \"iataCode\":\"CDG\",\n    \"cityId\":\"4\"\n    }  \n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/airports/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"airports",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Airport Pagable",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/airports?size=10&page=0",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"airports"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Airport All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/airports/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"airports",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Airpot Get By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/airports/1",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"airports",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Airport Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"city\": {\n        \"name\": \"ba\"\n    }\n}\n//içinde ba geçen şehirlerdeki airportlar",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/airports/search",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"airports",
+								"search"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Airport Json",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"name\": \"\",\n    \"iataCode\": \"\",\n    \"city\": {\n        \"name\": \"\",\n        \"code\": \"\",\n        \"country\": {\n            \"name\": \"\",\n            \"code\": \"\"\n        }\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/airports/search",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"airports",
+										"search"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Airport update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Sabiha Gökçen Havalimanı\",\n    \"iataCode\":\"SAWWWW\",\n    \"cityId\":\"2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/airports/1",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"airports",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Route",
+			"item": [
+				{
+					"name": "Route Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"originAirportId\":\"1\",\n    \"destinationAirportId\":\"2\",\n    \"duration\":\"PT3H43M\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/routes",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"routes"
+							]
+						},
+						"description": "Save single route in a request"
+					},
+					"response": []
+				},
+				{
+					"name": "Routes Pageable",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/routes?size=10&page=0",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"routes"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Routes All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/routes/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"routes",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Route Get By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/routes/1",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"routes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Route Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"origin\":{\n        \"city\":{\n            \"code\":\"IS\"\n        }\n    }\n}\n\n//City codunda \"is\" geçen sehirlerden kalkan rotalar",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/routes/search",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"routes",
+								"search"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Search json",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"origin\": {\n        \"id\": \"\",\n        \"name\": \"\",\n        \"iataCode\": \"\",\n        \"city\": {\n            \"name\": \"\",\n            \"code\": \"\",\n            \"country\": {\n                \"name\": \"\",\n                \"code\": \"\"\n            }\n        }\n    },\n    \"destination\": {\n        \"id\": \"\",\n        \"name\": \"\",\n        \"iataCode\": \"\",\n        \"city\": {\n            \"name\": \"\",\n            \"code\": \"\",\n            \"country\": {\n                \"name\": \"\",\n                \"code\": \"\"\n            }\n        }\n    },\n    \"duration\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/routes/search",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"routes",
+										"search"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Route Canceled",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/routes/1/cancel",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"routes",
+								"1",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Airline",
+			"item": [
+				{
+					"name": "Airline Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"iataCode\":\"IATA – AF\",\n    \"name\":\"Air France\"\n}\n\n\t",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/airlines",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"airlines"
+							]
+						},
+						"description": "Save single airline in a request"
+					},
+					"response": []
+				},
+				{
+					"name": "Airlines All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/airlines/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"airlines",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Airlines Pageable",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/airlines/all?size=10&page=0",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"airlines",
+								"all"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Airline Get By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/airlines/1",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"airlines",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Airline Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"\",\n    \"name\": \"a\",\n    \"iataCode\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/airlines/search",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"airlines",
+								"search"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Airline Json",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"\",\n    \"name\": \"\",\n    \"iataCode\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/airlines/search",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"airlines",
+										"search"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Aircraft",
+			"item": [
+				{
+					"name": "Aircraft Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"iataCode\":\"A700\",\n    \"model\":\"Airbus 777 - 300ER\",\n    \"seats\":[\n        {\"seatCode\":\"1A\",\"seatType\":\"ECONOMY\"},\n        {\"seatCode\":\"1B\",\"seatType\":\"ECONOMY\"},\n        {\"seatCode\":\"1C\",\"seatType\":\"ECONOMY\"},\n        {\"seatCode\":\"2A\",\"seatType\":\"FIRST\"},\n        {\"seatCode\":\"2B\",\"seatType\":\"FIRST\"}\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/aircraft_type",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"aircraft_type"
+							]
+						},
+						"description": "Save single aircraft in a request"
+					},
+					"response": [
+						{
+							"name": "Not Valid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"iataCode\":\"31x\",\n    \"model\":\"Airbus x\",\n    \"maxSeat\" : 30,\n    \"seats\":[\n        {\"seatCode\":\"1A\",\"seatType\":\"ECONOMY\"},\n        {\"seatCode\":\"1B\",\"seatType\":\"ECONOMY\"},\n        {\"seatCode\":\"1C\",\"seatType\":\"ECONOMY\"},\n        {\"seatCode\":\"1A\",\"seatType\":\"FIRST\"},\n        {\"seatCode\":\"\",\"seatType\":\"FIRST\"}\n    ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/aircraft_type",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"aircraft_type"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Not Valid 2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"iataCode\":\"31x\",\n    \"model\":\"Airbus x\",\n    \"maxSeat\" : 30,\n    \"seats\":[\n        {\"seatCode\":\"1A\",\"seatType\":\"ECONOMY\"},\n        {\"seatCode\":\"1B\",\"seatType\":\"ECONOMY\"},\n        {\"seatCode\":\"1C\",\"seatType\":\"ECONOMY\"},\n        {\"seatCode\":\"1A\",\"seatType\":\"FIRST\"},\n        {\"seatCode\":\"1A\",\"seatType\":\"FIRST\"}\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/aircraft_type",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"aircraft_type"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Not Valid 3",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"iataCode\":\"a2\",\n    \"model\":\"s\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/aircraft_type",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"aircraft_type"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Aircraft Save Multi with Seat",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n    \"iataCode\":\"73G\",\n    \"model\":\"Boeing 777 - 300ER\",\n    \"seats\":[\n        {\"seatCode\":\"1A\",\"seatType\":\"ECONOMY\"},\n        {\"seatCode\":\"1B\",\"seatType\":\"ECONOMY\"},\n        {\"seatCode\":\"1C\",\"seatType\":\"ECONOMY\"},\n        {\"seatCode\":\"1A\",\"seatType\":\"FIRST\"},\n        {\"seatCode\":\"1B\",\"seatType\":\"FIRST\"}\n    ]\n    },{\n        \"iataCode\":\"733\",\n        \"model\":\"Boeing 737\",\n        \"seats\":[\n        {\"seatCode\":\"1A\",\"seatType\":\"ECONOMY\"},\n        {\"seatCode\":\"1B\",\"seatType\":\"ECONOMY\"},\n        {\"seatCode\":\"1A\",\"seatType\":\"FIRST\"},\n        {\"seatCode\":\"1B\",\"seatType\":\"FIRST\"}\n    ]\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/aircraft_type",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"aircraft_type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aircraft All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/aircraft_type/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"aircraft_type",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aircraft Pageable",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/aircraft_type?size=10&page=0",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"aircraft_type"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aircraft Get By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/aircraft_type/1",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"aircraft_type",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aircraft All  By Grouping SeatType and Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/aircraft_type/group_by_seat_type",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"aircraft_type",
+								"group_by_seat_type"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Flight",
+			"item": [
+				{
+					"name": "Flight Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n    {\r\n        \"flightNumber\":\"TK-IST-DYB\",\r\n        \"flightDate\":\"2023-08-08\",\r\n        \"airlineId\":1,\r\n        \"routeId\": 1,\r\n        \"aircraftTypeId\":1,\r\n        \"flightSeatPrices\":[\r\n            {\"seatType\":\"ECONOMY\",\"price\":150 },\r\n            {\"seatType\":\"FIRST\",\"price\": 258.03}\r\n        ]\r\n    }\r\n    \r\n    //Not active route ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/flights",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"flights"
+							]
+						},
+						"description": "Save single flight in a request"
+					},
+					"response": []
+				},
+				{
+					"name": "Flight All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/flights/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"flights",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Flight Pageable",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/flights?size=10&page=0",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Flight By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/flights/1",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"flights",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Flight Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"legType\": \"INTERNATIONAL\",\r\n    \"airline\": {\r\n        \"name\": \"Turkish Airlines\"\r\n    }\r\n}\r\n\r\n//Turk havayollarının ınternatıonal uçuşları",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/flights/search?size=10&page=0",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"flights",
+								"search"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Flight Json",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"\",\r\n    \"flightNumber\": \"\",\r\n    \"flightDate\": \"\",\r\n    \"legType\": \"\",\r\n    \"airline\": {\r\n        \"id\": \"\",\r\n        \"name\": \"\",\r\n        \"iataCode\": \"\"\r\n    },\r\n    \"aircraftType\": {\r\n        \"id\": \"\",\r\n        \"iataCod\": \"\",\r\n        \"model\": \"\",\r\n        \"maxSeat\": \"\"\r\n    },\r\n    \"route\": {\r\n        \"id\": \"\",\r\n        \"origin\": {\r\n            \"id\": \"\",\r\n            \"name\": \"\",\r\n            \"iataCode\": \"\",\r\n            \"city\": {\r\n                \"name\": \"\",\r\n                \"code\": \"\",\r\n                \"country\": {\r\n                    \"name\": \"\",\r\n                    \"code\": \"\"\r\n                }\r\n            }\r\n        },\r\n        \"destination\": {\r\n            \"id\": \"\",\r\n            \"name\": \"\",\r\n            \"iataCode\": \"\",\r\n            \"city\": {\r\n                \"name\": \"\",\r\n                \"code\": \"\",\r\n                \"country\": {\r\n                    \"name\": \"\",\r\n                    \"code\": \"\"\r\n                }\r\n            }\r\n        },\r\n        \"duration\": \"\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/flights/search",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"flights",
+										"search"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 15 Aug 2023 00:43:55 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Success\": true,\n    \"Status\": 200,\n    \"Current Timestamp\": \"2023-08-15T03:43:55.1616891\",\n    \"Data\": {\n        \"content\": [\n            {\n                \"id\": 1,\n                \"flightNumber\": \"TK100\",\n                \"flightDate\": \"2023-08-08\",\n                \"legType\": \"DOMESTIC\",\n                \"status\": \"CANCELED\",\n                \"airline\": {\n                    \"iataCode\": \"TK\",\n                    \"name\": \"Turkish Airlines\"\n                },\n                \"route\": {\n                    \"id\": 1,\n                    \"status\": \"ACTIVE\",\n                    \"origin\": {\n                        \"id\": 1,\n                        \"name\": \"Sabiha Gökcen Havalimani\",\n                        \"iataCode\": \"SAW\",\n                        \"city\": {\n                            \"id\": 1,\n                            \"name\": \"istanbul\",\n                            \"code\": \"IS\",\n                            \"country\": {\n                                \"id\": 1,\n                                \"name\": \"Türkiye\",\n                                \"code\": \"TK\"\n                            }\n                        }\n                    },\n                    \"destination\": {\n                        \"id\": 2,\n                        \"name\": \"Balıkesir Havalimani\",\n                        \"iataCode\": \"BZI\",\n                        \"city\": {\n                            \"id\": 2,\n                            \"name\": \"Balıkesir\",\n                            \"code\": \"BK\",\n                            \"country\": {\n                                \"id\": 1,\n                                \"name\": \"Türkiye\",\n                                \"code\": \"TK\"\n                            }\n                        }\n                    }\n                },\n                \"flightSeatPrices\": [\n                    {\n                        \"id\": 2,\n                        \"seatType\": \"ECONOMY\",\n                        \"price\": 150\n                    },\n                    {\n                        \"id\": 1,\n                        \"seatType\": \"FIRST\",\n                        \"price\": 258.03\n                    }\n                ]\n            }\n        ],\n        \"pageable\": {\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"offset\": 0,\n            \"pageNumber\": 0,\n            \"pageSize\": 20,\n            \"paged\": true,\n            \"unpaged\": false\n        },\n        \"last\": true,\n        \"totalPages\": 1,\n        \"totalElements\": 1,\n        \"size\": 20,\n        \"number\": 0,\n        \"sort\": {\n            \"empty\": true,\n            \"sorted\": false,\n            \"unsorted\": true\n        },\n        \"numberOfElements\": 1,\n        \"first\": true,\n        \"empty\": false\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Flight Cancel",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/flights/1/cancel",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"flights",
+								"1",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ticket",
+			"item": [
+				{
+					"name": "Ticket Buy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ticketNumber\": \"tk111\",\r\n    \"flightId\": 1,\r\n    \"seatType\": \"FIRST\",\r\n    \"passenger\": {\r\n        \"identityNumber\": \"tck\",\r\n        \"name\": \"ali\",\r\n        \"surname\": \"veti\"\r\n    },\r\n    \"payment\":{\r\n        \"paymentMethod\":\"CREDIT_CARD\",\r\n        \"owner\":\"Ali Veli Bayrak\",\r\n        \"expiredMonth\":1,\r\n        \"expiredYear\":2024,\r\n        \"cvv\":\"021\",\r\n        \"digits\":\"1111-1111-1111-1111\"\r\n    }\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/tickets",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"tickets"
+							]
+						},
+						"description": "Save single ticket in a request"
+					},
+					"response": [
+						{
+							"name": "Not Valid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"ticketNumber\": \"TK1001\",\r\n    \"flightId\": 1,\r\n    \"seatType\": \"ECONOMY\",\r\n    \"passenger\": {\r\n        \"identityNumber\": \"tck\",\r\n        \"name\": \"ali\",\r\n        \"surname\": \"veti\"\r\n    },\r\n    \"payment\":{\r\n        \"paymentMethod\":\"CREDIT_CARD\",\r\n        \"owner\":\"ali\",\r\n        \"expiredMonth\":1,\r\n        \"expiredYear\":2024,\r\n        \"cvv\":\"021\",\r\n        \"digits\":\"1111111-1111-1111\"\r\n    }\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/tickets",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"tickets"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 14 Aug 2023 21:36:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Success\": false,\n    \"Status\": 400,\n    \"Current Timestamp\": \"2023-08-15T00:36:17.9629847\",\n    \"Error\": {\n        \"Not Valid Field\": {\n            \"payment.digits\": \" The credit card number is invalid\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Ticket All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/tickets/all",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"tickets",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ticket Pagable",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/tickets?size=10&page=0",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"tickets"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ticket By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/tickets/2",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"tickets",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NR Ticket Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"payment\": {\r\n        \"paymentMethod\": \"CREDIT_CARD\",\r\n        \"status\": \"REFUNDED\"\r\n    }\r\n}\r\n\r\n//Ödemesi kredi kartı ile olupra refunded olanlar",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/tickets/search",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"tickets",
+								"search"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ticket Json",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"\",\r\n    \"ticketNumber\": \"\",\r\n    \"seatType\": \"\",\r\n    \"status\": \"\",\r\n    \"passenger\": {\r\n        \"identityNumber\": \"\",\r\n        \"name\": \"\",\r\n        \"surname\": \"\"\r\n    },\r\n    \"payment\": {\r\n        \"paymentMethod\": \"\",\r\n        \"total\": \"\",\r\n        \"tax\": \"\",\r\n        \"status\": \"\"\r\n    },\r\n    \"flight\": {\r\n        {\r\n            \"id\": \"\",\r\n            \"flightNumber\": \"\",\r\n            \"flightDate\": \"\",\r\n            \"legType\": \"\",\r\n            \"airline\": {\r\n                \"id\": \"\",\r\n                \"name\": \"\",\r\n                \"iataCode\": \"\"\r\n            },\r\n            \"aircraftType\": {\r\n                \"id\": \"\",\r\n                \"iataCod\": \"\",\r\n                \"model\": \"\",\r\n                \"maxSeat\": \"\"\r\n            },\r\n            \"route\": {\r\n                \"id\": \"\",\r\n                \"origin\": {\r\n                    \"id\": \"\",\r\n                    \"name\": \"\",\r\n                    \"iataCode\": \"\",\r\n                    \"city\": {\r\n                        \"name\": \"\",\r\n                        \"code\": \"\",\r\n                        \"country\": {\r\n                            \"name\": \"\",\r\n                            \"code\": \"\"\r\n                        }\r\n                    }\r\n                },\r\n                \"destination\": {\r\n                    \"id\": \"\",\r\n                    \"name\": \"\",\r\n                    \"iataCode\": \"\",\r\n                    \"city\": {\r\n                        \"name\": \"\",\r\n                        \"code\": \"\",\r\n                        \"country\": {\r\n                            \"name\": \"\",\r\n                            \"code\": \"\"\r\n                        }\r\n                    }\r\n                },\r\n                \"duration\": \"\"\r\n            }\r\n        }\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apiUrl}}/tickets/search",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"tickets",
+										"search"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Ticket Cancel",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/tickets/1/cancel",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"tickets",
+								"1",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
