@@ -13,9 +13,6 @@ import io.upschool.mapper.response.TicketResponseMapper;
 import io.upschool.service.TicketService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -27,9 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tickets")
 @RequiredArgsConstructor
-@Slf4j
 public class TicketController {
-    private static final Logger logger = LoggerFactory.getLogger(TicketController.class);
     private final TicketService ticketService;
     private final TicketResponseMapper ticketResponseMapper;
 
@@ -37,7 +32,6 @@ public class TicketController {
     @PostMapping
     public ResponseEntity<BaseResponse<TicketResponse>> create(@Valid @RequestBody TicketBuyRequest ticketBuyRequest) throws DataNotFoundException, DuplicateEntryException, TicketSoldOut, UnsupportedPaymentType {
         Ticket ticket = ticketService.buy(ticketBuyRequest);
-        logger.warn("ticket buy info");
         var response = BaseResponse.<TicketResponse>builder()
                 .isSuccess(true)
                 .status(HttpStatus.CREATED.value())

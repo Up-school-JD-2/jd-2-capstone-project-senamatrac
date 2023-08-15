@@ -1,7 +1,6 @@
 package io.upschool.mapper.entity;
 
 import io.upschool.dto.request.create.TicketBuyRequest;
-import io.upschool.dto.request.search.TicketSearchRequest;
 import io.upschool.entity.Flight;
 import io.upschool.entity.Passenger;
 import io.upschool.entity.Payment;
@@ -33,5 +32,8 @@ public interface TicketMapper {
     @Mapping(target = "lastModifiedDate", ignore = true)
     Ticket map(TicketBuyRequest ticketBuyRequest, Flight flight, Payment payment, Passenger passenger);
 
-    Ticket map(TicketSearchRequest ticketSearchRequest);
+   /* @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "lastModifiedDate", ignore = true)
+    Ticket map(TicketSearchRequest ticketSearchRequest);*/
 }

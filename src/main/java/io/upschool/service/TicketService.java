@@ -37,13 +37,21 @@ public class TicketService {
     private final FlightSeatPriceRepository flightSeatPriceRepository;
     private final PaymentMapper paymentMapper;
     private final PassengerRepository passengerRepository;
+    private final PaymentService paymentService;
     @Value("${capstone.ticket.taxPercentage}")
     private Double taxPercentage;
+
+    //--------> CREATE <--------\\
+    @Transactional
+    public Ticket buy(Ticket ticket) {
+        return ticketRepository.save(ticket);
+    }
 
     @Transactional
     public Ticket buy(TicketBuyRequest ticketBuyRequest) throws DataNotFoundException, DuplicateEntryException, TicketSoldOut, UnsupportedPaymentType {
         ServiceExceptionUtil.check(ticketRepository::existsByTicketNumber, ticketBuyRequest.getTicketNumber(), () -> new DuplicateEntryException("ticket number:" + ticketBuyRequest.getTicketNumber()));
         Flight flight = flightRepository.findById(ticketBuyRequest.getFlightId()).orElseThrow(() -> new DataNotFoundException("flight id:" + ticketBuyRequest.getFlightId()));
+
         checkCapacity(ticketBuyRequest, flight);
 
         FlightSeatPrice flightSeatPrice = flightSeatPriceRepository.findByFlightIdAndSeatType(ticketBuyRequest.getFlightId(), ticketBuyRequest.getSeatType());
@@ -51,12 +59,18 @@ public class TicketService {
         Payment payment = createPayment(ticketBuyRequest.getPayment(), flightSeatPrice);
         payment.setStatus(PaymentStatus.PENDING);
 
+        var checkPaymentStatus = paymentService.pay(payment).getStatus();
+        if (checkPaymentStatus != PaymentStatus.COMPLETED) {
+            throw new RuntimeException("Payment cannot completed");
+        }
+
         Optional<Passenger> passengerOptional = passengerRepository.findByIdentityNumber(ticketBuyRequest.getPassenger().getIdentityNumber());
         Ticket ticket = passengerOptional.map(passenger -> ticketMapper.map(ticketBuyRequest, flight, payment, passenger))
                 .orElse(ticketMapper.map(ticketBuyRequest, flight, payment));
         ticket.setStatus(TicketStatus.BOOKED);
         return ticketRepository.save(ticket);
     }
+
 
     private Payment createPayment(PaymentCreateRequest paymentCreateRequest, FlightSeatPrice flightSeatPrice) throws UnsupportedPaymentType {
         var subTotal = flightSeatPrice.getPrice();
@@ -80,6 +94,7 @@ public class TicketService {
         }
     }
 
+    //--------> READ <--------\\
     public Page<Ticket> findAll(Pageable pageable) {
         return ticketRepository.findAll(pageable);
     }
@@ -96,19 +111,50 @@ public class TicketService {
         return ticketRepository.findAllByFlight_Id(id, pageable);
     }
 
-    public Ticket cancel(Long id) throws DataNotFoundException {
-        Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new DataNotFoundException("ticket id: " + id));
-        ticket.setStatus(TicketStatus.CANCELED);
-        //TODO çek
-
-        ticket.getPayment().setStatus(PaymentStatus.REFUNDED);
-        return ticketRepository.save(ticket);
+    public List<Ticket> findByFlight_IdAndStatusNot(Long id, TicketStatus ticketStatus) {
+        return ticketRepository.findByFlight_IdAndStatusNot(id, ticketStatus);
     }
 
     public Page<Ticket> search(TicketSearchRequest ticketSearchRequest, Pageable pageable) {
-        Ticket ticket = ticketMapper.map(ticketSearchRequest);
+        Ticket ticket = map(ticketSearchRequest);
         Example<Ticket> search = Example.of(ticket, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
 
         return ticketRepository.findAll(search, pageable);
     }
+
+    //--------> UPDATE <--------\\
+    public Ticket cancel(Long id) throws DataNotFoundException {
+        Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new DataNotFoundException("ticket id: " + id));
+        ticket.setStatus(TicketStatus.CANCELED);
+        ticket.getPayment().setStatus(PaymentStatus.REFUNDED);
+        return ticketRepository.save(ticket);
+    }
+
+
+    private Ticket map(TicketSearchRequest ticketSearchRequest) {
+        var ticketBuilder = Ticket.builder();
+        if (ticketSearchRequest.getPassenger() != null) {
+            Passenger passenger = Passenger.builder()
+                    .identityNumber(ticketSearchRequest.getPassenger().getIdentityNumber())
+                    .name(ticketSearchRequest.getPassenger().getName())
+                    .surname(ticketSearchRequest.getPassenger().getSurname())
+                    .build();
+            ticketBuilder.passenger(passenger);
+        }
+        if (ticketSearchRequest.getPayment() != null && ticketSearchRequest.getPayment().getPaymentMethod() == PaymentMethod.CREDIT_CARD) {
+            CreditCardPayment creditCardPayment = CreditCardPayment.builder()
+                    .status(ticketSearchRequest.getPayment().getStatus())
+                    .tax(ticketSearchRequest.getPayment().getTax())
+                    .total(ticketSearchRequest.getPayment().getTotal())
+                    .build();
+            ticketBuilder.payment(creditCardPayment);
+        }
+        return ticketBuilder
+                .seatType(ticketSearchRequest.getSeatType())
+                .ticketNumber(ticketSearchRequest.getTicketNumber())
+                .status(ticketSearchRequest.getStatus())
+                .build();
+    }
+
+
 }

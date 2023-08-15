@@ -3,6 +3,7 @@ package io.upschool.service;
 import io.upschool.dto.request.create.CountryCreateRequest;
 import io.upschool.dto.request.search.CountrySearchRequest;
 import io.upschool.entity.Country;
+import io.upschool.exception.DataCannotDelete;
 import io.upschool.exception.DataNotFoundException;
 import io.upschool.exception.DuplicateEntryException;
 import io.upschool.exception.ServiceExceptionUtil;
@@ -22,9 +23,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CountryService {
     private final CountryRepository countryRepository;
-
     private final CountryMapper countryMapper;
 
+    //--------> CRATE <--------\\
     @Transactional
     public Country save(CountryCreateRequest countryCreateRequest) throws DuplicateEntryException {
         ServiceExceptionUtil.check(countryRepository::existsByCode, countryCreateRequest.getCode(), () -> new DuplicateEntryException("code"));
@@ -44,24 +45,7 @@ public class CountryService {
         return countryRepository.saveAll(countries);
     }
 
-    @Transactional
-    public Country update(Long id, CountryCreateRequest countryCreateRequest) throws DataNotFoundException, DuplicateEntryException {
-
-        ServiceExceptionUtil.check(countryRepository::existsByCode, countryCreateRequest.getCode(), () -> new DuplicateEntryException("code"));
-
-        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("country with id: " + id));
-        country.setCode(countryCreateRequest.getCode());
-        country.setName(countryCreateRequest.getName());
-
-        return countryRepository.save(country);
-    }
-
-    @Transactional
-    public void deleteById(Long id) throws DataNotFoundException {
-        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("country with id: " + id));
-        countryRepository.delete(country);
-    }
-
+    //--------> READ <--------\\
     public List<Country> findAll() {
         return countryRepository.findAll();
     }
@@ -76,7 +60,29 @@ public class CountryService {
     }
 
     public Country findById(Long id) throws DataNotFoundException {
-        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("airport id:" + id));
-        return country;
+        return countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("airport id:" + id));
+    }
+
+    //--------> UPDATE <--------\\
+    @Transactional
+    public Country update(Long id, CountryCreateRequest countryCreateRequest) throws DataNotFoundException, DuplicateEntryException {
+
+        ServiceExceptionUtil.check(countryRepository::existsByCode, countryCreateRequest.getCode(), () -> new DuplicateEntryException("code"));
+
+        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("country with id: " + id));
+        country.setCode(countryCreateRequest.getCode());
+        country.setName(countryCreateRequest.getName());
+
+        return countryRepository.save(country);
+    }
+
+    //--------> DELETE <--------\\
+    @Transactional
+    public void deleteById(Long id) throws DataNotFoundException, DataCannotDelete {
+        Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("country with id: " + id));
+        if (!country.getCities().isEmpty()) {
+            throw new DataCannotDelete("Country cannot delete cause has cities");
+        }
+        countryRepository.delete(country);
     }
 }

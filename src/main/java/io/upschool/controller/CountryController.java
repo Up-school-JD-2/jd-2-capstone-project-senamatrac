@@ -103,7 +103,7 @@ public class CountryController {
         var response = BaseResponse.<String>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
-                .responseBody("soon")
+                .responseBody("Deleting is success")
                 .build();
         return ResponseEntity.ok(response);
     }

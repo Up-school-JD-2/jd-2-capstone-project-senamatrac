@@ -5,6 +5,7 @@ import io.upschool.dto.request.search.AircraftTypeSearchRequest;
 import io.upschool.dto.response.AircraftTypeResponse;
 import io.upschool.dto.response.BaseResponse;
 import io.upschool.entity.AircraftType;
+import io.upschool.enums.SeatType;
 import io.upschool.exception.DataCannotDelete;
 import io.upschool.exception.DataNotFoundException;
 import io.upschool.exception.DuplicateEntryException;
@@ -19,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 @RestController
 @RequestMapping("/api/aircraft_type")
@@ -91,6 +94,17 @@ public class AircraftTypeController {
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
                 .responseBody(aircraftTypePage.map(aircraftTypeResponseMapping::map))
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/group_by_seat_type")
+    public ResponseEntity<BaseResponse<Object>> getAllAircraftTypesGroupingBySeatType() {
+        Map<String, ConcurrentMap<SeatType, Long>> aircraftTypeList = aircraftTypeService.findAllAndGroupBySeatType();
+        var response = BaseResponse.<Object>builder()
+                .isSuccess(true)
+                .status(HttpStatus.OK.value())
+                .responseBody(aircraftTypeList)
                 .build();
         return ResponseEntity.ok(response);
     }

@@ -32,6 +32,7 @@ public class AirlineService {
         return airlineRepository.save(airline);
     }
 
+    @Transactional
     public List<Airline> saveAll(List<AirlineCreateRequest> airlines) {
         return airlines.stream().map(airline -> {
             try {

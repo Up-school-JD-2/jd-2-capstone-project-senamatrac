@@ -4,14 +4,11 @@ import io.upschool.dto.request.create.CityCreateRequest;
 import io.upschool.dto.request.search.CitySearchRequest;
 import io.upschool.entity.City;
 import io.upschool.entity.Country;
-import io.upschool.exception.DataCannotDelete;
 import io.upschool.exception.DataNotFoundException;
 import io.upschool.exception.DuplicateEntryException;
 import io.upschool.exception.ServiceExceptionUtil;
 import io.upschool.mapper.entity.CityMapper;
-import io.upschool.repository.AirportRepository;
 import io.upschool.repository.CityRepository;
-import io.upschool.repository.CountryRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
@@ -27,15 +24,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CityService {
     private final CityRepository cityRepository;
-    private final CountryRepository countryRepository;
-    private final AirportRepository airportRepository;
+    private final CountryService countryService;
     private final CityMapper cityMapper;
 
     //--------> CREATE <--------\\
     @Transactional
     public City save(CityCreateRequest cityCreateRequest) throws DuplicateEntryException, DataNotFoundException {
         ServiceExceptionUtil.check(cityRepository::existsByCode, cityCreateRequest.getCode(), () -> new DuplicateEntryException("code"));
-        Country country = countryRepository.findById(cityCreateRequest.getCountryId()).orElseThrow(() -> new DataNotFoundException("city's country id: " + cityCreateRequest.getCountryId()));
+        Country country = countryService.findById(cityCreateRequest.getCountryId());
         City city = City.builder()
                 .code(cityCreateRequest.getCode())
                 .name(cityCreateRequest.getName())
@@ -76,26 +72,5 @@ public class CityService {
                         .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
 
         return cityRepository.findAll(search, pageable);
-    }
-
-    //--------> UPDATE <--------\\
-    @Transactional
-    public City update(Long id, CityCreateRequest cityCreateRequest) throws DataNotFoundException, DuplicateEntryException {
-        ServiceExceptionUtil.check(cityRepository::existsByCode, cityCreateRequest.getCode(), () -> new DuplicateEntryException("code"));
-        City city = cityRepository.findById(id).orElseThrow(() -> new DataNotFoundException("city id: " + id));
-        Country country = countryRepository.findById(cityCreateRequest.getCountryId()).orElseThrow(() -> new DataNotFoundException("city's country id:" + cityCreateRequest.getCountryId()));
-
-        city.setCode(cityCreateRequest.getCode());
-        city.setName(cityCreateRequest.getName());
-        city.setCountry(country);
-
-        return cityRepository.save(city);
-    }
-
-    //--------> DELETE <--------\\
-    @Transactional
-    public void delete(Long id) throws DataNotFoundException, DataCannotDelete {
-
-
     }
 }

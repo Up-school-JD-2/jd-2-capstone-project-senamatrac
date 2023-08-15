@@ -9,8 +9,7 @@ import io.upschool.exception.DuplicateEntryException;
 import io.upschool.exception.ServiceExceptionUtil;
 import io.upschool.mapper.entity.FlightMapper;
 import io.upschool.mapper.entity.FlightSeatPriceMapper;
-import io.upschool.mapper.response.FlightResponseMapper;
-import io.upschool.repository.*;
+import io.upschool.repository.FlightRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -28,21 +27,19 @@ public class FlightService {
     public final FlightRepository flightRepository;
     public final FlightMapper flightMapper;
     public final FlightSeatPriceMapper flightSeatPriceMapper;
-    private final AirlineRepository airlineRepository;
-    private final RouteRepository routeRepository;
-    private final FlightResponseMapper flightResponseMapper;
-    private final AircraftTypeRepository aircraftTypeRepository;
-    private final FlightSeatPriceRepository flightSeatPriceRepository;
-    private final TicketRepository ticketRepository;
-    private final PaymentRepository paymentRepository;
+    private final AirlineService airlineService;
+    private final RouteService routeService;
+    private final AircraftTypeService aircraftTypeService;
+    private final TicketService ticketService;
 
     //--------> CREATE <--------\\
+    @Transactional
     public Flight save(FlightCreateRequest flightCreateRequest) throws DataNotFoundException, DuplicateEntryException {
         ServiceExceptionUtil.check(flightRepository::existsByFlightNumber, flightCreateRequest.getFlightNumber(), () -> new DuplicateEntryException("flight number : " + flightCreateRequest.getFlightNumber()));
 
-        Airline airline = airlineRepository.findById(flightCreateRequest.getAirlineId()).orElseThrow(() -> new DataNotFoundException("airline id:" + flightCreateRequest.getAirlineId()));
-        Route route = routeRepository.findById(flightCreateRequest.getRouteId()).orElseThrow(() -> new DataNotFoundException("route id:" + flightCreateRequest.getRouteId()));
-        AircraftType aircraftType = aircraftTypeRepository.findById(flightCreateRequest.getAircraftTypeId()).orElseThrow(() -> new DataNotFoundException("aircraft type id:" + flightCreateRequest.getAircraftTypeId()));
+        Airline airline = airlineService.findById(flightCreateRequest.getAirlineId());
+        Route route = routeService.findByIdAndStatus(flightCreateRequest.getRouteId(), RouteStatus.ACTIVE);
+        AircraftType aircraftType = aircraftTypeService.findById(flightCreateRequest.getAircraftTypeId());
 
         LegType legType = !Objects.equals(route.getOrigin().getCity().getCountry().getName(), route.getDestination().getCity().getCountry().getName()) ? LegType.INTERNATIONAL : LegType.DOMESTIC;
 
@@ -53,6 +50,7 @@ public class FlightService {
         return flightRepository.save(flight);
     }
 
+    @Transactional
     public List<Flight> saveAll(List<FlightCreateRequest> flightCreateRequests) {
         return flightCreateRequests.stream().map(flightCreateRequest ->
                 {
@@ -65,6 +63,7 @@ public class FlightService {
         ).toList();
     }
 
+    //--------> READ <--------\\
     public Page<Flight> findAll(Pageable pageable) {
         return flightRepository.findAll(pageable);
     }
@@ -84,20 +83,25 @@ public class FlightService {
         return flightRepository.findAll(example, pageable);
     }
 
+    //--------> UPDATE <--------\\
     @Transactional
     public Flight cancel(Long id) throws DataNotFoundException {
         Flight flight = flightRepository.findById(id).orElseThrow(() -> new DataNotFoundException("city id: " + id));
         flight.setStatus(FlightStatus.CANCELED);
 
-        List<Ticket> tickets = ticketRepository.findByFlight_IdAndStatusNot(id, TicketStatus.CANCELED);
+        List<Ticket> tickets = ticketService.findByFlight_IdAndStatusNot(id, TicketStatus.CANCELED);
         if (!tickets.isEmpty()) {
             tickets.forEach(ticket -> {
                 ticket.setStatus(TicketStatus.CANCELED);
                 ticket.getPayment().setStatus(PaymentStatus.REFUNDED);
-                ticketRepository.save(ticket);
+                ticketService.buy(ticket);
             });
         }
 
         return flightRepository.save(flight);
+    }
+
+    public List<Flight> findByRoute_Id(Long id) {
+        return flightRepository.findByRoute_Id(id);
     }
 }

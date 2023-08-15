@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,8 +83,8 @@ public class RouteController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping(value = "/search", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse<Page<RouteResponse>>> search(@RequestBody RouteSearchRequest routeSearchRequest, Pageable pageable) {
+    @GetMapping(value = "/search")
+    public ResponseEntity<BaseResponse<Page<RouteResponse>>> search(@Valid @RequestBody RouteSearchRequest routeSearchRequest, Pageable pageable) {
         Page<Route> routes = routeService.search(routeSearchRequest, pageable);
         var response = BaseResponse.<Page<RouteResponse>>builder()
                 .isSuccess(true)

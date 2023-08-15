@@ -1,15 +1,12 @@
 package io.upschool.mapper.entity;
 
 import io.upschool.dto.request.create.CreditCardPaymentCreateRequest;
-import io.upschool.dto.request.search.PaymentSearchRequest;
 import io.upschool.entity.CreditCardPayment;
-import io.upschool.entity.Payment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 @Mapper(componentModel = "spring")
 public interface PaymentMapper {
@@ -33,5 +30,4 @@ public interface PaymentMapper {
         return owner.replaceAll("(?<=\\w{1})[^\\s]", "*");
     }
 
-    Optional<Payment> map(PaymentSearchRequest paymentSearchRequest);
 }

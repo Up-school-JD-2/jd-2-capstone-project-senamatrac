@@ -11,7 +11,6 @@ import io.upschool.exception.DataNotFoundException;
 import io.upschool.exception.DuplicateEntryException;
 import io.upschool.exception.ServiceExceptionUtil;
 import io.upschool.mapper.entity.RouteMapper;
-import io.upschool.repository.AirportRepository;
 import io.upschool.repository.FlightRepository;
 import io.upschool.repository.RouteRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,15 +27,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RouteService {
     private final RouteRepository routeRepository;
-    private final AirportRepository airportRepository;
-    private final RouteMapper routeMapper;
+    private final AirportService airportService;
     private final FlightRepository flightRepository;
+    private final RouteMapper routeMapper;
 
     //--------> CREATE <--------\\
     public Route save(RouteCreateRequest routeCreateRequest) throws DuplicateEntryException, DataNotFoundException {
         ServiceExceptionUtil.check(() -> routeRepository.existsByOrigin_IdAndDestination_Id(routeCreateRequest.getOriginAirportId(), routeCreateRequest.getDestinationAirportId()), () -> new DuplicateEntryException("origin-destination: " + routeCreateRequest.getOriginAirportId() + "-" + routeCreateRequest.getDestinationAirportId()));
-        Airport origin = airportRepository.findById(routeCreateRequest.getOriginAirportId()).orElseThrow(() -> new DataNotFoundException("origin airport id:" + routeCreateRequest.getOriginAirportId()));
-        Airport destination = airportRepository.findById(routeCreateRequest.getDestinationAirportId()).orElseThrow(() -> new DataNotFoundException("destination airport id:" + routeCreateRequest.getDestinationAirportId()));
+        Airport origin = airportService.findById(routeCreateRequest.getOriginAirportId());
+        Airport destination = airportService.findById(routeCreateRequest.getDestinationAirportId());
 
         Route r = Route.builder().origin(origin).destination(destination).duration(routeCreateRequest.getDuration()).status(RouteStatus.ACTIVE).build();
         return routeRepository.save(r);
@@ -61,13 +60,16 @@ public class RouteService {
     }
 
     public Route findById(Long id) throws DataNotFoundException {
-        Route route = routeRepository.findById(id).orElseThrow(() -> new DataNotFoundException("route id:" + id));
-        return route;
+        return routeRepository.findById(id).orElseThrow(() -> new DataNotFoundException("route id:" + id));
+    }
+
+    public Route findByIdAndStatus(Long id, RouteStatus status) throws DataNotFoundException {
+        return routeRepository.findByIdAndStatus(id, status).orElseThrow(() -> new DataNotFoundException("route id:" + id + " with status: active"));
     }
 
     public Page<Route> search(RouteSearchRequest routeSearchRequest, Pageable pageable) {
         Route route = routeMapper.map(routeSearchRequest);
-        Example<Route> search = Example.of(route, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
+        Example<Route> search = Example.of(route, ExampleMatcher.matching().withIgnoreCase().withIgnoreNullValues().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
 
         return routeRepository.findAll(search, pageable);
     }
@@ -84,4 +86,6 @@ public class RouteService {
 
         return routeRepository.save(route);
     }
+
+
 }
