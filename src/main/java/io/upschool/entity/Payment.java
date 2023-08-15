@@ -24,7 +24,7 @@ import java.math.BigDecimal;
         discriminatorType = DiscriminatorType.STRING)
 public abstract class Payment extends BaseEntity {
 
-    @Column(name = "payment_method", nullable = false,insertable=false, updatable=false)
+    @Column(name = "payment_method", nullable = false, insertable = false, updatable = false)
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
@@ -35,6 +35,7 @@ public abstract class Payment extends BaseEntity {
     private BigDecimal tax;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private PaymentStatus status;
 
 

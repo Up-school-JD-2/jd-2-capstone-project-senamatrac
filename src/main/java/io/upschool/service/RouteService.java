@@ -1,15 +1,18 @@
 package io.upschool.service;
 
-import io.upschool.dto.request.RouteRequest;
+import io.upschool.dto.request.create.RouteCreateRequest;
 import io.upschool.dto.request.search.RouteSearchRequest;
 import io.upschool.entity.Airport;
+import io.upschool.entity.Flight;
 import io.upschool.entity.Route;
 import io.upschool.enums.RouteStatus;
+import io.upschool.exception.CannotChangeStatus;
 import io.upschool.exception.DataNotFoundException;
 import io.upschool.exception.DuplicateEntryException;
 import io.upschool.exception.ServiceExceptionUtil;
 import io.upschool.mapper.entity.RouteMapper;
 import io.upschool.repository.AirportRepository;
+import io.upschool.repository.FlightRepository;
 import io.upschool.repository.RouteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
@@ -27,21 +30,22 @@ public class RouteService {
     private final RouteRepository routeRepository;
     private final AirportRepository airportRepository;
     private final RouteMapper routeMapper;
+    private final FlightRepository flightRepository;
 
     //--------> CREATE <--------\\
-    public Route save(RouteRequest routeRequest) throws DuplicateEntryException, DataNotFoundException {
-        ServiceExceptionUtil.check(() -> routeRepository.existsByOrigin_IdAndDestination_Id(routeRequest.getOriginAirportId(), routeRequest.getDestinationAirportId()), () -> new DuplicateEntryException("origin-destination: " + routeRequest.getOriginAirportId() + "-" + routeRequest.getDestinationAirportId()));
-        Airport origin = airportRepository.findById(routeRequest.getOriginAirportId()).orElseThrow(() -> new DataNotFoundException("origin airport id:" + routeRequest.getOriginAirportId()));
-        Airport destination = airportRepository.findById(routeRequest.getDestinationAirportId()).orElseThrow(() -> new DataNotFoundException("destination airport id:" + routeRequest.getDestinationAirportId()));
+    public Route save(RouteCreateRequest routeCreateRequest) throws DuplicateEntryException, DataNotFoundException {
+        ServiceExceptionUtil.check(() -> routeRepository.existsByOrigin_IdAndDestination_Id(routeCreateRequest.getOriginAirportId(), routeCreateRequest.getDestinationAirportId()), () -> new DuplicateEntryException("origin-destination: " + routeCreateRequest.getOriginAirportId() + "-" + routeCreateRequest.getDestinationAirportId()));
+        Airport origin = airportRepository.findById(routeCreateRequest.getOriginAirportId()).orElseThrow(() -> new DataNotFoundException("origin airport id:" + routeCreateRequest.getOriginAirportId()));
+        Airport destination = airportRepository.findById(routeCreateRequest.getDestinationAirportId()).orElseThrow(() -> new DataNotFoundException("destination airport id:" + routeCreateRequest.getDestinationAirportId()));
 
-        Route r = Route.builder().origin(origin).destination(destination).duration(routeRequest.getDuration()).build();
+        Route r = Route.builder().origin(origin).destination(destination).duration(routeCreateRequest.getDuration()).status(RouteStatus.ACTIVE).build();
         return routeRepository.save(r);
     }
 
-    public List<Route> saveAll(List<RouteRequest> routeRequests) throws DuplicateEntryException, DataNotFoundException {
+    public List<Route> saveAll(List<RouteCreateRequest> routeCreateRequests) throws DuplicateEntryException, DataNotFoundException {
         List<Route> list = new ArrayList<>();
-        for (RouteRequest routeRequest : routeRequests) {
-            Route savedRoute = save(routeRequest);
+        for (RouteCreateRequest routeCreateRequest : routeCreateRequests) {
+            Route savedRoute = save(routeCreateRequest);
             list.add(savedRoute);
         }
         return list;
@@ -70,6 +74,11 @@ public class RouteService {
 
     public Route cancel(Long id) throws DataNotFoundException {
         Route route = routeRepository.findById(id).orElseThrow(() -> new DataNotFoundException("route id:" + id));
+        List<Flight> flights = flightRepository.findByRoute_Id(id);
+
+        if (!flights.isEmpty()) {
+            throw new CannotChangeStatus("The route cannot cancel cause it has some flights active on it");
+        }
 
         route.setStatus(RouteStatus.CANCELED);
 

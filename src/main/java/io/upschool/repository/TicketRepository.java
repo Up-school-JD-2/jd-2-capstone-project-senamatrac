@@ -9,14 +9,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     boolean existsByTicketNumber(String ticketNumber);
 
-    List<Ticket> findByFlight_Id(Long flightId);
+    List<Ticket> findByFlight_IdAndStatusNot(Long flightId, TicketStatus status);
 
     Page<Ticket> findAllByFlight_Id(Long id, Pageable pageable);
 

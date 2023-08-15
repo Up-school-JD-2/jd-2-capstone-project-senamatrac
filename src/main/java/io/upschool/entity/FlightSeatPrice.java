@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Audited
 @Entity
 @Table(name = "flight_seat_price")
-public class FlightSeatPrice extends BaseEntity{
+public class FlightSeatPrice extends BaseEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "flight_id")

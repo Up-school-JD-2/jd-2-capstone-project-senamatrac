@@ -1,6 +1,8 @@
 package io.upschool.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.envers.Audited;
 
@@ -13,7 +15,7 @@ import org.hibernate.envers.Audited;
 @Audited
 @Entity
 @Table(name = "passenger")
-public class Passenger extends BaseEntity{
+public class Passenger extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String identityNumber;

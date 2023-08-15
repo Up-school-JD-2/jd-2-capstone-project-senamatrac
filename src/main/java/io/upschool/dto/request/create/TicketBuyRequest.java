@@ -1,4 +1,4 @@
-package io.upschool.dto.request;
+package io.upschool.dto.request.create;
 
 import io.upschool.enums.SeatType;
 import jakarta.validation.Valid;
@@ -25,10 +25,10 @@ public class TicketBuyRequest {
 
     @Valid
     @NotNull
-    private PassengerRequest passenger;
+    private PassengerCreateRequest passenger;
 
     @Valid
     @NotNull
-    private PaymentRequest paymentRequest;
+    private PaymentCreateRequest payment;
 
 }

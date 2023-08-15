@@ -1,5 +1,6 @@
 package io.upschool.dto.response;
 
+import io.upschool.enums.FlightStatus;
 import io.upschool.enums.LegType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,7 @@ public class FlightResponse {
     private String flightNumber;
     private LocalDate flightDate;
     private LegType legType;
+    private FlightStatus status;
     private AirlineResponse airline;
     private RouteResponse route;
     private Set<FlightSeatPriceResponse> flightSeatPrices;

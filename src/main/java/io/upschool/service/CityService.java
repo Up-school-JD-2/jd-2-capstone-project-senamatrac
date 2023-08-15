@@ -1,6 +1,6 @@
 package io.upschool.service;
 
-import io.upschool.dto.request.CityRequest;
+import io.upschool.dto.request.create.CityCreateRequest;
 import io.upschool.dto.request.search.CitySearchRequest;
 import io.upschool.entity.City;
 import io.upschool.entity.Country;
@@ -33,20 +33,20 @@ public class CityService {
 
     //--------> CREATE <--------\\
     @Transactional
-    public City save(CityRequest cityRequest) throws DuplicateEntryException, DataNotFoundException {
-        ServiceExceptionUtil.check(cityRepository::existsByCode, cityRequest.getCode(), () -> new DuplicateEntryException("code"));
-        Country country = countryRepository.findById(cityRequest.getCountryId()).orElseThrow(() -> new DataNotFoundException("city's country id: " + cityRequest.getCountryId()));
+    public City save(CityCreateRequest cityCreateRequest) throws DuplicateEntryException, DataNotFoundException {
+        ServiceExceptionUtil.check(cityRepository::existsByCode, cityCreateRequest.getCode(), () -> new DuplicateEntryException("code"));
+        Country country = countryRepository.findById(cityCreateRequest.getCountryId()).orElseThrow(() -> new DataNotFoundException("city's country id: " + cityCreateRequest.getCountryId()));
         City city = City.builder()
-                .code(cityRequest.getCode())
-                .name(cityRequest.getName())
+                .code(cityCreateRequest.getCode())
+                .name(cityCreateRequest.getName())
                 .country(country).build();
 
         return cityRepository.save(city);
     }
 
     @Transactional
-    public List<City> saveAll(List<CityRequest> cityRequests) {
-        return cityRequests.stream().map(x -> {
+    public List<City> saveAll(List<CityCreateRequest> cityCreateRequests) {
+        return cityCreateRequests.stream().map(x -> {
             try {
                 return save(x);
             } catch (DuplicateEntryException | DataNotFoundException e) {
@@ -80,13 +80,13 @@ public class CityService {
 
     //--------> UPDATE <--------\\
     @Transactional
-    public City update(Long id, CityRequest cityRequest) throws DataNotFoundException, DuplicateEntryException {
-        ServiceExceptionUtil.check(cityRepository::existsByCode, cityRequest.getCode(), () -> new DuplicateEntryException("code"));
+    public City update(Long id, CityCreateRequest cityCreateRequest) throws DataNotFoundException, DuplicateEntryException {
+        ServiceExceptionUtil.check(cityRepository::existsByCode, cityCreateRequest.getCode(), () -> new DuplicateEntryException("code"));
         City city = cityRepository.findById(id).orElseThrow(() -> new DataNotFoundException("city id: " + id));
-        Country country = countryRepository.findById(cityRequest.getCountryId()).orElseThrow(() -> new DataNotFoundException("city's country id:" + cityRequest.getCountryId()));
+        Country country = countryRepository.findById(cityCreateRequest.getCountryId()).orElseThrow(() -> new DataNotFoundException("city's country id:" + cityCreateRequest.getCountryId()));
 
-        city.setCode(cityRequest.getCode());
-        city.setName(cityRequest.getName());
+        city.setCode(cityCreateRequest.getCode());
+        city.setName(cityCreateRequest.getName());
         city.setCountry(country);
 
         return cityRepository.save(city);

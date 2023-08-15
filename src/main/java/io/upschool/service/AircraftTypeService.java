@@ -1,7 +1,7 @@
 package io.upschool.service;
 
+import io.upschool.dto.request.create.AircraftTypeCreateRequest;
 import io.upschool.dto.request.search.AircraftTypeSearchRequest;
-import io.upschool.dto.request.AircraftTypeRequest;
 import io.upschool.entity.AircraftType;
 import io.upschool.exception.DataCannotDelete;
 import io.upschool.exception.DataNotFoundException;
@@ -28,16 +28,17 @@ public class AircraftTypeService {
 
 
     @Transactional
-    public AircraftType save(AircraftTypeRequest aircraftTypeRequest) throws DuplicateEntryException {
-        ServiceExceptionUtil.check(aircraftTypeRepository::existsByIataCode, aircraftTypeRequest.getIataCode(), () -> new DuplicateEntryException("iata code"));
-        AircraftType aircraftType = aircraftTypeMapper.map(aircraftTypeRequest);
+    public AircraftType save(AircraftTypeCreateRequest aircraftTypeCreateRequest) throws DuplicateEntryException {
+        ServiceExceptionUtil.check(aircraftTypeRepository::existsByIataCode, aircraftTypeCreateRequest.getIataCode(), () -> new DuplicateEntryException("iata code"));
+        AircraftType aircraftType = aircraftTypeMapper.map(aircraftTypeCreateRequest);
         Optional.ofNullable(aircraftType.getSeats())
                 .ifPresent(seats -> seats.forEach(seat -> seat.setAircraftType(aircraftType)));
         return aircraftTypeRepository.save(aircraftType);
     }
+
     @Transactional
-    public List<AircraftType> saveAll(List<AircraftTypeRequest> aircraftTypeRequests) {
-        return aircraftTypeRequests.stream().map(x -> {
+    public List<AircraftType> saveAll(List<AircraftTypeCreateRequest> aircraftTypeCreateRequests) {
+        return aircraftTypeCreateRequests.stream().map(x -> {
             try {
                 return save(x);
             } catch (DuplicateEntryException e) {
@@ -63,13 +64,13 @@ public class AircraftTypeService {
     }
 
     //--------> UPDATE <--------\\
-    public AircraftType update(Long id, AircraftTypeRequest aircraftTypeRequest) throws DataNotFoundException, DuplicateEntryException {
+    public AircraftType update(Long id, AircraftTypeCreateRequest aircraftTypeCreateRequest) throws DataNotFoundException, DuplicateEntryException {
         AircraftType aircraftType = aircraftTypeRepository.findById(id).orElseThrow(() -> new DataNotFoundException("aircraft id: " + id));
         ServiceExceptionUtil.check(aircraftTypeRepository::existsByIataCode, aircraftType.getIataCode(), () -> new DuplicateEntryException("iata code"));
 
-        aircraftType.setIataCode(aircraftTypeRequest.getIataCode());
-        aircraftType.setModel(aircraftTypeRequest.getModel());
-        aircraftType.setSeats(seatMapper.map(aircraftTypeRequest.getSeats()));
+        aircraftType.setIataCode(aircraftTypeCreateRequest.getIataCode());
+        aircraftType.setModel(aircraftTypeCreateRequest.getModel());
+        aircraftType.setSeats(seatMapper.map(aircraftTypeCreateRequest.getSeats()));
 
         return aircraftTypeRepository.save(aircraftType);
     }

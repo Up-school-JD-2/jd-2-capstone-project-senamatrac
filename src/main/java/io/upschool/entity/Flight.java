@@ -4,11 +4,13 @@ import io.upschool.enums.FlightStatus;
 import io.upschool.enums.FlightType;
 import io.upschool.enums.LegType;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.envers.Audited;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 
@@ -16,11 +18,10 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Audited
 @Entity
 @Table(name = "flight")
-public class Flight extends BaseEntity{
+public class Flight extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String flightNumber;
@@ -28,15 +29,15 @@ public class Flight extends BaseEntity{
     @Column(nullable = false)
     private LocalDate flightDate;
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private FlightStatus status;
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private FlightType flightType;
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private LegType legType;
 

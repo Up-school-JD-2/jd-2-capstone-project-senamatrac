@@ -2,7 +2,6 @@ package io.upschool.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
 
 
@@ -14,7 +13,7 @@ import org.hibernate.envers.Audited;
 @Audited
 @Entity
 @Table(name = "airport")
-public class Airport extends BaseEntity{
+public class Airport extends BaseEntity {
 
     @Column(nullable = false)
     private String name;

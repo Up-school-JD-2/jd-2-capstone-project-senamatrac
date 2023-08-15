@@ -1,17 +1,18 @@
-package io.upschool.dto.request;
+package io.upschool.dto.request.create;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
 @Setter
-public class FlightRequest {
+public class FlightCreateRequest {
 
     @NotBlank
     private String flightNumber;
@@ -25,5 +26,5 @@ public class FlightRequest {
     private Long routeId;
     @Valid
     @NotEmpty
-    private Set<FlightSeatPriceRequest> flightSeatPrices;
+    private Set<FlightSeatPriceCreateRequest> flightSeatPrices;
 }

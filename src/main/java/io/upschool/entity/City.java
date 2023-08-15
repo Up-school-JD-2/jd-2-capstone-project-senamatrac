@@ -12,7 +12,7 @@ import org.hibernate.envers.Audited;
 @Audited
 @Entity
 @Table(name = "city")
-public class City extends BaseEntity{
+public class City extends BaseEntity {
 
     @Column(nullable = false)
     private String name;

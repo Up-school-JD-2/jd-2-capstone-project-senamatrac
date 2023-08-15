@@ -1,13 +1,14 @@
-package io.upschool.dto.request;
+package io.upschool.dto.request.create;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.Duration;
 
 @Getter
 @Setter
-public class RouteRequest {
+public class RouteCreateRequest {
     @NotNull
     private Long originAirportId;
 

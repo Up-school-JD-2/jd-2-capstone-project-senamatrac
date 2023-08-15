@@ -1,11 +1,12 @@
-package io.upschool.dto.request;
+package io.upschool.dto.request.create;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
-public class PassengerRequest {
+public class PassengerCreateRequest {
     @NotBlank
     private String identityNumber;
 

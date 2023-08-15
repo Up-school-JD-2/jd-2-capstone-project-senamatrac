@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class AircraftTypeSearchRequest {
+    private Long id;
     private String iataCode;
     private String model;
     private Integer maxSeat;

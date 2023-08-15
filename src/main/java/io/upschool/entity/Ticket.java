@@ -6,15 +6,15 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.envers.Audited;
 
-@Entity
-@Table(name = "ticket")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Audited
-public class Ticket extends BaseEntity{
+@Entity
+@Table(name = "ticket")
+public class Ticket extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String ticketNumber;
 
@@ -29,11 +29,11 @@ public class Ticket extends BaseEntity{
     @JoinColumn(name = "flight_id")
     private Flight flight;
 
-    @ManyToOne(cascade = CascadeType.PERSIST,optional = false)
+    @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
     @JoinColumn(name = "passenger_id")
     private Passenger passenger;
 
-    @OneToOne(cascade = CascadeType.PERSIST,optional = false)
+    @OneToOne(cascade = CascadeType.PERSIST, optional = false)
     @JoinColumn(name = "payment_id")
     private Payment payment;
 

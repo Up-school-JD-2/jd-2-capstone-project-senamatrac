@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AirportSearchRequest {
-    private Long id;
+public class PassengerSearchRequest {
+    private String identityNumber;
     private String name;
-    private String iataCode;
-    private CitySearchRequest city;
+    private String surname;
 }

@@ -12,6 +12,7 @@ import java.time.Duration;
 @NoArgsConstructor
 @Builder
 public class RouteSearchRequest {
+    private Long id;
     private AirportSearchRequest origin;
     private AirportSearchRequest destination;
     private Duration duration;

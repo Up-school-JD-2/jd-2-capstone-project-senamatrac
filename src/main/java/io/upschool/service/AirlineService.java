@@ -1,9 +1,8 @@
 package io.upschool.service;
 
-import io.upschool.dto.request.AirlineRequest;
+import io.upschool.dto.request.create.AirlineCreateRequest;
 import io.upschool.dto.request.search.AirlineSearchRequest;
 import io.upschool.entity.Airline;
-import io.upschool.entity.City;
 import io.upschool.exception.DataNotFoundException;
 import io.upschool.exception.DuplicateEntryException;
 import io.upschool.exception.ServiceExceptionUtil;
@@ -27,13 +26,13 @@ public class AirlineService {
 
     //--------> CREATE <--------\\
     @Transactional
-    public Airline save(AirlineRequest airlineRequest) throws DuplicateEntryException {
-        ServiceExceptionUtil.check(airlineRepository::existsByIataCode, airlineRequest.getIataCode(), () -> new DuplicateEntryException("iata code"));
-        Airline airline = airlineMapper.map(airlineRequest);
+    public Airline save(AirlineCreateRequest airlineCreateRequest) throws DuplicateEntryException {
+        ServiceExceptionUtil.check(airlineRepository::existsByIataCode, airlineCreateRequest.getIataCode(), () -> new DuplicateEntryException("iata code"));
+        Airline airline = airlineMapper.map(airlineCreateRequest);
         return airlineRepository.save(airline);
     }
 
-    public List<Airline> saveAll(List<AirlineRequest> airlines) {
+    public List<Airline> saveAll(List<AirlineCreateRequest> airlines) {
         return airlines.stream().map(airline -> {
             try {
                 return save(airline);
@@ -63,11 +62,11 @@ public class AirlineService {
     }
 
     //--------> UPDATE <--------\\
-    public Airline update(Long id, AirlineRequest airlineRequest) throws DataNotFoundException, DuplicateEntryException {
-        ServiceExceptionUtil.check(airlineRepository::existsByIataCode, airlineRequest.getIataCode(), () -> new DuplicateEntryException("iata code"));
+    public Airline update(Long id, AirlineCreateRequest airlineCreateRequest) throws DataNotFoundException, DuplicateEntryException {
+        ServiceExceptionUtil.check(airlineRepository::existsByIataCode, airlineCreateRequest.getIataCode(), () -> new DuplicateEntryException("iata code"));
 
         Airline airline = airlineRepository.findById(id).orElseThrow(() -> new DataNotFoundException("airline id:" + id));
-        airline.setName(airlineRequest.getName());
+        airline.setName(airlineCreateRequest.getName());
         airline.setIataCode(airline.getIataCode());
         return airline;
     }

@@ -1,11 +1,10 @@
 package io.upschool.controller;
 
-import io.upschool.dto.response.BaseResponse;
-import io.upschool.dto.request.AirportRequest;
+import io.upschool.dto.request.create.AirportCreateRequest;
 import io.upschool.dto.request.search.AirportSearchRequest;
 import io.upschool.dto.response.AirportResponse;
+import io.upschool.dto.response.BaseResponse;
 import io.upschool.entity.Airport;
-import io.upschool.exception.DataCannotDelete;
 import io.upschool.exception.DataNotFoundException;
 import io.upschool.exception.DuplicateEntryException;
 import io.upschool.mapper.response.AirportResponseMapper;
@@ -15,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,73 +28,71 @@ public class AirportController {
 
     //--------> CREATE <--------\\
     @PostMapping
-    public BaseResponse<AirportResponse> create(@Valid @RequestBody AirportRequest airportRequest) throws DataNotFoundException, DuplicateEntryException {
-        Airport airport = airportService.save(airportRequest);
-        return BaseResponse.<AirportResponse>builder()
+    public ResponseEntity<BaseResponse<AirportResponse>> create(@Valid @RequestBody AirportCreateRequest airportCreateRequest) throws DataNotFoundException, DuplicateEntryException {
+        Airport airport = airportService.save(airportCreateRequest);
+        var response = BaseResponse.<AirportResponse>builder()
                 .isSuccess(true)
                 .status(HttpStatus.CREATED.value())
                 .responseBody(airportResponseMapper.map(airport))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/all")
-    public BaseResponse<List<AirportResponse>> createAll(@RequestBody List<AirportRequest> airportRequests) throws DataNotFoundException, DuplicateEntryException  {
-        List<Airport> airports = airportService.saveAll(airportRequests);
-        return BaseResponse.<List<AirportResponse>>builder()
+    public ResponseEntity<BaseResponse<List<AirportResponse>>> createAll(@RequestBody List<AirportCreateRequest> airportCreateRequests) throws DataNotFoundException, DuplicateEntryException {
+        List<Airport> airports = airportService.saveAll(airportCreateRequests);
+        var response = BaseResponse.<List<AirportResponse>>builder()
                 .isSuccess(true)
                 .status(HttpStatus.CREATED.value())
                 .responseBody(airportResponseMapper.map(airports))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     //--------> READ <--------\\
     @GetMapping
-    public BaseResponse<Page<AirportResponse>> getPageable(Pageable pageable) {
+    public ResponseEntity<BaseResponse<Page<AirportResponse>>> getPageable(Pageable pageable) {
         Page<Airport> airportPage = airportService.findAll(pageable);
-        return BaseResponse.<Page<AirportResponse>>builder()
+        var response = BaseResponse.<Page<AirportResponse>>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
                 .responseBody(airportPage.map(airportResponseMapper::map))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/all")
-    public BaseResponse<List<AirportResponse>> getAll() {
+    public ResponseEntity<BaseResponse<List<AirportResponse>>> getAll() {
         List<Airport> airportList = airportService.findAll();
-        return BaseResponse.<List<AirportResponse>>builder()
+        var response = BaseResponse.<List<AirportResponse>>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
                 .responseBody(airportResponseMapper.map(airportList))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public BaseResponse<AirportResponse> getById(@PathVariable Long id) throws DataNotFoundException {
+    public ResponseEntity<BaseResponse<AirportResponse>> getById(@PathVariable Long id) throws DataNotFoundException {
         Airport airport = airportService.findById(id);
-        return BaseResponse.<AirportResponse>builder()
+        var response = BaseResponse.<AirportResponse>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
                 .responseBody(airportResponseMapper.map(airport))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/search")
-    public BaseResponse<Page<AirportResponse>> search(@RequestBody AirportSearchRequest airportSearchRequest, Pageable pageable) {
+    public ResponseEntity<BaseResponse<Page<AirportResponse>>> search(@RequestBody AirportSearchRequest airportSearchRequest, Pageable pageable) {
         Page<Airport> airportPage = airportService.search(airportSearchRequest, pageable);
-        return BaseResponse.<Page<AirportResponse>>builder()
+        var response = BaseResponse.<Page<AirportResponse>>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
                 .responseBody(airportPage.map(airportResponseMapper::map))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     //--------> DELETE <--------\\
-    @DeleteMapping(("/{id}"))
-    public BaseResponse<String> delete(@PathVariable Long id)  throws DataNotFoundException, DataCannotDelete {
-        return BaseResponse.<String>builder()
-                .isSuccess(true)
-                .status(HttpStatus.OK.value())
-                .responseBody("soon")
-                .build();
-    }
 }

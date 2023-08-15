@@ -1,11 +1,10 @@
 package io.upschool.controller;
 
-import io.upschool.dto.request.RouteRequest;
+import io.upschool.dto.request.create.RouteCreateRequest;
 import io.upschool.dto.request.search.RouteSearchRequest;
 import io.upschool.dto.response.BaseResponse;
 import io.upschool.dto.response.RouteResponse;
 import io.upschool.entity.Route;
-import io.upschool.exception.DataCannotDelete;
 import io.upschool.exception.DataNotFoundException;
 import io.upschool.exception.DuplicateEntryException;
 import io.upschool.mapper.response.RouteResponseMapper;
@@ -15,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,84 +29,81 @@ public class RouteController {
 
     //--------> CREATE <--------\\
     @PostMapping
-    public BaseResponse<RouteResponse> create(@Valid @RequestBody RouteRequest routeRequest) throws DataNotFoundException, DuplicateEntryException {
-        Route route = routeService.save(routeRequest);
-        return BaseResponse.<RouteResponse>builder()
+    public ResponseEntity<BaseResponse<RouteResponse>> create(@Valid @RequestBody RouteCreateRequest routeCreateRequest) throws DataNotFoundException, DuplicateEntryException {
+        Route route = routeService.save(routeCreateRequest);
+        var response = BaseResponse.<RouteResponse>builder()
                 .isSuccess(true)
                 .status(HttpStatus.CREATED.value())
                 .responseBody(routeResponseMapper.map(route))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/all")
-    public BaseResponse<List<RouteResponse>> create(@Valid @RequestBody List<RouteRequest> routeRequests) throws DataNotFoundException, DuplicateEntryException {
-        List<Route> routes = routeService.saveAll(routeRequests);
-        return BaseResponse.<List<RouteResponse>>builder()
+    public ResponseEntity<BaseResponse<List<RouteResponse>>> create(@Valid @RequestBody List<RouteCreateRequest> routeCreateRequests) throws DataNotFoundException, DuplicateEntryException {
+        List<Route> routes = routeService.saveAll(routeCreateRequests);
+        var response = BaseResponse.<List<RouteResponse>>builder()
                 .isSuccess(true)
                 .status(HttpStatus.CREATED.value())
                 .responseBody(routeResponseMapper.map(routes))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     //--------> READ <--------\\
     @GetMapping
-    public BaseResponse<Page<RouteResponse>> getRoutes(Pageable pageable) {
+    public ResponseEntity<BaseResponse<Page<RouteResponse>>> getRoutes(Pageable pageable) {
         Page<Route> routes = routeService.findAll(pageable);
-        return BaseResponse.<Page<RouteResponse>>builder()
+        var response = BaseResponse.<Page<RouteResponse>>builder()
                 .isSuccess(true)
                 .status(HttpStatus.CREATED.value())
                 .responseBody(routes.map(routeResponseMapper::map))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/all")
-    public BaseResponse<List<RouteResponse>> getAllRoutes() {
+    public ResponseEntity<BaseResponse<List<RouteResponse>>> getAllRoutes() {
         List<Route> routes = routeService.findAll();
-        return BaseResponse.<List<RouteResponse>>builder()
+        var response = BaseResponse.<List<RouteResponse>>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
                 .responseBody(routeResponseMapper.map(routes))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public BaseResponse<RouteResponse> getAllRoutes(@PathVariable Long id) throws DataNotFoundException {
+    public ResponseEntity<BaseResponse<RouteResponse>> getAllRoutes(@PathVariable Long id) throws DataNotFoundException {
         Route route = routeService.findById(id);
-        return BaseResponse.<RouteResponse>builder()
+        var response = BaseResponse.<RouteResponse>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
                 .responseBody(routeResponseMapper.map(route))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/search")
-    public BaseResponse<Page<RouteResponse>> search(@RequestBody RouteSearchRequest routeSearchRequest, Pageable pageable) {
+    @GetMapping(value = "/search", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse<Page<RouteResponse>>> search(@RequestBody RouteSearchRequest routeSearchRequest, Pageable pageable) {
         Page<Route> routes = routeService.search(routeSearchRequest, pageable);
-        return BaseResponse.<Page<RouteResponse>>builder()
+        var response = BaseResponse.<Page<RouteResponse>>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
                 .responseBody(routes.map(routeResponseMapper::map))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     //--------> UPDATE <--------\\
-    @PutMapping("/{id}/canceled")
-    public BaseResponse<RouteResponse> cancel(@PathVariable Long id) throws DataNotFoundException {
+    @PutMapping("/{id}/cancel")
+    public ResponseEntity<BaseResponse<RouteResponse>> cancel(@PathVariable Long id) throws DataNotFoundException {
         Route route = routeService.cancel(id);
-        return BaseResponse.<RouteResponse>builder()
+        var response = BaseResponse.<RouteResponse>builder()
                 .isSuccess(true)
                 .status(HttpStatus.CREATED.value())
                 .responseBody(routeResponseMapper.map(route))
                 .build();
-    }
-
-    //--------> DELETE <--------\\
-    @DeleteMapping({"/{id}"})
-    public BaseResponse<String> delete(@PathVariable Long id) throws DataNotFoundException, DataCannotDelete {
-        return BaseResponse.<String>builder()
-                .isSuccess(true)
-                .status(HttpStatus.OK.value())
-                .responseBody("soon")
-                .build();
+        return ResponseEntity.ok(response);
     }
 }

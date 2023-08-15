@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class FlightSearchRequest {
+    private Long id;
     private String flightNumber;
     private LocalDate flightDate;
     private LegType legType;

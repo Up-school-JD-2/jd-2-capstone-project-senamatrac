@@ -1,6 +1,6 @@
 package io.upschool.controller;
 
-import io.upschool.dto.request.CountryRequest;
+import io.upschool.dto.request.create.CountryCreateRequest;
 import io.upschool.dto.request.search.CountrySearchRequest;
 import io.upschool.dto.response.BaseResponse;
 import io.upschool.dto.response.CountryResponse;
@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,75 +27,84 @@ public class CountryController {
     private final CountryService countryService;
     private final CountyResponseMapper countyResponseMapper;
 
-    //--------> CREAD <--------\\
+    //--------> CREATE <--------\\
     @PostMapping
-    public BaseResponse<CountryResponse> create(@Valid @RequestBody CountryRequest countryRequest) throws DuplicateEntryException {
-        Country country = countryService.save(countryRequest);
-        return BaseResponse.<CountryResponse>builder()
+    public ResponseEntity<BaseResponse<CountryResponse>> create(@Valid @RequestBody CountryCreateRequest countryCreateRequest) throws DuplicateEntryException {
+        Country country = countryService.save(countryCreateRequest);
+        var response = BaseResponse.<CountryResponse>builder()
                 .isSuccess(true)
                 .status(HttpStatus.CREATED.value())
                 .responseBody(countyResponseMapper.map(country))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/all")
-    public BaseResponse<List<CountryResponse>> create(@Valid @RequestBody List<CountryRequest> countryRequestList) throws DuplicateEntryException {
-        List<Country> countries = countryService.saveAll(countryRequestList);
-        return BaseResponse.<List<CountryResponse>>builder()
+    public ResponseEntity<BaseResponse<List<CountryResponse>>> create(@Valid @RequestBody List<CountryCreateRequest> countryCreateRequestList) throws DuplicateEntryException {
+        List<Country> countries = countryService.saveAll(countryCreateRequestList);
+        var response = BaseResponse.<List<CountryResponse>>builder()
                 .isSuccess(true)
                 .status(HttpStatus.CREATED.value())
                 .responseBody(countyResponseMapper.map(countries))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     //--------> READ <--------\\
     @GetMapping
-    public BaseResponse<Page<CountryResponse>> getAllCountries(Pageable pageable) {
+    public ResponseEntity<BaseResponse<Page<CountryResponse>>> getAllCountries(Pageable pageable) {
         Page<Country> countryPage = countryService.findAll(pageable);
-        return BaseResponse.<Page<CountryResponse>>builder()
+        var response = BaseResponse.<Page<CountryResponse>>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
                 .responseBody(countryPage.map(countyResponseMapper::map))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/all")
-    public BaseResponse<List<CountryResponse>> getAllCountries() {
+    public ResponseEntity<BaseResponse<List<CountryResponse>>> getAllCountries() {
         List<Country> countryList = countryService.findAll();
-        return BaseResponse.<List<CountryResponse>>builder()
+        var response = BaseResponse.<List<CountryResponse>>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
                 .responseBody(countyResponseMapper.map(countryList))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public BaseResponse<CountryResponse> getById(@PathVariable Long id) throws DataNotFoundException {
+    public ResponseEntity<BaseResponse<CountryResponse>> getById(@PathVariable Long id) throws DataNotFoundException {
         Country country = countryService.findById(id);
-        return BaseResponse.<CountryResponse>builder()
+        var response = BaseResponse.<CountryResponse>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
                 .responseBody(countyResponseMapper.map(country))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/search")
-    public BaseResponse<Page<CountryResponse>> search(CountrySearchRequest countrySearchRequest, Pageable pageable) {
+    public ResponseEntity<BaseResponse<Page<CountryResponse>>> search(CountrySearchRequest countrySearchRequest, Pageable pageable) {
+
         Page<Country> countries = countryService.search(countrySearchRequest, pageable);
-        return BaseResponse.<Page<CountryResponse>>builder()
+        var response = BaseResponse.<Page<CountryResponse>>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
                 .responseBody(countries.map(countyResponseMapper::map))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     //--------> DELETE <--------\\
     @DeleteMapping("/{id}")
-    public BaseResponse<String> delete(@PathVariable Long id) throws DataNotFoundException, DataCannotDelete {
+    public ResponseEntity<BaseResponse<String>> delete(@PathVariable Long id) throws DataNotFoundException, DataCannotDelete {
         countryService.deleteById(id);
-        return BaseResponse.<String>builder()
+        var response = BaseResponse.<String>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
+                .responseBody("soon")
                 .build();
+        return ResponseEntity.ok(response);
     }
 }

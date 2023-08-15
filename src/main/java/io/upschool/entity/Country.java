@@ -14,7 +14,7 @@ import java.util.Set;
 @Audited
 @Entity
 @Table(name = "country")
-public class Country extends BaseEntity{
+public class Country extends BaseEntity {
 
     @Column(nullable = false)
     private String name;

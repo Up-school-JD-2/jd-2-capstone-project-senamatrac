@@ -1,7 +1,10 @@
 package io.upschool.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.envers.Audited;
 
 @Getter
@@ -11,7 +14,7 @@ import org.hibernate.envers.Audited;
 @Audited
 @Entity
 @Table(name = "airline_route")
-public class AirlineRoute extends BaseEntity{
+public class AirlineRoute extends BaseEntity {
 
     @Column
     private Boolean active;

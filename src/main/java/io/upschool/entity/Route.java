@@ -16,7 +16,7 @@ import java.time.Duration;
 @Audited
 @Entity
 @Table(name = "route", indexes = @Index(name = "UNQ_ROUTE_ORIGIN_DESTINATION", columnList = "origin_airport_id, destination_airport_id", unique = true))
-public class Route extends BaseEntity{
+public class Route extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "origin_airport_id")
     private Airport origin;
@@ -28,7 +28,7 @@ public class Route extends BaseEntity{
     @Column
     private Duration duration;
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private RouteStatus status;
 }

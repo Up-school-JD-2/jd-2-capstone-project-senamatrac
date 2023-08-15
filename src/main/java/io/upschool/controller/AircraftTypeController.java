@@ -1,6 +1,6 @@
 package io.upschool.controller;
 
-import io.upschool.dto.request.AircraftTypeRequest;
+import io.upschool.dto.request.create.AircraftTypeCreateRequest;
 import io.upschool.dto.request.search.AircraftTypeSearchRequest;
 import io.upschool.dto.response.AircraftTypeResponse;
 import io.upschool.dto.response.BaseResponse;
@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,75 +29,82 @@ public class AircraftTypeController {
 
     //--------> CREATE <--------\\
     @PostMapping
-    public BaseResponse<AircraftTypeResponse> create(@Valid @RequestBody AircraftTypeRequest aircraftTypeRequest) throws DuplicateEntryException {
-        AircraftType aircraftType = aircraftTypeService.save(aircraftTypeRequest);
-        return BaseResponse.<AircraftTypeResponse>builder()
+    public ResponseEntity<BaseResponse<AircraftTypeResponse>> create(@Valid @RequestBody AircraftTypeCreateRequest aircraftTypeCreateRequest) throws DuplicateEntryException {
+        AircraftType aircraftType = aircraftTypeService.save(aircraftTypeCreateRequest);
+        var response = BaseResponse.<AircraftTypeResponse>builder()
                 .isSuccess(true)
                 .status(HttpStatus.CREATED.value())
                 .responseBody(aircraftTypeResponseMapping.map(aircraftType))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/all")
-    public BaseResponse<List<AircraftTypeResponse>>  createAll(@Valid @RequestBody List<AircraftTypeRequest> aircraftTypeRequests) throws DuplicateEntryException{
-        List<AircraftType> aircraftTypes = aircraftTypeService.saveAll(aircraftTypeRequests);
-        return  BaseResponse.<List<AircraftTypeResponse>>builder()
+    public ResponseEntity<BaseResponse<List<AircraftTypeResponse>>> createAll(@Valid @RequestBody List<AircraftTypeCreateRequest> aircraftTypeCreateRequests) throws DuplicateEntryException {
+        List<AircraftType> aircraftTypes = aircraftTypeService.saveAll(aircraftTypeCreateRequests);
+        var response = BaseResponse.<List<AircraftTypeResponse>>builder()
                 .isSuccess(true)
                 .status(HttpStatus.CREATED.value())
                 .responseBody(aircraftTypeResponseMapping.map(aircraftTypes))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     //--------> READ <--------\\
     @GetMapping
-    public BaseResponse<Page<AircraftTypeResponse>> getAllAircraftTypes(Pageable pageable) {
+    public ResponseEntity<BaseResponse<Page<AircraftTypeResponse>>> getAllAircraftTypes(Pageable pageable) {
         Page<AircraftType> aircraftTypePage = aircraftTypeService.findAll(pageable);
-        return BaseResponse.<Page<AircraftTypeResponse>>builder()
+        var response = BaseResponse.<Page<AircraftTypeResponse>>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
                 .responseBody(aircraftTypePage.map(aircraftTypeResponseMapping::map))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/all")
-    public BaseResponse<List<AircraftTypeResponse>> getAllAircraftTypes() {
+    public ResponseEntity<BaseResponse<List<AircraftTypeResponse>>> getAllAircraftTypes() {
         List<AircraftType> aircraftTypeList = aircraftTypeService.findAll();
-        return BaseResponse.<List<AircraftTypeResponse>>builder()
+        var response = BaseResponse.<List<AircraftTypeResponse>>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
                 .responseBody(aircraftTypeResponseMapping.map(aircraftTypeList))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public BaseResponse<AircraftTypeResponse> getById(@PathVariable Long id) throws DataNotFoundException {
+    public ResponseEntity<BaseResponse<AircraftTypeResponse>> getById(@PathVariable Long id) throws DataNotFoundException {
         AircraftType aircraftType = aircraftTypeService.findById(id);
-        return BaseResponse.<AircraftTypeResponse>builder()
+        var response = BaseResponse.<AircraftTypeResponse>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
                 .responseBody(aircraftTypeResponseMapping.map(aircraftType))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/search")
-    public BaseResponse<Page<AircraftTypeResponse>> search(Pageable pageable, @Valid @RequestBody AircraftTypeSearchRequest aircraftTypeSearchRequest) {
+    public ResponseEntity<BaseResponse<Page<AircraftTypeResponse>>> search(Pageable pageable, @Valid @RequestBody AircraftTypeSearchRequest aircraftTypeSearchRequest) {
         Page<AircraftType> aircraftTypePage = aircraftTypeService.search(aircraftTypeSearchRequest, pageable);
-        return BaseResponse.<Page<AircraftTypeResponse>>builder()
+        var response = BaseResponse.<Page<AircraftTypeResponse>>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.value())
                 .responseBody(aircraftTypePage.map(aircraftTypeResponseMapping::map))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     //--------> UPDATE <--------\\
     @PutMapping("/{id}")
-    public BaseResponse<AircraftTypeResponse> update(@PathVariable Long id, @Valid @RequestBody AircraftTypeRequest aircraftTypeRequest) throws DataNotFoundException, DuplicateEntryException {
-        AircraftType aircraftType = aircraftTypeService.update(id, aircraftTypeRequest);
-        return BaseResponse.<AircraftTypeResponse>builder()
+    public ResponseEntity<BaseResponse<AircraftTypeResponse>> update(@PathVariable Long id, @Valid @RequestBody AircraftTypeCreateRequest aircraftTypeCreateRequest) throws DataNotFoundException, DuplicateEntryException {
+        AircraftType aircraftType = aircraftTypeService.update(id, aircraftTypeCreateRequest);
+        var response = BaseResponse.<AircraftTypeResponse>builder()
                 .isSuccess(true)
                 .status(HttpStatus.CREATED.value())
                 .responseBody(aircraftTypeResponseMapping.map(aircraftType))
                 .build();
+        return ResponseEntity.ok(response);
     }
 
     //--------> DELETE <--------\\

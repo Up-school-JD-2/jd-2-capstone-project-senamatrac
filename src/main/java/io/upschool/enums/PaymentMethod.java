@@ -2,5 +2,5 @@ package io.upschool.enums;
 
 
 public enum PaymentMethod {
-    CREDIT_CARD,CASH
+    CREDIT_CARD, CASH
 }

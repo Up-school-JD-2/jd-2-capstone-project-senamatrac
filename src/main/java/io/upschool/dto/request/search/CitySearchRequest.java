@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class CitySearchRequest {
+    private Long id;
     private String name;
     private String code;
     private CountrySearchRequest country;

@@ -38,7 +38,7 @@ public class CreditCardPayment extends Payment {
     private String cvv;
 
     @Builder
-    public CreditCardPayment( BigDecimal total, BigDecimal tax, PaymentStatus status, String owner, int expiredMonth, int expiredYear, String digits, String cvv) {
+    public CreditCardPayment(BigDecimal total, BigDecimal tax, PaymentStatus status, String owner, int expiredMonth, int expiredYear, String digits, String cvv) {
         super(PaymentMethod.CREDIT_CARD, total, tax, status);
         this.owner = owner;
         this.expiredMonth = expiredMonth;

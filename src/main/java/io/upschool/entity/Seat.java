@@ -13,8 +13,8 @@ import org.hibernate.envers.Audited;
 @Builder
 @Audited
 @Entity
-@Table(name = "seat", indexes = @Index(name = "UNQ_SEAT_AIRCRAFT_ID_SEAT_CODE", columnList = "aircraft_id, seat_code",unique = true))
-public class Seat extends BaseEntity{
+@Table(name = "seat", indexes = @Index(name = "UNQ_SEAT_AIRCRAFT_ID_SEAT_CODE", columnList = "aircraft_id, seat_code", unique = true))
+public class Seat extends BaseEntity {
 
     @Column(name = "seat_code")
     private String seatCode;

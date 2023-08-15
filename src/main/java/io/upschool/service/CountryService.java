@@ -1,6 +1,6 @@
 package io.upschool.service;
 
-import io.upschool.dto.request.CountryRequest;
+import io.upschool.dto.request.create.CountryCreateRequest;
 import io.upschool.dto.request.search.CountrySearchRequest;
 import io.upschool.entity.Country;
 import io.upschool.exception.DataNotFoundException;
@@ -26,32 +26,32 @@ public class CountryService {
     private final CountryMapper countryMapper;
 
     @Transactional
-    public Country save(CountryRequest countryRequest) throws DuplicateEntryException {
-        ServiceExceptionUtil.check(countryRepository::existsByCode, countryRequest.getCode(), () -> new DuplicateEntryException("code"));
+    public Country save(CountryCreateRequest countryCreateRequest) throws DuplicateEntryException {
+        ServiceExceptionUtil.check(countryRepository::existsByCode, countryCreateRequest.getCode(), () -> new DuplicateEntryException("code"));
         Country country = Country.builder()
-                .code(countryRequest.getCode())
-                .name(countryRequest.getName()).build();
+                .code(countryCreateRequest.getCode())
+                .name(countryCreateRequest.getName()).build();
         return countryRepository.save(country);
     }
 
     @Transactional
-    public List<Country> saveAll(List<CountryRequest> countryRequests) {
-        List<Country> countries = countryRequests.stream()
-                .map(countryRequest -> Country.builder().
-                        code(countryRequest.getCode()).
-                        name(countryRequest.getName()).build()).toList();
+    public List<Country> saveAll(List<CountryCreateRequest> countryCreateRequests) {
+        List<Country> countries = countryCreateRequests.stream()
+                .map(countryCreateRequest -> Country.builder().
+                        code(countryCreateRequest.getCode()).
+                        name(countryCreateRequest.getName()).build()).toList();
 
         return countryRepository.saveAll(countries);
     }
 
     @Transactional
-    public Country update(Long id, CountryRequest countryRequest) throws DataNotFoundException, DuplicateEntryException {
+    public Country update(Long id, CountryCreateRequest countryCreateRequest) throws DataNotFoundException, DuplicateEntryException {
 
-        ServiceExceptionUtil.check(countryRepository::existsByCode, countryRequest.getCode(), () -> new DuplicateEntryException("code"));
+        ServiceExceptionUtil.check(countryRepository::existsByCode, countryCreateRequest.getCode(), () -> new DuplicateEntryException("code"));
 
         Country country = countryRepository.findById(id).orElseThrow(() -> new DataNotFoundException("country with id: " + id));
-        country.setCode(countryRequest.getCode());
-        country.setName(countryRequest.getName());
+        country.setCode(countryCreateRequest.getCode());
+        country.setName(countryCreateRequest.getName());
 
         return countryRepository.save(country);
     }
@@ -71,7 +71,7 @@ public class CountryService {
     }
 
     public Page<Country> search(CountrySearchRequest countrySearchRequest, Pageable pageable) {
-        Example<Country> example = Example.of(countryMapper.map(countrySearchRequest), ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
+        Example<Country> example = Example.of(countryMapper.map(countrySearchRequest), ExampleMatcher.matching().withIgnoreCase().withIgnoreNullValues().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
         return countryRepository.findAll(example, pageable);
     }
 

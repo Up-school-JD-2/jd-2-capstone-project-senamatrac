@@ -1,4 +1,4 @@
-package io.upschool.dto.response;
+package io.upschool.dto.request.search;
 
 import io.upschool.enums.PaymentMethod;
 import io.upschool.enums.PaymentStatus;
@@ -13,11 +13,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PaymentResponse {
-    private Long id;
+public class PaymentSearchRequest {
+    private PaymentMethod paymentMethod;
     private BigDecimal total;
     private BigDecimal tax;
     private PaymentStatus status;
-    private PaymentMethod paymentMethod;
-    private CreditCardResponse creditCard;
 }
